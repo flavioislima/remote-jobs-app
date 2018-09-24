@@ -3,11 +3,18 @@ import ListJobs from '../ListJobs'
 
 const url = 'https://jsremotely.com/api'
 
-const JSRemotely = () => (
-    <ListJobs
-        url={url}
-        source={"JSRemotely"}
-    />
-)
+class JSRemotely extends React.Component {
+    static navigationOptions = {
+        header: null,
+    };
+    render() {
+        return (
+            <ListJobs
+                url={url}
+                source={"JSRemotely"}
+            />
+        )
+    }
+}
 
 export default JSRemotely

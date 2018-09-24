@@ -3,15 +3,16 @@ import {
   Platform,
   StyleSheet,
 } from 'react-native';
-import { RemoteOk, JSRemotely } from './components/screens'
 
-const App = () => {
-  const navigationOptions = {
+import AppNavigator from './navigation/AppNavigator'
+
+const App = (props) => {
+  props.navigationOptions = {
     header: null,
   }
 
   return (
-    <RemoteOk />
+    <AppNavigator />
   )
 }
 
