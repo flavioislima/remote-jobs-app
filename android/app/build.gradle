@@ -102,8 +102,8 @@ android {
         applicationId "com.remotework"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.1.1"
+        versionCode 4
+        versionName "1.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
