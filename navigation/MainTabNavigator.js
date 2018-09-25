@@ -27,7 +27,20 @@ JSRemotelyStack.navigationOptions = {
 
 }
 
-export default createBottomTabNavigator({
-    RemoteOkStack,
-    JSRemotelyStack
-})
+export default createBottomTabNavigator(
+    {
+        RemoteOkStack,
+        JSRemotelyStack
+    }, {
+        tabBarOptions: {
+            style: {
+                backgroundColor: '#e1e8ee',
+                paddingTop: 5,
+                borderTopColor: 'gray',
+                borderTopWidth: 0.5,
+            },
+            activeTintColor: 'black',
+            inactiveTintColor: 'gray'
+        }
+    }
+)
