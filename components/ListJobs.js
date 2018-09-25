@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, Platform, View, FlatList, Text, RefreshControl, TextInput, TouchableOpacity, Linking, StyleSheet } from 'react-native'
+import { SearchBar } from 'react-native-elements'
 import axios from 'axios'
 import Jobs from './Jobs'
 
@@ -23,6 +24,10 @@ export default class ListJobs extends React.Component {
 
     _onSearchJobs = (filterText) => {
         this.setState({ filterText })
+    }
+
+    _onClearSearch = () => {
+        this.setState({ filterText: '' })
     }
 
     _onRefresh = () => {
@@ -51,12 +56,14 @@ export default class ListJobs extends React.Component {
                         >{this.state.data.length} Jobs found on {this.props.source}</Text>
                     }
                 </View>
-                <TextInput
-                    style={styles.search}
-                    maxLength={40}
+                <SearchBar
+                    round
+                    lightTheme
+                    clearIcon={{ type: 'font-awesome', name: 'times' }}
+                    icon={{ type: 'font-awesome', name: 'search' }}
                     placeholder="Search for Jobs..."
                     onChangeText={this._onSearchJobs}
-                    value={this.state.filterText}
+                    onClearText={this._onClearSearch}
                 />
                 <RefreshControl
                     refreshing={this.state.refreshing}
@@ -91,7 +98,7 @@ export default class ListJobs extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#e1e8ee',
     },
     contentContainer: {
         paddingTop: 0,
@@ -107,29 +114,4 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     search: { height: 40, marginHorizontal: 25, marginVertical: 5, borderWidth: 0.2, borderColor: 'gray', padding: 5 },
-    tabBarInfoContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        ...Platform.select({
-            ios: {
-                shadowColor: 'black',
-                shadowOffset: { height: -3 },
-                shadowOpacity: 0.1,
-                shadowRadius: 3,
-            },
-            android: {
-                elevation: 20,
-            },
-        }),
-        alignItems: 'center',
-        backgroundColor: '#fbfbfb',
-        paddingVertical: 20,
-    },
-    tabBarInfoText: {
-        fontSize: 17,
-        color: 'rgba(96,100,109, 1)',
-        textAlign: 'center',
-    },
 });
