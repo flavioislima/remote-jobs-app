@@ -3,12 +3,20 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, Linking } from 'react-
 import moment from 'moment'
 
 const Jobs = (props) => {
-    const { link, name, title, company, tags, logo, date, url, position, description } = props.data
+    const { link, name, title, company, tags, logo, url, position } = props.data
+    let { description, date } = props.data
+    description = description
+        .replace(/<(?:.|\n)*?>/gm, '')
+        .replace(/&amp;/gm, '&')
+        .replace(/&#8211;/gm, "-")
+        .replace(/&rsquo;|&#8217;|&#8216;|&#8220;|&#8221;/gm, "'")
+
+    date = moment(date).endOf('day').fromNow()
+
     let renderDescAndTags;
     if (tags) {
         renderDescAndTags = (
             <View>
-                <Text style={styles.description}>{description}</Text>
                 <View style={styles.tagsView}>
                     {tags.map((tag, i) => <Text style={styles.tags} key={i}>{(tag).toUpperCase()}</Text>)}
                 </View>
@@ -27,11 +35,13 @@ const Jobs = (props) => {
                         <Text style={styles.position}>{position ? position : title}</Text>
                         <Text style={styles.company}>{company ? company : name}</Text>
                     </View>
+
                     <View style={styles.viewDate}>
-                        <Text style={styles.date}>{moment(date).endOf('day').fromNow()}</Text>
+                        <Text style={styles.date}>{date}</Text>
                         <Image source={{ uri: logo }} style={styles.logo} />
                     </View>
                 </View>
+                <Text style={styles.description}>{description}</Text>
                 {
                     tags ? renderDescAndTags : console.log('noTags')
                 }
