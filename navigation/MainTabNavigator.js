@@ -38,7 +38,7 @@ export default createBottomTabNavigator(
         tabBarOptions: {
             tabStyle: {
                 borderLeftColor: 'white',
-                // borderRightColor: 'white',
+                borderRightColor: 'white',
                 borderWidth: 0.2
             },
             labelStyle: {
