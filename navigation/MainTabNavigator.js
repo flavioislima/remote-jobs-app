@@ -10,9 +10,12 @@ const RemoteOkStack = createStackNavigator({
 
 RemoteOkStack.navigationOptions = {
     tabBarLabel: 'RemoteOk',
-    tabBarIcon: (
-        <Icon name='briefcase' size={25} color='#000' />
-    )
+    tabBarLabelStyle: {
+        fontSize: 20
+    }
+    // tabBarIcon: (
+    //     <Icon name='briefcase' size={25} color='#6efdff' />
+    // )
 }
 
 const JSRemotelyStack = createStackNavigator({
@@ -21,9 +24,9 @@ const JSRemotelyStack = createStackNavigator({
 
 JSRemotelyStack.navigationOptions = {
     tabBarLabel: 'JSRemotely',
-    tabBarIcon: (
-        <Icon name='globe' size={25} color='#000' />
-    )
+    // tabBarIcon: (
+    //     <Icon name='globe' size={25} color='#6efdff' />
+    // )
 
 }
 
@@ -33,14 +36,23 @@ export default createBottomTabNavigator(
         JSRemotelyStack
     }, {
         tabBarOptions: {
+            tabStyle: {
+                borderLeftColor: 'white',
+                // borderRightColor: 'white',
+                borderWidth: 0.2
+            },
+            labelStyle: {
+                fontSize: 13,
+                alignItems: 'center',
+                marginBottom: 15
+            },
             style: {
-                backgroundColor: '#e1e8ee',
-                paddingTop: 5,
-                borderTopColor: 'gray',
+                backgroundColor: '#363636',
+                borderTopColor: 'white',
                 borderTopWidth: 0.5,
             },
-            activeTintColor: 'black',
-            inactiveTintColor: 'gray'
+            activeTintColor: 'white',
+            inactiveTintColor: 'darkgray'
         }
     }
 )

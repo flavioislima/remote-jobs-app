@@ -46,13 +46,18 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         marginHorizontal: 8,
-        marginVertical: 5
+        marginVertical: 5,
+        borderWidth: 0.3,
+        borderRadius: 10,
+        borderColor: 'gray',
+        backgroundColor: 'white'
     },
     viewJob: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: '#007acc',
-        padding: 5
+        backgroundColor: '#4effa1',
+        padding: 5,
+        borderRadius: 10,
     },
     viewPosition: {
         flexDirection: 'column',
@@ -64,12 +69,12 @@ const styles = StyleSheet.create({
     position: {
         fontSize: 15,
         fontWeight: '700',
-        color: 'white'
+        color: 'black'
     },
     company: {
         fontSize: 13,
         fontWeight: '400',
-        color: 'aquamarine'
+        color: 'black'
     },
     description: {
         marginLeft: 10,
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
     date: {
         fontSize: 11,
         fontWeight: '400',
-        color: 'white',
+        color: 'black',
         marginLeft: 15
     },
     logo: {
@@ -92,20 +97,22 @@ const styles = StyleSheet.create({
     },
     tagsView: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignContent: 'space-around',
+        justifyContent: 'center',
+        alignContent: 'center',
         flexWrap: 'wrap',
-        marginVertical: 3
+        // marginVertical: 3,
+        marginBottom: 5,
     },
     tags: {
         fontSize: 11,
-        backgroundColor: 'orange',
-        color: 'white',
+        backgroundColor: '#e1e8ee',
+        color: 'black',
         padding: 4,
-        margin: 1,
-        borderWidth: 0.5,
+        margin: 3,
+        // marginHorizontal: 5,
+        borderWidth: 0.1,
         borderRadius: 4,
-        borderColor: 'white'
+        // borderColor: 'black'
     },
 })
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Platform, View, FlatList, Text, RefreshControl, TextInput, TouchableOpacity, Linking, StyleSheet } from 'react-native'
+import { StatusBar, View, FlatList, Text, RefreshControl, TextInput, TouchableOpacity, Linking, StyleSheet } from 'react-native'
 import { SearchBar } from 'react-native-elements'
 import axios from 'axios'
 import Jobs from './Jobs'
@@ -45,6 +45,7 @@ export default class ListJobs extends React.Component {
 
         return (
             <View style={styles.container}>
+                <StatusBar backgroundColor='#363636' />
                 <View style={styles.welcomeContainer}>
                     {this.state.refreshing ?
                         <Text
@@ -59,9 +60,13 @@ export default class ListJobs extends React.Component {
                 <SearchBar
                     round
                     lightTheme
-                    clearIcon={{ type: 'font-awesome', name: 'times' }}
-                    icon={{ type: 'font-awesome', name: 'search' }}
+                    // containerStyle={{ backgroundColor: 'white' }}
+                    // inputContainerStyle={{ backgroundColor: 'white' }}
+                    inputStyle={{ backgroundColor: 'white' }}
+                    clearIcon={{ type: 'font-awesome', name: 'times', color: 'lightgray' }}
+                    icon={{ type: 'font-awesome', name: 'search', color: 'lightgray' }}
                     placeholder="Search for Jobs..."
+                    // placeholderTextColor='lightgray'
                     onChangeText={this._onSearchJobs}
                     onClearText={this._onClearSearch}
                 />
@@ -104,14 +109,13 @@ const styles = StyleSheet.create({
         paddingTop: 0,
     },
     welcomeContainer: {
-        backgroundColor: '#007acc',
+        backgroundColor: '#363636',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 10,
+        paddingVertical: 5,
     },
     title: {
         color: 'white',
         fontSize: 16
-    },
-    search: { height: 40, marginHorizontal: 25, marginVertical: 5, borderWidth: 0.2, borderColor: 'gray', padding: 5 },
+    }
 });
