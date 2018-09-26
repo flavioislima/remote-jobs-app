@@ -27,8 +27,10 @@ const Jobs = (props) => {
                         <Text style={styles.position}>{position ? position : title}</Text>
                         <Text style={styles.company}>{company ? company : name}</Text>
                     </View>
-                    <Text style={styles.date}>{moment(date).endOf('day').fromNow()}</Text>
-                    <Image source={{ uri: logo }} style={styles.logo} />
+                    <View style={styles.viewDate}>
+                        <Text style={styles.date}>{moment(date).endOf('day').fromNow()}</Text>
+                        <Image source={{ uri: logo }} style={styles.logo} />
+                    </View>
                 </View>
                 {
                     tags ? renderDescAndTags : console.log('noTags')
@@ -62,8 +64,16 @@ const styles = StyleSheet.create({
     viewPosition: {
         flexDirection: 'column',
         flexWrap: 'wrap',
-        width: 250,
-        justifyContent: 'space-between',
+        width: '75%',
+        // justifyContent: 'space-between',
+        marginLeft: 3
+    },
+    viewDate: {
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        width: '25%',
         marginLeft: 3
     },
     position: {
@@ -89,11 +99,13 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '400',
         color: 'black',
-        marginLeft: 15
+        // marginLeft: 15,
+        marginBottom: 3
     },
     logo: {
         width: 35,
-        height: 35
+        height: 35,
+        // marginLeft: 10
     },
     tagsView: {
         flexDirection: 'row',
