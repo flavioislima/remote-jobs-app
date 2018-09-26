@@ -60,13 +60,10 @@ export default class ListJobs extends React.Component {
                 <SearchBar
                     round
                     lightTheme
-                    // containerStyle={{ backgroundColor: 'white' }}
-                    // inputContainerStyle={{ backgroundColor: 'white' }}
                     inputStyle={{ backgroundColor: 'white' }}
                     clearIcon={{ type: 'font-awesome', name: 'times', color: 'lightgray' }}
                     icon={{ type: 'font-awesome', name: 'search', color: 'lightgray' }}
                     placeholder="Search for Jobs..."
-                    // placeholderTextColor='lightgray'
                     onChangeText={this._onSearchJobs}
                     onClearText={this._onClearSearch}
                 />

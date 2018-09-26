@@ -1,6 +1,5 @@
 import React from 'react'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
-import Icon from 'react-native-vector-icons/FontAwesome'
 
 import { RemoteOk, JSRemotely } from '../components/screens'
 
@@ -13,9 +12,6 @@ RemoteOkStack.navigationOptions = {
     tabBarLabelStyle: {
         fontSize: 20
     }
-    // tabBarIcon: (
-    //     <Icon name='briefcase' size={25} color='#6efdff' />
-    // )
 }
 
 const JSRemotelyStack = createStackNavigator({
@@ -24,10 +20,6 @@ const JSRemotelyStack = createStackNavigator({
 
 JSRemotelyStack.navigationOptions = {
     tabBarLabel: 'JSRemotely',
-    // tabBarIcon: (
-    //     <Icon name='globe' size={25} color='#6efdff' />
-    // )
-
 }
 
 export default createBottomTabNavigator(

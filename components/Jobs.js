@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         flexWrap: 'wrap',
         width: '75%',
-        // justifyContent: 'space-between',
         marginLeft: 3
     },
     viewDate: {
@@ -109,20 +108,17 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontWeight: '400',
         color: 'black',
-        // marginLeft: 15,
         marginBottom: 3
     },
     logo: {
         width: 35,
         height: 35,
-        // marginLeft: 10
     },
     tagsView: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignContent: 'center',
         flexWrap: 'wrap',
-        // marginVertical: 3,
         marginBottom: 5,
     },
     tags: {
@@ -131,10 +127,8 @@ const styles = StyleSheet.create({
         color: 'black',
         padding: 4,
         margin: 3,
-        // marginHorizontal: 5,
         borderWidth: 0.1,
         borderRadius: 4,
-        // borderColor: 'black'
     },
 })
 
