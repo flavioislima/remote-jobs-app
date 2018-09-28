@@ -1,19 +1,42 @@
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, StyleSheet, Linking } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, AsyncStorage, Share } from 'react-native'
 import moment from 'moment'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 class Jobs extends React.Component {
     state = {
-        showDescription: false
+        showDescription: false,
+        urlToShare: ''
     }
 
     _handleDescription = () => {
         this.setState(prevstate => ({ showDescription: !prevstate.showDescription }))
     }
 
+    _handleSharing = (url, position, company) => {
+        Share.share(
+            {
+                message: `Here follows a great Remote Job Opportunity: 
+        * Position: ${position} 
+        * Company: ${company}
+        * Url: ${url}
+        * Get our App at: https://play.google.com/store/apps/details?id=com.remotework`,
+                url,
+                title: `Remote Work App - ${position} @${company}`
+            }, {
+                subject: 'Job Shared from Remote Work App',
+                dialogTitle: 'Share a Remote Job',
+                tintColor: '#4effa1'
+            }
+        )
+    }
+
     render() {
-        const { link, name, title, company, tags, logo, url, position } = this.props.data
-        let { description, date } = this.props.data
+        const { link, name, title, tags, logo, url } = this.props.data
+        let { description, date, company, position } = this.props.data
+        company = company ? company : name
+        position = position ? position : title
+
         date = moment(date).endOf('day').fromNow()
         description = description
             .replace(/<(?:.|\n)*?>/gm, '')
@@ -36,13 +59,12 @@ class Jobs extends React.Component {
             <View style={styles.item}>
                 <TouchableOpacity
                     style={styles.touch}
-                    onLongPress={() => Linking.openURL(url ? url : link)}
                     onPress={() => this._handleDescription()}
                 >
                     <View style={styles.viewJob}>
                         <View style={styles.viewPosition}>
-                            <Text style={styles.position}>{position ? position : title}</Text>
-                            <Text style={styles.company}>{company ? company : name}</Text>
+                            <Text style={styles.position}>{position}</Text>
+                            <Text style={styles.company}>{company}</Text>
                         </View>
 
                         <View style={styles.viewDate}>
@@ -57,7 +79,24 @@ class Jobs extends React.Component {
                             {
                                 tags && renderTags
                             }
-                            <Text style={{ fontSize: 9, marginBottom: 5, alignSelf: 'center' }}>(LongPress to Open Link)</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 5 }}>
+                                <TouchableOpacity style={styles.icons}>
+                                    <Icon name='heart' size={20} color='red' />
+                                    <Text style={styles.iconText}>Save</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => Linking.openURL(url ? url : link)}
+                                    style={styles.icons}>
+                                    <Icon name='globe' size={20} color='blue' />
+                                    <Text style={styles.iconText}>Open</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => this._handleSharing(url, position, company)}
+                                    style={styles.icons}>
+                                    <Icon name='retweet' size={20} color='purple' />
+                                    <Text style={styles.iconText}>Share</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     }
                 </TouchableOpacity>
@@ -146,6 +185,17 @@ const styles = StyleSheet.create({
         borderWidth: 0.1,
         borderRadius: 4,
     },
+    icons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignContent: 'space-between',
+        alignItems: 'center'
+    },
+    iconText: {
+        fontSize: 11,
+        color: 'blue',
+        marginLeft: 5
+    }
 })
 
 export default Jobs
