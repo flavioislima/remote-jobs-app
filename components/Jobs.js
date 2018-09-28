@@ -1,10 +1,14 @@
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, TouchableHighlight, StyleSheet, Linking } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, Linking } from 'react-native'
 import moment from 'moment'
 
 class Jobs extends React.Component {
     state = {
         showDescription: false
+    }
+
+    _handleDescription = () => {
+        this.setState(prevstate => ({ showDescription: !prevstate.showDescription }))
     }
 
     render() {
@@ -17,9 +21,9 @@ class Jobs extends React.Component {
             .replace(/&#8211;/gm, "-")
             .replace(/&rsquo;|&#8217;|&#8216;|&#8220;|&#8221;|&nbsp;|&ldquo;|&rdquo;/gm, "'")
 
-        let renderDescAndTags;
+        let renderTags;
         if (tags) {
-            renderDescAndTags = (
+            renderTags = (
                 <View>
                     <View style={styles.tagsView}>
                         {tags.map((tag, i) => <Text style={styles.tags} key={i}>{(tag).toUpperCase()}</Text>)}
@@ -33,7 +37,7 @@ class Jobs extends React.Component {
                 <TouchableOpacity
                     style={styles.touch}
                     onLongPress={() => Linking.openURL(url ? url : link)}
-                    onPress={() => this.setState({ showDescription: !this.state.showDescription })}
+                    onPress={() => this._handleDescription()}
                 >
                     <View style={styles.viewJob}>
                         <View style={styles.viewPosition}>
@@ -51,7 +55,7 @@ class Jobs extends React.Component {
                         <View>
                             <Text style={styles.description}>{description}</Text>
                             {
-                                tags && renderDescAndTags
+                                tags && renderTags
                             }
                             <Text style={{ fontSize: 9, marginBottom: 5, alignSelf: 'center' }}>(LongPress to Open Link)</Text>
                         </View>
