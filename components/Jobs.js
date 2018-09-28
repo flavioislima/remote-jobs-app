@@ -47,16 +47,14 @@ class Jobs extends React.Component {
                         </View>
                     </View>
                     {
-                        this.state.showDescription ?
-                            <View>
-                                <Text style={styles.description}>{description}</Text>
-                                {
-                                    tags ? renderDescAndTags : console.log('noTags')
-                                }
-                                <Text style={{ fontSize: 9, marginBottom: 5, alignSelf: 'center' }}>(LongPress to Open Link)</Text>
-                            </View>
-                            :
-                            console.log("no description")
+                        this.state.showDescription &&
+                        <View>
+                            <Text style={styles.description}>{description}</Text>
+                            {
+                                tags && renderDescAndTags
+                            }
+                            <Text style={{ fontSize: 9, marginBottom: 5, alignSelf: 'center' }}>(LongPress to Open Link)</Text>
+                        </View>
                     }
                 </TouchableOpacity>
             </View>
