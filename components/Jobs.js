@@ -1,15 +1,14 @@
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, AsyncStorage, Share, Modal, Button } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, AsyncStorage, Share } from 'react-native'
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 class Jobs extends React.Component {
   state = {
     showDescription: false,
-    modalVisible: false,
     countViews: 0,
     job: this.props.data,
-    isFavorite: null
+    isFavorite: null,
   }
 
   _handleDescription = () => {
@@ -64,12 +63,6 @@ class Jobs extends React.Component {
       data.isFavorite = true
       await AsyncStorage.setItem(id, JSON.stringify(data))
     }
-
-    console.log({ keys })
-  }
-
-  _setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible });
   }
 
   render() {
