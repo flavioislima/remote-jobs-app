@@ -65,6 +65,10 @@ class Jobs extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps === this.props || nextState === this.state
+  }
+
   render() {
     const { link, name, title, tags, logo } = this.state.job
     let { description, date, company, position, url, isFavorite } = this.state.job
