@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, Share } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, AsyncStorage, Share, Modal, Button } from 'react-native'
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -7,6 +7,9 @@ class Jobs extends React.Component {
   state = {
     showDescription: false,
     modalVisible: false,
+    countViews: 0,
+    job: this.props.data,
+    isFavorite: null
   }
 
   _handleDescription = () => {
@@ -14,6 +17,10 @@ class Jobs extends React.Component {
   }
 
   _handleUrl = (url) => {
+    let count = this.state.countViews++
+    this.setState({
+      countViews: count
+    })
     Linking.openURL(url)
   }
 
@@ -35,13 +42,39 @@ class Jobs extends React.Component {
     )
   }
 
-  setModalVisible(visible) {
+  _handleFavorite = async (data) => {
+    let isFavorite = data.isFavorite ? false : true
+    const id = data.id
+    job = {
+      ...data,
+      isFavorite
+    }
+    this.setState({ job, isFavorite })
+
+    let keys = []
+    await AsyncStorage.getAllKeys()
+      .then(res => keys = res)
+      .catch(err => console.error(err))
+
+    if (keys.includes(id)) {
+      await AsyncStorage.removeItem(data.id)
+        .then(() => { this.props.refresh() })
+        .catch((e) => console.error(e))
+    } else {
+      data.isFavorite = true
+      await AsyncStorage.setItem(id, JSON.stringify(data))
+    }
+
+    console.log({ keys })
+  }
+
+  _setModalVisible = (visible) => {
     this.setState({ modalVisible: visible });
   }
 
   render() {
-    const { link, name, title, tags, logo } = this.props.data
-    let { description, date, company, position, url } = this.props.data
+    const { link, name, title, tags, logo } = this.state.job
+    let { description, date, company, position, url, isFavorite } = this.state.job
     company = company ? company : name
     position = position ? position : title
     url = url ? url : link
@@ -78,7 +111,7 @@ class Jobs extends React.Component {
 
             <View style={styles.viewDate}>
               <Text style={styles.date}>{date}</Text>
-              <Image source={{ uri: logo }} style={styles.logo} />
+              {/* <Image source={logo ? { uri: logo } : fakeLogo} style={styles.logo} /> */}
             </View>
           </View>
           {
@@ -88,22 +121,28 @@ class Jobs extends React.Component {
               {
                 tags && renderTags
               }
-              <View style={styles.iconsView}>
-                <TouchableOpacity
-                  onPress={() => this._handleUrl(url)}
-                  style={styles.icons}>
-                  <Icon name='globe' size={25} color='blue' />
-                  <Text style={styles.iconText}>Open</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => this._handleSharing(url, position, company)}
-                  style={styles.icons}>
-                  <Icon name='retweet' size={25} color='purple' />
-                  <Text style={[styles.iconText, { color: 'purple' }]}>Share</Text>
-                </TouchableOpacity>
-              </View>
             </View>
           }
+          <View style={styles.iconsView}>
+            <TouchableOpacity
+              onPress={() => this._handleFavorite(this.state.job)}
+              style={styles.icons}>
+              <Icon name={!isFavorite ? 'heart-o' : 'heart'} size={25} color='red' />
+              <Text style={[styles.iconText, { color: 'red' }]}>{isFavorite ? 'Saved' : 'Save'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this._handleUrl(url)}
+              style={styles.icons}>
+              <Icon name='globe' size={25} color='blue' />
+              <Text style={styles.iconText}>Open</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this._handleSharing(url, position, company)}
+              style={styles.icons}>
+              <Icon name='retweet' size={25} color='purple' />
+              <Text style={[styles.iconText, { color: 'purple' }]}>Share</Text>
+            </TouchableOpacity>
+          </View>
         </TouchableOpacity>
       </View>
     )
@@ -125,6 +164,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   viewJob: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#4effa1',
@@ -134,6 +174,7 @@ const styles = StyleSheet.create({
   viewPosition: {
     flexDirection: 'column',
     flexWrap: 'wrap',
+    justifyContent: 'center',
     width: '75%',
     marginLeft: 3
   },
@@ -143,6 +184,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     width: '25%',
+    height: 68,
     marginLeft: 3
   },
   position: {
@@ -200,6 +242,9 @@ const styles = StyleSheet.create({
     width: '20%',
     alignItems: 'center',
     padding: 4,
+    // borderColor: 'gray',
+    // borderWidth: 0.2,
+    // borderRadius: 10
   },
   iconText: {
     fontSize: 13,
