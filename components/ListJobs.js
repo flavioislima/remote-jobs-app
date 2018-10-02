@@ -1,15 +1,19 @@
 import React from 'react'
-import { StatusBar, View, FlatList, Text, RefreshControl, AsyncStorage, StyleSheet, Alert, NetInfo, ToastAndroid } from 'react-native'
+import { StatusBar, View, FlatList, Text, RefreshControl, AsyncStorage, StyleSheet, Alert, NetInfo, ToastAndroid, TouchableOpacity } from 'react-native'
 import { SearchBar, Button } from 'react-native-elements'
 import axios from 'axios'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import Jobs from './Jobs'
+import RatingModal from './RatingModal'
 
 export default class ListJobs extends React.Component {
     state = {
         data: [],
         favorites: [],
         filterText: '',
-        refreshing: true
+        refreshing: true,
+        modalVisible: false,
+        rated: null
     }
 
     _onGetData = async () => {
@@ -32,14 +36,18 @@ export default class ListJobs extends React.Component {
             })
     }
 
-    _getStorageData = async () => {
+    _getFavorites = async () => {
         let favs = []
         await AsyncStorage.getAllKeys()
             .then((data) => {
                 if (data.length > 0) {
+                    let favKeys = data
                     data.map(async (key) => await AsyncStorage.getItem(key)
-                        .then(fav => favs.push(JSON.parse(fav)))
-                        .then(() => this.setState({ data: favs, refreshing: false }))
+                        .then(fav => {
+                            fav = JSON.parse(fav)
+                            if (fav.id) favs.push(fav)
+                        })
+                        .then(() => this.setState({ data: favs, favorites: favKeys, refreshing: false }))
                         .catch(err => console.error(err))
                     )
                 } else {
@@ -58,16 +66,16 @@ export default class ListJobs extends React.Component {
     }
 
     _onRefresh = async () => {
-        // this.setState({ data: [], favorites: [] })
+        this.setState({ data: [], favorites: [], refreshing: true })
         if (this.props.url) {
             await this._onGetData()
         } else {
-            await this._getStorageData()
+            await this._getFavorites()
         }
     }
 
     _clearFavorites = () => {
-        AsyncStorage.clear()
+        AsyncStorage.multiRemove(this.state.favorites)
             .then(() => {
                 this.setState({ favorites: [], data: [] })
                 Alert.alert('Erase Favorites', 'Favorites Cleared!', [{ text: 'OK' }])
@@ -76,15 +84,38 @@ export default class ListJobs extends React.Component {
     }
 
     _handleClearFavorites = () => {
+        console.log(this.state.favorites)
         Alert.alert('Erase Favorites', 'Are You Sure?', [{ text: 'Cancel' }, { text: 'Yes', onPress: this._clearFavorites }])
     }
 
-    async componentDidMount() {
+    async componentWillMount() {
+        await AsyncStorage.getItem('rated')
+            .then((rated) => this.setState({ rated: JSON.parse(rated) }))
+
         if (this.props.url) {
             await this._onGetData()
         } else {
-            await this._getStorageData()
+            await this._getFavorites()
         }
+
+    }
+
+    _setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    }
+
+    rated = async (rated) => {
+        rated = String(rated)
+        console.log('rated', rated)
+        await AsyncStorage.setItem('rated', rated)
+            .then(async () => {
+                await AsyncStorage.getItem('rated')
+                    .then(rate => {
+                        console.log(rate)
+                        this.setState({ rated: rated ? true : false })
+                        console.log(this.state.rated)
+                    })
+            })
     }
 
     render() {
@@ -93,7 +124,7 @@ export default class ListJobs extends React.Component {
         const filteredData = this.state.data.filter(filter)
 
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <StatusBar backgroundColor='#363636' />
                 <View style={styles.welcomeContainer}>
                     {this.state.refreshing ?
@@ -104,6 +135,21 @@ export default class ListJobs extends React.Component {
                         <Text
                             style={styles.title}
                         >{this.state.data.length} Jobs found on {this.props.source}</Text>
+                    }
+                    {!this.state.rated &&
+                        <TouchableOpacity
+                            onPress={() => this._setModalVisible(!this.state.modalVisible)}
+                            style={styles.icons}>
+                            <Icon name='star' size={25} color='yellow' />
+                            <Text style={styles.iconText}>Rate Us</Text>
+                        </TouchableOpacity>
+                    }
+                    {
+                        this.state.modalVisible &&
+                        <RatingModal
+                            rated={this.rated}
+                            modalVisible={this.state.modalVisible}
+                            setModalVisible={this._setModalVisible} />
                     }
                 </View>
                 <SearchBar
@@ -168,13 +214,29 @@ const styles = StyleSheet.create({
         paddingTop: 0,
     },
     welcomeContainer: {
+        flexDirection: 'row',
         backgroundColor: '#363636',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         paddingVertical: 5,
     },
     title: {
         color: 'white',
-        fontSize: 16
+        fontSize: 18
+    },
+    icons: {
+        flexDirection: 'row',
+        // width: '16%',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 4,
+        borderColor: 'yellow',
+        borderWidth: 0.5,
+        borderRadius: 10
+    },
+    iconText: {
+        fontSize: 13,
+        color: 'yellow',
+        marginLeft: 5
     }
 });
