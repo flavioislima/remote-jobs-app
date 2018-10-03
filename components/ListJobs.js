@@ -88,6 +88,21 @@ export default class ListJobs extends React.Component {
         Alert.alert('Erase Favorites', 'Are You Sure?', [{ text: 'Cancel' }, { text: 'Yes', onPress: this._clearFavorites }])
     }
 
+    _setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    }
+
+    _rated = async (rated) => {
+        rated = String(rated)
+        await AsyncStorage.setItem('rated', rated)
+            .then(async () => {
+                await AsyncStorage.getItem('rated')
+                    .then((info) => {
+                        this.setState({ rated: info })
+                    })
+            })
+    }
+
     async componentWillMount() {
         await AsyncStorage.getItem('rated')
             .then((rated) => this.setState({ rated: JSON.parse(rated) }))
@@ -97,25 +112,6 @@ export default class ListJobs extends React.Component {
         } else {
             await this._getFavorites()
         }
-
-    }
-
-    _setModalVisible = (visible) => {
-        this.setState({ modalVisible: visible });
-    }
-
-    rated = async (rated) => {
-        rated = String(rated)
-        console.log('rated', rated)
-        await AsyncStorage.setItem('rated', rated)
-            .then(async () => {
-                await AsyncStorage.getItem('rated')
-                    .then(rate => {
-                        console.log(rate)
-                        this.setState({ rated: rated ? true : false })
-                        console.log(this.state.rated)
-                    })
-            })
     }
 
     render() {
@@ -140,14 +136,14 @@ export default class ListJobs extends React.Component {
                         <TouchableOpacity
                             onPress={() => this._setModalVisible(!this.state.modalVisible)}
                             style={styles.icons}>
-                            <Icon name='star' size={25} color='yellow' />
+                            <Icon name='star' size={15} color='yellow' />
                             <Text style={styles.iconText}>Rate Us</Text>
                         </TouchableOpacity>
                     }
                     {
                         this.state.modalVisible &&
                         <RatingModal
-                            rated={this.rated}
+                            rated={this._rated}
                             modalVisible={this.state.modalVisible}
                             setModalVisible={this._setModalVisible} />
                     }
@@ -222,20 +218,20 @@ const styles = StyleSheet.create({
     },
     title: {
         color: 'white',
-        fontSize: 18
+        fontSize: 14
     },
     icons: {
         flexDirection: 'row',
         // width: '16%',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: 4,
+        padding: 0,
         borderColor: 'yellow',
-        borderWidth: 0.5,
+        // borderWidth: 0.5,
         borderRadius: 10
     },
     iconText: {
-        fontSize: 13,
+        fontSize: 14,
         color: 'yellow',
         marginLeft: 5
     }
