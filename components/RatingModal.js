@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, View, Text } from 'react-native'
+import { Modal, View, Text, StyleSheet } from 'react-native'
 import { Rating, Button } from 'react-native-elements'
 import Rate from 'react-native-rate'
 
@@ -17,12 +17,12 @@ const RatingModal = (props) => (
       Alert.alert('Modal has been closed.');
     }}
   >
-    <View style={{ flex: 1, borderRadius: 10, justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>
-      <View style={{ backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
-        <Text style={{ fontSize: 15, margin: 10 }}>
-          Please, do not forget to rate the app.
+    <View style={styles.modalView}>
+      <View style={styles.rating}>
+        <Text style={styles.ratingText}>
+          Please, give us a feedback!
             </Text>
-        <View style={{ marginVertical: 5 }}>
+        <View>
           <Rating
             showRating
             type="star"
@@ -40,16 +40,39 @@ const RatingModal = (props) => (
           <Button
             transparent
             color='green'
-            leftIcon={{ name: 'star', type: 'font-awesome', color: 'red' }}
-            title='Rate Later!'
+            leftIcon={{ name: 'times-circle', type: 'font-awesome', color: 'red' }}
+            title='Later!'
             onPress={() => {
               props.setModalVisible(!props.modalVisible)
             }}
           />
         </View>
       </View>
-    </View>
-  </Modal>
+    </View >
+  </Modal >
 )
 
 export default RatingModal
+
+const styles = StyleSheet.create({
+  modalView: {
+    flex: 1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center'
+  },
+  rating: {
+    backgroundColor: 'white',
+    width: '75%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
+  },
+  ratingText: {
+    fontSize: 15,
+    marginTop: 10,
+    marginBottom: 5
+  },
+
+})
