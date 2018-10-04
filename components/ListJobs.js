@@ -104,15 +104,15 @@ export default class ListJobs extends React.Component {
       })
   }
 
-  async componentDidMount() {
-    await AsyncStorage.getItem('rated')
-      .then((rated) => this.setState({ rated: JSON.parse(rated) }))
-
+  componentDidMount() {
     if (this.props.url) {
-      await this._onGetData()
+      this._onGetData()
     } else {
-      await this._getFavorites()
+      this._getFavorites()
     }
+
+    AsyncStorage.getItem('rated')
+      .then((rated) => this.setState({ rated: JSON.parse(rated) }))
   }
 
   render() {
