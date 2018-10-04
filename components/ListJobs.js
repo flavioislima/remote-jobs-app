@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, View, FlatList, Text, RefreshControl, AsyncStorage, StyleSheet, Alert, NetInfo, ToastAndroid, TouchableOpacity } from 'react-native'
+import { StatusBar, View, FlatList, Text, RefreshControl, AsyncStorage, StyleSheet, Alert, ToastAndroid, TouchableOpacity } from 'react-native'
 import { SearchBar, Button } from 'react-native-elements'
 import axios from 'axios'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -17,17 +17,18 @@ export default class ListJobs extends React.Component {
   }
 
   _onGetData = async () => {
-    if (NetInfo.isConnected) {
-      await axios.get(this.props.url)
-        .then(data => {
+    await axios.get(this.props.url)
+      .then(data => {
+        if (data) {
           this.setState({
             data: data.data,
             refreshing: false
           })
-        })
-    } else {
-      ToastAndroid.showWithGravity('Network Error', 4500, ToastAndroid.CENTER)
-    }
+        } else {
+          ToastAndroid.showWithGravity('Network Error', 4500, ToastAndroid.CENTER)
+        }
+      })
+
     let keys = []
     await AsyncStorage.getAllKeys()
       .then(async (data) => {
