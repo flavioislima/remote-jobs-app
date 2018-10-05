@@ -4,7 +4,9 @@ import { SearchBar, Button } from 'react-native-elements'
 import axios from 'axios'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Jobs from './Jobs'
-import RatingModal from './RatingModal'
+
+let RatingModal = null
+let filteredData = []
 
 export default class ListJobs extends React.Component {
   state = {
@@ -62,6 +64,17 @@ export default class ListJobs extends React.Component {
     this.setState({ filterText })
   }
 
+  searchFilterFunction = text => {
+    const newData = this.arrayholder.filter(item => {
+      const itemData = `${item.name.title.toUpperCase()}   
+      ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
+      const textData = text.toUpperCase();
+
+      return itemData.indexOf(textData) > -1;
+    });
+    this.setState({ data: newData });
+  };
+
   _onClearSearch = () => {
     this.setState({ filterText: '' })
   }
@@ -85,12 +98,23 @@ export default class ListJobs extends React.Component {
   }
 
   _handleClearFavorites = () => {
-    console.log(this.state.favorites)
     Alert.alert('Erase Favorites', 'Are You Sure?', [{ text: 'Cancel' }, { text: 'Yes', onPress: this._clearFavorites }])
   }
-
+  3
   _setModalVisible = (visible) => {
+    if (RatingModal === null) {
+      RatingModal = require('./RatingModal').default
+    }
+
     this.setState({ modalVisible: visible });
+
+    if (this.state.modalVisible)
+      return (
+        <RatingModal
+          rated={this._rated}
+          modalVisible={this.state.modalVisible}
+          setModalVisible={this._setModalVisible} />
+      )
   }
 
   _rated = async (rated) => {
@@ -117,7 +141,7 @@ export default class ListJobs extends React.Component {
 
   render() {
     const filterRegex = new RegExp(String(this.state.filterText), 'i')
-    const filter = item => filterRegex.test(item.text) || filterRegex.test(item.position || item.title)
+    const filter = item => filterRegex.test(item.position) || filterRegex.test(item.title)
     const filteredData = this.state.data.filter(filter)
 
     return (
@@ -165,11 +189,14 @@ export default class ListJobs extends React.Component {
           renderItem={(job) => {
             let { id, jobId } = job.item
             id = id ? id : jobId
+            job.item.isFavorite = false
             if (this.state.favorites.includes(id)) job.item.isFavorite = true
             if (jobId) job.item.id = String(jobId)
             if (id) {
               return (
+                // <Text>{job.item.title}</Text>
                 <Jobs
+                  isFavorite={job.item.isFavorite}
                   refresh={this._onRefresh}
                   source={this.props.source}
                   data={job.item} />

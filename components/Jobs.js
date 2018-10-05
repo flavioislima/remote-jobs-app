@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, AsyncStorage, Share } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Linking, AsyncStorage, Share } from 'react-native'
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -7,8 +7,7 @@ class Jobs extends React.Component {
   state = {
     showDescription: false,
     countViews: 0,
-    job: this.props.data,
-    isFavorite: null,
+    isFavorite: this.props.isFavorite,
   }
 
   _handleDescription = () => {
@@ -42,13 +41,12 @@ class Jobs extends React.Component {
   }
 
   _handleFavorite = async (data) => {
-    let isFavorite = data.isFavorite ? false : true
     const id = data.id
-    job = {
-      ...data,
-      isFavorite
-    }
-    this.setState({ job, isFavorite })
+
+    alert(this.state.isFavorite)
+
+    this.setState({ isFavorite: !this.state.isFavorite })
+    this.props.data.isFavorite = !this.state.isFavorite
 
     let keys = []
     await AsyncStorage.getAllKeys()
@@ -57,7 +55,7 @@ class Jobs extends React.Component {
 
     if (keys.includes(id)) {
       await AsyncStorage.removeItem(data.id)
-        .then(() => { this.props.refresh() })
+        .then(() => { if (this.props.source === "Favorites") this.props.refresh() })
         .catch((e) => console.error(e))
     } else {
       data.isFavorite = true
@@ -65,17 +63,24 @@ class Jobs extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps === this.props || nextState === this.state
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (nextState.isFavorite !== this.state.isFavorite) {
+  //     return true
+  //   } else if (nextState.showDescription !== this.state.showDescription) {
+  //     return true
+  //   } else if (nextProps.data !== this.props.data) {
+  //     return true
+  //   } else {
+  //     return false
+  //   }
+  // }
 
   render() {
-    const { link, name, title, tags, logo } = this.state.job
-    let { description, date, company, position, url, isFavorite } = this.state.job
+    const { link, name, title, tags, logo } = this.props.data
+    let { description, date, company, url, position, isFavorite } = this.props.data
     company = company ? company : name
     position = position ? position : title
     url = url ? url : link
-
     date = moment(date).endOf('day').fromNow()
     description = description
       .replace(/<(?:.|\n)*?>/gm, '')
@@ -122,9 +127,9 @@ class Jobs extends React.Component {
           }
           <View style={styles.iconsView}>
             <TouchableOpacity
-              onPress={() => this._handleFavorite(this.state.job)}
+              onPress={() => this._handleFavorite(this.props.data)}
               style={styles.icons}>
-              <Icon name={!isFavorite ? 'heart-o' : 'heart'} size={25} color='red' />
+              <Icon name={this.props.data.isFavorite ? 'heart' : 'heart-o'} size={25} color='red' />
               <Text style={[styles.iconText, { color: 'red' }]}>{isFavorite ? 'Saved' : 'Save'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -155,16 +160,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 8,
     marginVertical: 5,
-    borderWidth: 0.3,
     borderRadius: 10,
-    borderColor: 'gray',
     backgroundColor: 'white'
   },
   viewJob: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#4effa1',
+    backgroundColor: '#1abc9c',
     padding: 5,
     borderRadius: 10,
   },
@@ -187,12 +190,12 @@ const styles = StyleSheet.create({
   position: {
     fontSize: 15,
     fontWeight: '700',
-    color: 'black'
+    color: 'white'
   },
   company: {
     fontSize: 13,
     fontWeight: '400',
-    color: 'black'
+    color: 'white'
   },
   description: {
     marginLeft: 10,
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 11,
     fontWeight: '400',
-    color: 'black',
+    color: 'white',
     marginBottom: 3
   },
   logo: {
