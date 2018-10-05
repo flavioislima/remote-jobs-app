@@ -32,8 +32,8 @@ FavoritesStack.navigationOptions = {
 
 export default createBottomTabNavigator(
     {
-        RemoteOkStack,
         JSRemotelyStack,
+        RemoteOkStack,
         Favorites
     }, {
         tabBarOptions: {
