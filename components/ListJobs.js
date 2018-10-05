@@ -21,13 +21,13 @@ export default class ListJobs extends React.Component {
   _onGetData = async () => {
     await axios.get(this.props.url)
       .then(data => {
-        if (data) {
+        if (data.data.length < 800) {
           this.setState({
             data: data.data,
             refreshing: false
           })
         } else {
-          ToastAndroid.showWithGravity('Network Error', 4500, ToastAndroid.CENTER)
+          ToastAndroid.showWithGravity('Network Error', 5500, ToastAndroid.CENTER)
         }
       })
 
@@ -194,12 +194,15 @@ export default class ListJobs extends React.Component {
             if (jobId) job.item.id = String(jobId)
             if (id) {
               return (
-                // <Text>{job.item.title}</Text>
                 <Jobs
                   isFavorite={job.item.isFavorite}
                   refresh={this._onRefresh}
                   source={this.props.source}
                   data={job.item} />
+              )
+            } else {
+              return (
+                <Text>Error</Text>
               )
             }
           }

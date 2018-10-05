@@ -42,9 +42,6 @@ class Jobs extends React.Component {
 
   _handleFavorite = async (data) => {
     const id = data.id
-
-    alert(this.state.isFavorite)
-
     this.setState({ isFavorite: !this.state.isFavorite })
     this.props.data.isFavorite = !this.state.isFavorite
 
@@ -63,17 +60,17 @@ class Jobs extends React.Component {
     }
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (nextState.isFavorite !== this.state.isFavorite) {
-  //     return true
-  //   } else if (nextState.showDescription !== this.state.showDescription) {
-  //     return true
-  //   } else if (nextProps.data !== this.props.data) {
-  //     return true
-  //   } else {
-  //     return false
-  //   }
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.isFavorite !== this.state.isFavorite) {
+      return true
+    } else if (nextState.showDescription !== this.state.showDescription) {
+      return true
+    } else if (nextProps.data !== this.props.data) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   render() {
     const { link, name, title, tags, logo } = this.props.data
@@ -169,7 +166,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#1abc9c',
     padding: 5,
-    borderRadius: 10,
+    // borderTopStartRadius: 10,
+    // borderTopEndRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    // borderBottomStartRadius: 10,
   },
   viewPosition: {
     flexDirection: 'column',
@@ -242,9 +243,6 @@ const styles = StyleSheet.create({
     width: '20%',
     alignItems: 'center',
     padding: 4,
-    // borderColor: 'gray',
-    // borderWidth: 0.2,
-    // borderRadius: 10
   },
   iconText: {
     fontSize: 13,
