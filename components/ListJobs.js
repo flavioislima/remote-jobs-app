@@ -27,7 +27,7 @@ export default class ListJobs extends React.Component {
             refreshing: false
           })
         } else {
-          ToastAndroid.showWithGravity('Network Error', 5500, ToastAndroid.CENTER)
+          ToastAndroid.showWithGravity('Network Error', 6500, ToastAndroid.CENTER)
         }
       })
 
@@ -173,24 +173,36 @@ export default class ListJobs extends React.Component {
               setModalVisible={this._setModalVisible} />
           }
         </View>
-        <SearchBar
-          round
-          lightTheme
-          inputStyle={{ backgroundColor: 'white' }}
-          clearIcon={{ type: 'font-awesome', name: 'times', color: 'lightgray' }}
-          icon={{ type: 'font-awesome', name: 'search', color: 'lightgray' }}
-          placeholder="Search for Jobs..."
-          onChangeText={this._onSearchJobs}
-          onClearText={this._onClearSearch}
-        />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View style={{ width: '90%' }}>
+            <SearchBar
+              round
+              lightTheme
+              inputStyle={{ backgroundColor: 'white' }}
+              clearIcon={{ type: 'font-awesome', name: 'times', color: 'lightgray' }}
+              icon={{ type: 'font-awesome', name: 'search', color: 'lightgray' }}
+              placeholder="Search for Jobs..."
+              onChangeText={this._onSearchJobs}
+              onClearText={this._onClearSearch}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={this._onRefresh}
+            style={{ alignSelf: 'center', width: '10%' }}>
+            <Icon name='refresh' size={30} color='blue' />
+          </TouchableOpacity>
+        </View>
         <FlatList
           style={styles.container}
           data={filteredData}
           renderItem={(job) => {
             let { id, jobId } = job.item
             id = id ? id : jobId
-            job.item.isFavorite = false
-            if (this.state.favorites.includes(id)) job.item.isFavorite = true
+            // job.item.isFavorite = false
+            if (this.state.favorites.includes(id)) {
+              job.item.isFavorite = true
+            }
+            // console.log(job.item.isFavorite)
             if (jobId) job.item.id = String(jobId)
             if (id) {
               return (
@@ -215,12 +227,13 @@ export default class ListJobs extends React.Component {
             />
           }
         />
-        {this.props.source === 'Favorites' &&
+        {
+          this.props.source === 'Favorites' &&
           <Button
             transparent
             color='red'
             leftIcon={{ name: 'trash', type: 'font-awesome', color: 'red' }}
-            title="Clear Favorites"
+            title="Delete all Favorites"
             onPress={this._handleClearFavorites} />
         }
       </View >
@@ -246,7 +259,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontSize: 14
+    fontSize: 14,
+    width: '80%'
   },
   icons: {
     flexDirection: 'row',

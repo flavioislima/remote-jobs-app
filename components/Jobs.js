@@ -67,6 +67,8 @@ class Jobs extends React.Component {
       return true
     } else if (nextProps.data !== this.props.data) {
       return true
+    } else if (nextProps.isFavorite !== this.props.isFavorite) {
+      return true
     } else {
       return false
     }
@@ -95,6 +97,8 @@ class Jobs extends React.Component {
         </View>
       )
     }
+
+    console.log(this.props.isFavorite, this.state.isFavorite)
 
     return (
       <View style={styles.item}>
@@ -126,8 +130,8 @@ class Jobs extends React.Component {
             <TouchableOpacity
               onPress={() => this._handleFavorite(this.props.data)}
               style={styles.icons}>
-              <Icon name={this.props.data.isFavorite ? 'heart' : 'heart-o'} size={25} color='red' />
-              <Text style={[styles.iconText, { color: 'red' }]}>{isFavorite ? 'Saved' : 'Save'}</Text>
+              <Icon name={this.props.isFavorite ? 'heart' : 'heart-o'} size={25} color='red' />
+              <Text style={[styles.iconText, { color: 'red' }]}>{this.props.isFavorite ? 'Saved' : 'Save'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this._handleUrl(url)}
