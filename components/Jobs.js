@@ -7,7 +7,6 @@ class Jobs extends React.Component {
   state = {
     showDescription: false,
     countViews: 0,
-    isFavorite: this.props.isFavorite,
   }
 
   _handleDescription = () => {
@@ -42,8 +41,7 @@ class Jobs extends React.Component {
 
   _handleFavorite = async (data) => {
     const id = data.id
-    this.setState({ isFavorite: !this.state.isFavorite })
-    this.props.data.isFavorite = !this.state.isFavorite
+    this.props.data.isFavorite = !this.props.data.isFavorite
 
     let keys = []
     await AsyncStorage.getAllKeys()
@@ -58,20 +56,7 @@ class Jobs extends React.Component {
       data.isFavorite = true
       await AsyncStorage.setItem(id, JSON.stringify(data))
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.isFavorite !== this.state.isFavorite) {
-      return true
-    } else if (nextState.showDescription !== this.state.showDescription) {
-      return true
-    } else if (nextProps.data !== this.props.data) {
-      return true
-    } else if (nextProps.isFavorite !== this.props.isFavorite) {
-      return true
-    } else {
-      return false
-    }
+    this.forceUpdate()
   }
 
   render() {
@@ -98,8 +83,6 @@ class Jobs extends React.Component {
       )
     }
 
-    console.log(this.props.isFavorite, this.state.isFavorite)
-
     return (
       <View style={styles.item}>
         <TouchableOpacity
@@ -120,7 +103,9 @@ class Jobs extends React.Component {
           {
             this.state.showDescription &&
             <View>
-              <Text style={styles.description}>{description}</Text>
+              <Text
+                numberOfLines={7}
+                style={styles.description}>{description}</Text>
               {
                 tags && renderTags
               }
@@ -130,8 +115,8 @@ class Jobs extends React.Component {
             <TouchableOpacity
               onPress={() => this._handleFavorite(this.props.data)}
               style={styles.icons}>
-              <Icon name={this.props.isFavorite ? 'heart' : 'heart-o'} size={25} color='red' />
-              <Text style={[styles.iconText, { color: 'red' }]}>{this.props.isFavorite ? 'Saved' : 'Save'}</Text>
+              <Icon name={isFavorite ? 'heart' : 'heart-o'} size={25} color='red' />
+              <Text style={[styles.iconText, { color: 'red' }]}>{isFavorite ? 'Saved' : 'Save'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => this._handleUrl(url)}
@@ -240,11 +225,11 @@ const styles = StyleSheet.create({
   iconsView: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignContent: 'center',
     marginVertical: 5
   },
   icons: {
     flexDirection: 'row',
-    width: '20%',
     alignItems: 'center',
     padding: 4,
   },
