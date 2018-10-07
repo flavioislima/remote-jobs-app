@@ -51,13 +51,13 @@ export default class ListJobs extends React.Component {
                         })
                         .then(() => favs = favs.sort((a, b) => a.date - b.date))
                         .then(() => this.setState({ data: favs, favorites: favKeys, refreshing: false }))
-                        .catch(err => console.error(err))
+                        .catch(err => Alert.alert(err))
                     )
                 } else {
                     this.setState({ refreshing: false })
                 }
             })
-            .catch(err => alert("Error: ", err))
+            .catch(err => Alert.alert("Error: ", err))
     }
 
     _onSearchJobs = (filterText) => {
@@ -94,7 +94,7 @@ export default class ListJobs extends React.Component {
                 this.setState({ favorites: [], data: [] })
                 Alert.alert('Erase Favorites', 'Favorites Cleared!', [{ text: 'OK' }])
             })
-            .catch(res => console.error(res))
+            .catch(err => Alert.alert("Error on Erase Favorites: ", err))
     }
 
     _handleClearFavorites = () => {
@@ -183,8 +183,8 @@ export default class ListJobs extends React.Component {
                             setModalVisible={this._setModalVisible} />
                     }
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'space-between' }}>
-                    <View style={{ width: '95%' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignContent: 'space-between', marginHorizontal: 5 }}>
+                    <View style={{ width: '92%' }}>
                         <SearchBar
                             round
                             lightTheme
@@ -198,7 +198,7 @@ export default class ListJobs extends React.Component {
                     </View>
                     <TouchableOpacity
                         onPress={this._onRefresh}
-                        style={{ alignSelf: 'center', width: '5%' }}>
+                        style={{ alignSelf: 'center', width: '8%' }}>
                         <Icon name='refresh' size={30} color="#9b59bc" />
                     </TouchableOpacity>
                 </View>
@@ -221,10 +221,6 @@ export default class ListJobs extends React.Component {
                                     refresh={this._onRefresh}
                                     source={this.props.source}
                                     data={job.item} />
-                            )
-                        } else {
-                            return (
-                                <Text>Error</Text>
                             )
                         }
                     }
