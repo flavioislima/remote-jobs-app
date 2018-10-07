@@ -46,17 +46,17 @@ class Jobs extends React.Component {
     let keys = []
     await AsyncStorage.getAllKeys()
       .then(res => keys = res)
-      .catch(err => console.error(err))
+      .catch(err => Alert.alert("Error: ", err))
 
     if (keys.includes(id)) {
       await AsyncStorage.removeItem(data.id)
         .then(() => { if (this.props.source === "Favorites") this.props.refresh() })
-        .catch((e) => console.error(e))
+        .catch(err => Alert.alert("Error: ", err))
     } else {
       data.isFavorite = true
       await AsyncStorage.setItem(id, JSON.stringify(data))
     }
-    this.forceUpdate()
+    if (this.props.source !== "Favorites") this.forceUpdate()
   }
 
   render() {
@@ -155,11 +155,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#1abc9c',
     padding: 5,
-    // borderTopStartRadius: 10,
-    // borderTopEndRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    // borderBottomStartRadius: 10,
   },
   viewPosition: {
     flexDirection: 'column',
