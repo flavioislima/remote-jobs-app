@@ -64,17 +64,6 @@ export default class ListJobs extends React.Component {
     this.setState({ filterText })
   }
 
-  searchFilterFunction = text => {
-    const newData = this.arrayholder.filter(item => {
-      const itemData = `${item.name.title.toUpperCase()}   
-      ${item.name.first.toUpperCase()} ${item.name.last.toUpperCase()}`;
-      const textData = text.toUpperCase();
-
-      return itemData.indexOf(textData) > -1;
-    });
-    this.setState({ data: newData });
-  };
-
   _onClearSearch = () => {
     this.setState({ filterText: '' })
   }
