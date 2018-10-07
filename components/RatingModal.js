@@ -10,7 +10,7 @@ const options = {
 
 const RatingModal = (props) => (
   <Modal
-    animationType="slide"
+    animationType="fade"
     transparent={true}
     visible={props.ModalVisible}
     onRequestClose={() => {
