@@ -3,22 +3,37 @@ import { View, Text, TouchableOpacity, StyleSheet, Linking, AsyncStorage, Share 
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-class Jobs extends React.Component {
+export default class Jobs extends React.Component {
   state = {
-    showDescription: false,
-    countViews: 0,
+    showDescription: false
   }
 
   _handleDescription = () => {
     this.setState(prevstate => ({ showDescription: !prevstate.showDescription }))
   }
 
-  _handleUrl = (url) => {
-    let count = this.state.countViews++
-    this.setState({
-      countViews: count
-    })
-    Linking.openURL(url)
+  _handleUrl = async (url) => {
+    let count
+    AsyncStorage.getItem('count')
+      .then(async (numCount) => {
+        if (!numCount) {
+          count = 1
+          await AsyncStorage.setItem('count', String(count))
+            .then(async () => {
+              Linking.openURL(url)
+            })
+        } else {
+          count = parseInt(numCount) + 1
+          if (count > 3) {
+            if (!this.props.rated) this.props.setModalVisible(true)
+          }
+          await AsyncStorage.setItem('count', String(count))
+            .then(async () => {
+              Linking.openURL(url)
+            })
+        }
+      })
+      .catch((err) => console.log(err))
   }
 
   _handleSharing = (url, position, company) => {
@@ -28,7 +43,7 @@ class Jobs extends React.Component {
         * Position: ${position} 
         * Company: ${company}
         * Url: ${url}
-        * Get our App at: https://play.google.com/store/apps/details?id=com.remotework`,
+        * Get our App at: http://bit.ly/remoteWork`,
         url,
         title: `Remote Work App - ${position} @${company}`
       }, {
@@ -60,7 +75,7 @@ class Jobs extends React.Component {
   }
 
   render() {
-    const { link, name, title, tags, logo } = this.props.data
+    const { link, name, title, tags } = this.props.data
     let { description, date, company, url, position, isFavorite } = this.props.data
     company = company ? company : name
     position = position ? position : title
@@ -97,14 +112,13 @@ class Jobs extends React.Component {
 
             <View style={styles.viewDate}>
               <Text style={styles.date}>{date}</Text>
-              {/* <Image source={logo ? { uri: logo } : fakeLogo} style={styles.logo} /> */}
             </View>
           </View>
           {
             this.state.showDescription &&
             <View>
               <Text
-                numberOfLines={7}
+                numberOfLines={10}
                 style={styles.description}>{description}</Text>
               {
                 tags && renderTags
@@ -229,6 +243,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 4,
+    width: '20%',
   },
   iconText: {
     fontSize: 13,
@@ -236,5 +251,3 @@ const styles = StyleSheet.create({
     marginLeft: 5
   }
 })
-
-export default Jobs

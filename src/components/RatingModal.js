@@ -1,11 +1,11 @@
 import React from 'react'
-import { Modal, View, Text, StyleSheet } from 'react-native'
+import { Modal, View, Text, StyleSheet, AsyncStorage } from 'react-native'
 import { Rating, Button } from 'react-native-elements'
 import Rate from 'react-native-rate'
 
 const options = {
   GooglePackageName: "com.remotework",
-  preferInApp: false,
+  preferInApp: true,
 }
 
 const RatingModal = (props) => (
@@ -13,9 +13,7 @@ const RatingModal = (props) => (
     animationType="fade"
     transparent={true}
     visible={props.ModalVisible}
-    onRequestClose={() => {
-      Alert.alert('Modal has been closed.');
-    }}
+    onRequestClose={() => null}
   >
     <View style={styles.modalView}>
       <View style={styles.rating}>
@@ -33,6 +31,7 @@ const RatingModal = (props) => (
               Rate.rate(options, () => {
                 props.rated('true')
                 props.setModalVisible(!props.modalVisible)
+                AsyncStorage.setItem('count', '0')
               })
             }}
             style={{ paddingVertical: 10 }}
