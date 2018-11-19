@@ -3,6 +3,8 @@ import { StatusBar, View, FlatList, Text, RefreshControl, AsyncStorage, StyleShe
 import { SearchBar, Button } from 'react-native-elements'
 import axios from 'axios'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { AdMobBanner } from 'react-native-admob'
+
 import Jobs from './Jobs'
 
 let RatingModal = null
@@ -96,14 +98,6 @@ export default class ListJobs extends React.Component {
     }
 
     this.setState({ modalVisible: visible });
-
-    if (this.state.modalVisible)
-      return (
-        <RatingModal
-          rated={this._rated}
-          modalVisible={this.state.modalVisible}
-          setModalVisible={this._setModalVisible} />
-      )
   }
 
   _rated = async (rated) => {
@@ -209,6 +203,8 @@ export default class ListJobs extends React.Component {
                   isFavorite={isFavorite}
                   refresh={this._onRefresh}
                   source={this.props.source}
+                  setModalVisible={this._setModalVisible}
+                  rated={this.state.rated}
                   data={job.item} />
               )
             }
@@ -232,6 +228,14 @@ export default class ListJobs extends React.Component {
             title="Delete all Favorites"
             onPress={this._handleClearFavorites} />
         }
+        <View style={{ alignItems: 'center' }}>
+          <AdMobBanner
+            adSize="fullBanner"
+            adUnitID="ca-app-pub-0501787885464364/9529568258"
+            testDevices={[AdMobBanner.simulatorId]}
+            onAdFailedToLoad={error => console.log(error)}
+          />
+        </View>
       </View >
     )
   }
