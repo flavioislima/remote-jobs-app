@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 
-import { RemoteOk, JSRemotely, Favorites } from '../components/screens'
+import { RemoteOk, JSRemotely, Favorites, Indeed } from '../components/screens'
 
 const RemoteOkStack = createStackNavigator({
     RemoteOk: RemoteOk
@@ -22,18 +22,27 @@ JSRemotelyStack.navigationOptions = {
     tabBarLabel: 'JSRemotely',
 }
 
+const IndeedStack = createStackNavigator({
+    Indeed: Indeed
+})
+
+IndeedStack.navigationOptions = {
+    tabBarLabel: 'Indeed',
+}
+
 const FavoritesStack = createStackNavigator({
     Favorites: Favorites
 })
 
 FavoritesStack.navigationOptions = {
-    tabBarLabel: 'Favorites',
+    tabBarLabel: 'Saved',
 }
 
 export default createBottomTabNavigator(
     {
         RemoteOkStack,
         JSRemotelyStack,
+        IndeedStack,
         Favorites
     }, {
         tabBarOptions: {
@@ -45,12 +54,13 @@ export default createBottomTabNavigator(
             labelStyle: {
                 fontSize: 13,
                 alignItems: 'center',
-                marginBottom: 15
+                marginBottom: 12
             },
             style: {
                 backgroundColor: '#363636',
                 borderTopColor: 'white',
                 borderTopWidth: 0.5,
+                height: 40
             },
             activeTintColor: 'white',
             inactiveTintColor: 'darkgray'

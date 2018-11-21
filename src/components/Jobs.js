@@ -75,12 +75,12 @@ export default class Jobs extends React.Component {
   }
 
   render() {
-    const { link, name, title, tags } = this.props.data
+    const { link, name, title, tags, dateFormated } = this.props.data
     let { description, date, company, url, position, isFavorite } = this.props.data
     company = company ? company : name
     position = position ? position : title
     url = url ? url : link
-    date = moment(date).endOf('day').fromNow()
+    if (date) date = moment(date).endOf('day').fromNow()
     description = description
       .replace(/<(?:.|\n)*?>/gm, '')
       .replace(/&amp;/gm, '&')
@@ -111,7 +111,7 @@ export default class Jobs extends React.Component {
             </View>
 
             <View style={styles.viewDate}>
-              <Text style={styles.date}>{date}</Text>
+              <Text style={styles.date}>{date || dateFormated}</Text>
             </View>
           </View>
           {

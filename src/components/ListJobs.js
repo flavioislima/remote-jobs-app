@@ -22,9 +22,17 @@ export default class ListJobs extends React.Component {
   _onGetData = async () => {
     await axios.get(this.props.url)
       .then(data => {
-        if (data.data.length < 800) {
+        let newData
+
+        if (this.props.source === "Indeed") {
+          newData = data.data.Job
+        } else {
+          newData = data.data
+        }
+
+        if (newData.length < 800) {
           this.setState({
-            data: data.data,
+            data: newData,
             refreshing: false
           })
         } else {
@@ -191,6 +199,8 @@ export default class ListJobs extends React.Component {
           renderItem={(job) => {
             let isFavorite = false
             let { id, jobId } = job.item
+            let urlId = job.item.url
+            if (!id) job.item.id = urlId
             id = id ? id : jobId
             if (this.state.favorites.includes(id)) {
               job.item.isFavorite = true
