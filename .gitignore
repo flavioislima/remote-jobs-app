@@ -42,6 +42,7 @@ buck-out/
 \.buckd/
 *.keystore
 *.jks
+api.js
 
 # fastlane
 #
