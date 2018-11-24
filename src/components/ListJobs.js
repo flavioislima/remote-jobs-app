@@ -1,14 +1,14 @@
 import React from 'react'
 import { StatusBar, View, FlatList, Text, RefreshControl, AsyncStorage, StyleSheet, Alert, ToastAndroid, TouchableOpacity } from 'react-native'
-import { SearchBar, Button } from 'react-native-elements'
+import { Button } from 'react-native-elements'
 import axios from 'axios'
-import Icon from 'react-native-vector-icons/FontAwesome'
 
 import api from '../api'
 import Jobs from './Jobs'
 import Stars from '../UI/Stars'
 import AdBanner from '../UI/AdBanner'
 import StatusJobs from '../UI/StatusJobs'
+import Search from '../UI/Search'
 
 let RatingModal = null
 
@@ -168,25 +168,11 @@ export default class ListJobs extends React.Component {
               setModalVisible={this._setModalVisible} />
           }
         </View>
-        <View style={styles.searchView}>
-          <View style={styles.searchJobs}>
-            <SearchBar
-              round
-              lightTheme
-              inputStyle={{ backgroundColor: 'white' }}
-              clearIcon={{ type: 'font-awesome', name: 'times', color: 'lightgray' }}
-              icon={{ type: 'font-awesome', name: 'search', color: 'lightgray' }}
-              placeholder="Search for Jobs..."
-              onChangeText={this._onSearchJobs}
-              onClearText={this._onClearSearch}
-            />
-          </View>
-          <TouchableOpacity
-            onPress={this._onRefresh}
-            style={styles.reloadButton}>
-            <Icon name='refresh' size={30} color="#9b59bc" />
-          </TouchableOpacity>
-        </View>
+        <Search
+          onChangeText={this._onSearchJobs}
+          onClearText={this._onClearSearch}
+          refresh={this._onRefresh}
+        />
         <FlatList
           style={styles.container}
           data={filteredData}
@@ -256,18 +242,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: 5,
     paddingHorizontal: 5
-  },
-  searchView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'space-between',
-    marginHorizontal: 5
-  },
-  searchJobs: {
-    width: '92%'
-  },
-  reloadButton: {
-    alignSelf: 'center',
-    width: '8%'
   },
 });
