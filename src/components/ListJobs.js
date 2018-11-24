@@ -3,9 +3,12 @@ import { StatusBar, View, FlatList, Text, RefreshControl, AsyncStorage, StyleShe
 import { SearchBar, Button } from 'react-native-elements'
 import axios from 'axios'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { AdMobBanner } from 'react-native-admob'
 
+import api from '../api'
 import Jobs from './Jobs'
+import Stars from '../UI/Stars'
+import AdBanner from '../UI/AdBanner'
+import StatusJobs from '../UI/StatusJobs'
 
 let RatingModal = null
 
@@ -16,21 +19,21 @@ export default class ListJobs extends React.Component {
     filterText: '',
     refreshing: true,
     modalVisible: false,
-    rated: null
+    rated: null,
+    url: this.props.url,
+    token: this.props.token
   }
 
   _onGetData = async () => {
-    await axios.get(this.props.url)
+    if (this.props.source === "Indeed") await this._checkToken()
+    await axios.get(this.state.url)
       .then(data => {
         let newData
 
-        if (this.props.source === "Indeed") {
-          newData = data.data.Job
-        } else {
-          newData = data.data
-        }
+        this.props.source === "Indeed" ?
+          newData = data.data.Job : newData = data.data
 
-        if (newData.length < 800) {
+        if (newData.length > 10) {
           this.setState({
             data: newData,
             refreshing: false
@@ -39,6 +42,7 @@ export default class ListJobs extends React.Component {
           ToastAndroid.showWithGravity('Network Error', 6500, ToastAndroid.CENTER)
         }
       })
+      .catch(err => console.error(err))
 
     let keys = []
     await AsyncStorage.getAllKeys()
@@ -46,6 +50,21 @@ export default class ListJobs extends React.Component {
         keys = await data
         this.setState({ favorites: keys, refreshing: false })
       })
+  }
+
+  _checkToken = async () => {
+    await axios.get(`https://www.parsehub.com/api/v2/projects?api_key=${api}&offset=0&limit=20&include_options=1`)
+      .then(res => {
+        let data = res.data.projects[0]
+        let token = data.last_ready_run.run_token
+        let url = `https://www.parsehub.com/api/v2/runs/${token}/data?api_key=${api}`
+
+        // console.log("New Token?", this.state.token, token, this.state.token !== token)
+
+        if (this.state.token !== token)
+          this.setState({ token, url })
+      })
+      .catch(err => console.error(err))
   }
 
   _getFavorites = async () => {
@@ -80,10 +99,10 @@ export default class ListJobs extends React.Component {
 
   _onRefresh = async () => {
     this.setState({ data: [], favorites: [], refreshing: true })
-    if (this.props.url) {
-      await this._onGetData()
-    } else {
+    if (this.state.url === 'Favorites') {
       await this._getFavorites()
+    } else {
+      await this._onGetData()
     }
   }
 
@@ -102,7 +121,7 @@ export default class ListJobs extends React.Component {
   3
   _setModalVisible = (visible) => {
     if (RatingModal === null) {
-      RatingModal = require('./RatingModal').default
+      RatingModal = require('../UI/RatingModal').default
     }
 
     this.setState({ modalVisible: visible });
@@ -120,10 +139,10 @@ export default class ListJobs extends React.Component {
   }
 
   async componentDidMount() {
-    if (this.props.url) {
-      await this._onGetData()
-    } else {
+    if (this.state.url === 'Favorites') {
       await this._getFavorites()
+    } else {
+      await this._onGetData()
     }
 
     await AsyncStorage.getItem('rated')
@@ -139,33 +158,8 @@ export default class ListJobs extends React.Component {
       <View style={styles.container} >
         <StatusBar backgroundColor='#363636' />
         <View style={styles.welcomeContainer}>
-          {this.state.refreshing ?
-            <Text
-              style={styles.title}
-            >Searching on {this.props.source}...</Text>
-            :
-            <Text
-              style={styles.title}
-            >{this.state.data.length} Jobs found on {this.props.source}</Text>
-          }
-          {!this.state.rated ?
-            <TouchableOpacity
-              onPress={() => this._setModalVisible(!this.state.modalVisible)}
-              style={styles.icons}>
-              <Icon name='star' size={15} color='yellow' />
-              <Text style={styles.iconText}>Rate Us</Text>
-            </TouchableOpacity>
-            :
-            <TouchableOpacity
-              onPress={() => this._setModalVisible(!this.state.modalVisible)}
-              style={styles.icons}>
-              <Icon name='star' size={15} color='yellow' />
-              <Icon name='star' size={15} color='yellow' />
-              <Icon name='star' size={15} color='yellow' />
-              <Icon name='star' size={15} color='yellow' />
-              <Icon name='star' size={15} color='yellow' />
-            </TouchableOpacity>
-          }
+          <StatusJobs source={this.props.source} refreshing={this.state.refreshing} length={this.state.data.length} />
+          <Stars rated={this.state.rated} modalVisible={this.state.modalVisible} setModalVisible={this._setModalVisible} />
           {
             this.state.modalVisible &&
             <RatingModal
@@ -239,12 +233,7 @@ export default class ListJobs extends React.Component {
             onPress={this._handleClearFavorites} />
         }
         <View style={{ alignItems: 'center' }}>
-          <AdMobBanner
-            adSize="fullBanner"
-            adUnitID="ca-app-pub-0501787885464364/9529568258"
-            testDevices={[AdMobBanner.simulatorId]}
-            onAdFailedToLoad={error => console.log(error)}
-          />
+          <AdBanner />
         </View>
       </View >
     )
@@ -268,11 +257,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 5
   },
-  title: {
-    color: 'white',
-    fontSize: 14,
-    width: '80%'
-  },
   searchView: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -286,17 +270,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '8%'
   },
-  icons: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 0,
-    borderColor: 'yellow',
-    borderRadius: 10
-  },
-  iconText: {
-    fontSize: 14,
-    color: 'yellow',
-    marginLeft: 5
-  }
 });
