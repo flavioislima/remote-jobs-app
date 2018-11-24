@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 
-import { RemoteOk, JSRemotely, Favorites, Indeed } from '../components/screens'
+import { RemoteOk, JSRemotely, Favorites, Indeed } from '../screens'
 
 const RemoteOkStack = createStackNavigator({
     RemoteOk: RemoteOk
@@ -40,10 +40,10 @@ FavoritesStack.navigationOptions = {
 
 export default createBottomTabNavigator(
     {
-        RemoteOkStack,
-        JSRemotelyStack,
         IndeedStack,
-        Favorites
+        JSRemotelyStack,
+        RemoteOkStack,
+        FavoritesStack
     }, {
         tabBarOptions: {
             tabStyle: {
