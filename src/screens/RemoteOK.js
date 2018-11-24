@@ -1,5 +1,5 @@
 import React from 'react'
-import ListJobs from '../ListJobs'
+import ListJobs from '../components/ListJobs'
 
 const url = 'https://remoteok.io/api'
 

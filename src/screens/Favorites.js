@@ -1,5 +1,5 @@
 import React from 'react'
-import ListJobs from '../ListJobs'
+import ListJobs from '../components/ListJobs'
 
 class Favorites extends React.Component {
     static navigationOptions = {
@@ -9,6 +9,7 @@ class Favorites extends React.Component {
     render() {
         return (
             <ListJobs
+                url='Favorites'
                 source={"Favorites"}
             />
         )
