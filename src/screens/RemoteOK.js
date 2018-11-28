@@ -1,5 +1,5 @@
 import React from 'react'
-import ListJobs from '../components/ListJobs'
+import ListJobs from '../components/Listjobs/ListJobs'
 
 const url = 'https://remoteok.io/api'
 
@@ -8,8 +8,10 @@ class RemoteOk extends React.Component {
         header: null,
     };
     render() {
+        const navigate = this.props.navigation
         return (
             <ListJobs url={url}
+                navigate={navigate}
                 source={"RemoteOk"}
             />
         )

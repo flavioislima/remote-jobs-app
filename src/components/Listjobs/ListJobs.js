@@ -1,16 +1,17 @@
 import React from 'react'
-import { StatusBar, View, FlatList, Text, RefreshControl, AsyncStorage, StyleSheet, Alert, ToastAndroid, TouchableOpacity } from 'react-native'
+import { StatusBar, View, FlatList, RefreshControl, AsyncStorage, StyleSheet, Alert } from 'react-native'
 import { Button } from 'react-native-elements'
 import axios from 'axios'
 
-import api from '../api'
-import Jobs from './Jobs'
-import Stars from '../UI/Stars'
-import AdBanner from '../UI/AdBanner'
-import StatusJobs from '../UI/StatusJobs'
-import Search from '../UI/Search'
+import api from '../../api'
+import Jobs from './Jobs/Jobs'
+import Stars from '../../UI/Stars'
+import AdBanner from '../../UI/AdBanner'
+import StatusJobs from '../../UI/StatusJobs'
+import Search from '../../UI/Search'
 
 let RatingModal = null
+let Error = null
 
 export default class ListJobs extends React.Component {
   state = {
@@ -21,7 +22,8 @@ export default class ListJobs extends React.Component {
     modalVisible: false,
     rated: null,
     url: this.props.url,
-    token: this.props.token
+    token: this.props.token,
+    error: false
   }
 
   _onGetData = async () => {
@@ -33,13 +35,16 @@ export default class ListJobs extends React.Component {
         this.props.source === "Indeed" ?
           newData = data.data.Job : newData = data.data
 
-        if (newData.length > 10) {
+        if (newData.length > 10 && newData.length < 3500) {
           this.setState({
             data: newData,
             refreshing: false
           })
         } else {
-          ToastAndroid.showWithGravity('Network Error', 6500, ToastAndroid.CENTER)
+          if (Error === null) {
+            Error = require('../../UI/Error').default
+          }
+          this.setState({ error: true })
         }
       })
       .catch(err => console.error(err))
@@ -121,7 +126,7 @@ export default class ListJobs extends React.Component {
   3
   _setModalVisible = (visible) => {
     if (RatingModal === null) {
-      RatingModal = require('../UI/RatingModal').default
+      RatingModal = require('../../UI/RatingModal').default
     }
 
     this.setState({ modalVisible: visible });
@@ -138,14 +143,14 @@ export default class ListJobs extends React.Component {
       })
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     if (this.state.url === 'Favorites') {
-      await this._getFavorites()
+      this._getFavorites()
     } else {
-      await this._onGetData()
+      this._onGetData()
     }
 
-    await AsyncStorage.getItem('rated')
+    AsyncStorage.getItem('rated')
       .then((rated) => this.setState({ rated: JSON.parse(rated) }))
   }
 
@@ -157,7 +162,7 @@ export default class ListJobs extends React.Component {
     return (
       <View style={styles.container} >
         <StatusBar backgroundColor='#363636' />
-        <View style={styles.welcomeContainer}>
+        <View style={styles.status}>
           <StatusJobs source={this.props.source} refreshing={this.state.refreshing} length={this.state.data.length} />
           <Stars rated={this.state.rated} modalVisible={this.state.modalVisible} setModalVisible={this._setModalVisible} />
           {
@@ -173,6 +178,7 @@ export default class ListJobs extends React.Component {
           onClearText={this._onClearSearch}
           refresh={this._onRefresh}
         />
+        {this.state.error && <Error />}
         <FlatList
           style={styles.container}
           data={filteredData}
@@ -195,7 +201,9 @@ export default class ListJobs extends React.Component {
                   source={this.props.source}
                   setModalVisible={this._setModalVisible}
                   rated={this.state.rated}
-                  data={job.item} />
+                  data={job.item}
+                  navigate={this.props.navigate}
+                />
               )
             }
           }
@@ -218,9 +226,7 @@ export default class ListJobs extends React.Component {
             title="Delete all Favorites"
             onPress={this._handleClearFavorites} />
         }
-        <View style={{ alignItems: 'center' }}>
-          <AdBanner />
-        </View>
+        <AdBanner />
       </View >
     )
   }
@@ -235,7 +241,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 0,
   },
-  welcomeContainer: {
+  status: {
     flexDirection: 'row',
     backgroundColor: '#363636',
     alignItems: 'center',

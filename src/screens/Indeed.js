@@ -1,19 +1,20 @@
 import React from 'react'
-import axios from 'axios'
-import api from '../api'
-import ListJobs from '../components/ListJobs'
+import ListJobs from '../components/Listjobs/ListJobs'
 
 class Indeed extends React.Component {
     static navigationOptions = {
         header: null,
     };
 
+
     render() {
+        const navigate = this.props.navigation
         return (
             <ListJobs
                 url='empty'
                 token='empty'
                 source={'Indeed'}
+                navigate={navigate}
             />
         )
     }

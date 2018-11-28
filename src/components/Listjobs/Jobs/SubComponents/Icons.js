@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default (props) => (
@@ -13,6 +13,7 @@ export default (props) => (
     </TouchableOpacity>
     <TouchableOpacity
       onPress={() => props.handleUrl(props.url)}
+      onLongPress={() => Linking.openURL(props.url)}
       style={styles.icons}>
       <Icon name='globe' size={25} color='blue' />
       <Text style={styles.iconText}>Open</Text>
