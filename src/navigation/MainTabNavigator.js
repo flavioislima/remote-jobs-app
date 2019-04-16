@@ -1,69 +1,73 @@
-import React from 'react'
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
+import React from 'react';
+import {
+  createStackNavigator,
+  createBottomTabNavigator
+} from 'react-navigation';
 
-import { RemoteOk, JSRemotely, Favorites, Indeed, Browser } from '../screens'
+import { RemoteOk, JSRemotely, Favorites, Indeed, Browser } from '../screens';
 
 const RemoteOkStack = createStackNavigator({
-    RemoteOk: RemoteOk
-})
+  RemoteOk: RemoteOk
+});
 
 RemoteOkStack.navigationOptions = {
-    tabBarLabel: 'RemoteOk',
-    tabBarLabelStyle: {
-        fontSize: 20
-    }
-}
+  tabBarLabel: 'RemoteOk',
+  tabBarLabelStyle: {
+    fontSize: 20
+  }
+};
 
 const JSRemotelyStack = createStackNavigator({
-    JSRemotely: JSRemotely
-})
+  JSRemotely: JSRemotely
+});
 
 JSRemotelyStack.navigationOptions = {
-    tabBarLabel: 'JSRemotely',
-}
+  tabBarLabel: 'JSRemotely'
+};
 
 const IndeedStack = createStackNavigator({
-    Indeed: Indeed
-})
+  Indeed: Indeed
+});
 
 IndeedStack.navigationOptions = {
-    tabBarLabel: 'Indeed'
-}
+  tabBarLabel: 'Indeed'
+};
 
 const FavoritesStack = createStackNavigator({
-    Favorites: Favorites
-})
+  Favorites: Favorites
+});
 
 FavoritesStack.navigationOptions = {
-    tabBarLabel: 'Saved',
-}
+  tabBarLabel: 'Saved'
+};
 
 export default createBottomTabNavigator(
-    {
-        IndeedStack,
-        JSRemotelyStack,
-        RemoteOkStack,
-        FavoritesStack
-    }, {
-        tabBarOptions: {
-            tabStyle: {
-                borderLeftColor: 'white',
-                borderRightColor: 'white',
-                borderWidth: 0.2
-            },
-            labelStyle: {
-                fontSize: 13,
-                alignItems: 'center',
-                marginBottom: 12
-            },
-            style: {
-                backgroundColor: '#363636',
-                borderTopColor: 'white',
-                borderTopWidth: 0.5,
-                height: 40
-            },
-            activeTintColor: 'white',
-            inactiveTintColor: 'darkgray'
-        }
+  {
+    IndeedStack,
+    // JSRemotelyStack,
+    RemoteOkStack,
+    FavoritesStack
+  },
+  {
+    tabBarOptions: {
+      tabStyle: {
+        borderLeftColor: 'white',
+        borderRightColor: 'white',
+        borderWidth: 0.2
+      },
+      labelStyle: {
+        fontSize: 13,
+        alignItems: 'center',
+        marginBottom: 12
+      },
+      style: {
+        backgroundColor: '#363636',
+        borderTopColor: 'white',
+        borderTopWidth: 0.5,
+        height: 40
+      },
+      activeTintColor: 'white',
+      inactiveTintColor: 'darkgray'
     }
-)
+  }
+);

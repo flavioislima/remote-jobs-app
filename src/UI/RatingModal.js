@@ -1,14 +1,14 @@
-import React from 'react'
-import { Modal, View, Text, StyleSheet, AsyncStorage } from 'react-native'
-import { Rating, Button } from 'react-native-elements'
-import Rate from 'react-native-rate'
+import React from 'react';
+import { Modal, View, Text, StyleSheet, AsyncStorage } from 'react-native';
+import { Rating, Button } from 'react-native-elements';
+import Rate from 'react-native-rate';
 
 const options = {
-  GooglePackageName: "com.remotework",
-  preferInApp: true,
-}
+  GooglePackageName: 'com.remotework',
+  preferInApp: true
+};
 
-const RatingModal = (props) => (
+const RatingModal = props => (
   <Modal
     animationType="fade"
     transparent={true}
@@ -17,9 +17,7 @@ const RatingModal = (props) => (
   >
     <View style={styles.modalView}>
       <View style={styles.rating}>
-        <Text style={styles.ratingText}>
-          Please, give us a feedback!
-            </Text>
+        <Text style={styles.ratingText}>Please, give us a feedback!</Text>
         <View>
           <Rating
             showRating
@@ -29,29 +27,33 @@ const RatingModal = (props) => (
             imageSize={40}
             onFinishRating={() => {
               Rate.rate(options, () => {
-                props.rated('true')
-                props.setModalVisible(!props.modalVisible)
-                AsyncStorage.setItem('count', '0')
-              })
+                props.rated('true');
+                props.setModalVisible(!props.modalVisible);
+                AsyncStorage.setItem('count', '0');
+              });
             }}
             style={{ paddingVertical: 10 }}
           />
           <Button
             transparent
-            color='green'
-            leftIcon={{ name: 'times-circle', type: 'font-awesome', color: 'red' }}
-            title='Later!'
+            color="green"
+            leftIcon={{
+              name: 'times-circle',
+              type: 'font-awesome',
+              color: 'red'
+            }}
+            title="Later!"
             onPress={() => {
-              props.setModalVisible(!props.modalVisible)
+              props.setModalVisible(!props.modalVisible);
             }}
           />
         </View>
       </View>
-    </View >
-  </Modal >
-)
+    </View>
+  </Modal>
+);
 
-export default RatingModal
+export default RatingModal;
 
 const styles = StyleSheet.create({
   modalView: {
@@ -72,6 +74,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 10,
     marginBottom: 5
-  },
-
-})
+  }
+});
