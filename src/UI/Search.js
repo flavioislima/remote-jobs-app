@@ -1,9 +1,9 @@
-import React from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { SearchBar } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import React from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { SearchBar } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default (props) => (
+export default props => (
   <View style={styles.searchView}>
     <View style={styles.searchJobs}>
       <SearchBar
@@ -17,13 +17,11 @@ export default (props) => (
         onClearText={props.onClearText}
       />
     </View>
-    <TouchableOpacity
-      onPress={props.refresh}
-      style={styles.reloadButton}>
-      <Icon name='refresh' size={30} color="#9b59bc" />
+    <TouchableOpacity onPress={props.refresh} style={styles.reloadButton}>
+      <Icon name="refresh" size={30} color="#9b59bc" />
     </TouchableOpacity>
   </View>
-)
+);
 
 const styles = StyleSheet.create({
   searchView: {
@@ -38,5 +36,5 @@ const styles = StyleSheet.create({
   reloadButton: {
     alignSelf: 'center',
     width: '8%'
-  },
-})
+  }
+});

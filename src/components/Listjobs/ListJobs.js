@@ -45,13 +45,10 @@ export default class ListJobs extends React.Component {
       .get(this.state.url)
       .then(data => {
         let newData = [{}];
-        console.log(this.state.url);
-        console.log(data.data.Job);
 
         this.props.source === providers.indeed
           ? (newData = data.data.Job)
           : (newData = data.data);
-        console.log(this.props.source, { newData });
         if (newData.length > 10 && newData.length < 3500) {
           this.setState({
             data: newData,
@@ -90,7 +87,6 @@ export default class ListJobs extends React.Component {
         let token = data.last_ready_run.run_token;
         let url = `https://www.parsehub.com/api/v2/runs/${token}/data?api_key=${api}`;
 
-        console.log({ url });
         if (this.state.token !== token) this.setState({ token, url });
       })
       .catch(err => {
@@ -166,7 +162,7 @@ export default class ListJobs extends React.Component {
       { text: 'Yes', onPress: this._clearFavorites }
     ]);
   };
-  3;
+
   _setModalVisible = visible => {
     if (RatingModal === null) {
       RatingModal = require('../../UI/RatingModal').default;
