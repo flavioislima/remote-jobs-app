@@ -16,15 +16,17 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
     "axios": "^0.18.0",
+    "expo-ads-admob": "^6.0.0",
     "global": "^4.4.0",
     "moment": "^2.24.0",
     "react": "16.8.3",
     "react-native": "0.59.4",
     "react-native-cli": "^2.0.1",
-    "react-native-elements": "^1.1.0",
+    "react-native-elements": "0.19",
     "react-native-firebase": "5.3",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-rate": "^1.1.6",
+    "react-native-unimodules": "^0.5.4",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.6.1",
     "tslint": "^5.19.0"

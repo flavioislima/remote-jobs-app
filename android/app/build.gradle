@@ -77,6 +77,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -112,8 +113,8 @@ android {
         applicationId "com.remotework"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 30
-        versionName "3.0"
+        versionCode 43
+        versionName "4.0.3"
     }
     splits {
         abi {
@@ -157,6 +158,8 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_async-storage')
+    addUnimodulesDependencies()
     implementation project(':react-native-gesture-handler')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
