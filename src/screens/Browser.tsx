@@ -1,23 +1,28 @@
-import React from 'react';
+import React from "react";
 import {
   View,
-  WebView,
   TouchableOpacity,
   Text,
   Linking,
-  StyleSheet
-} from 'react-native';
+  StyleSheet,
+  WebView
+} from "react-native";
+import { NavigationParams } from "react-navigation";
 
-// import AdBanner from '../UI/AdBanner';
+import AdBanner from "../UI/AdBanner";
 
-export default class BrowserScreen extends React.Component {
-  static navigationOptions = {
+interface Props {
+  navigation: any;
+}
+
+export default class BrowserScreen extends React.Component<Props> {
+  static navigationOptions: NavigationParams = {
     header: null
   };
 
   render() {
     const { navigation } = this.props;
-    const url = navigation.getParam('url', 'http://google.com');
+    const url = navigation.getParam("url", "http://google.com");
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
@@ -29,26 +34,25 @@ export default class BrowserScreen extends React.Component {
         <WebView
           javaScriptEnabled
           domStorageEnabled
-          renderError
           decelerationRate="normal"
           startInLoadingState
           source={{ uri: url }}
           style={{ marginVertical: 5 }}
         />
 
-        {/* <AdBanner /> */}
+        <AdBanner />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  text: { fontSize: 16, fontWeight: '700', color: 'white' },
+  text: { fontSize: 16, fontWeight: "700", color: "white" },
   touch: {
     height: 32,
-    backgroundColor: '#0dbc79',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center'
+    backgroundColor: "#A7C8FF",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center"
   }
 });

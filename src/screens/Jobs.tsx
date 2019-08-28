@@ -1,29 +1,35 @@
-import * as React from 'react';
-import ListJobs from '../components/Listjobs/ListJobs';
-import { Context } from '../../App';
+import * as React from "react";
+import ListJobs from "../components/Listjobs/ListJobs";
+import { NavigationParams } from "react-navigation";
+import JobsContext from "../state/JobsContext";
 
 interface Props {
   navigation: string;
 }
 
-class Jobs extends React.Component<Props> {
-  static navigationOptions = {
+class Jobs extends React.PureComponent<Props> {
+  static navigationOptions: NavigationParams = {
     header: null
   };
+  static contextType = JobsContext;
+
+  componentDidMount() {
+    this.context.refresh();
+  }
 
   render() {
     const navigate: string = this.props.navigation;
+    const { data, refresh, refreshing } = this.context;
+
     return (
-      <Context.Consumer>
-        {context => (
-          <ListJobs
-            jobs={context.data}
-            navigate={navigate}
-            refresh={context.refresh}
-            refreshing={context.refreshing}
-          />
-        )}
-      </Context.Consumer>
+      <>
+        <ListJobs
+          jobs={data}
+          navigate={navigate}
+          refresh={refresh}
+          refreshing={refreshing}
+        />
+      </>
     );
   }
 }

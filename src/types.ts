@@ -9,9 +9,20 @@ export interface JobType {
   dateFormated?: string;
   type?: string;
   salary?: string;
+  isFavorite?: boolean;
+}
+
+export interface ContextType {
+  data: JobType[];
+  favorites: JobType[];
+  keys: string[];
+  refreshing: boolean;
+  refresh?: () => void;
+  handleFavorites?: (id: string) => void;
+  handleClearFavorites?: () => void;
 }
 
 export interface handleFavorites {
   add: () => void;
-  clear: (string) => void;
+  clear: (keys: string[]) => void;
 }

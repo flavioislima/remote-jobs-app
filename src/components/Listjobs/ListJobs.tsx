@@ -1,165 +1,129 @@
-import React from 'react';
+import React from "react";
 import {
-  StatusBar,
-  View,
   FlatList,
   RefreshControl,
+  StatusBar,
   StyleSheet,
-  Text
-} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import { Button } from 'react-native-elements';
-import { SafeAreaView } from 'react-navigation';
-import Icon from 'react-native-vector-icons/FontAwesome';
+  View
+} from "react-native";
+import { SafeAreaView } from "react-navigation";
 
-import Job from './Jobs/Job';
-import Stars from '../../UI/Stars';
-import StatusJobs from '../../UI/StatusJobs';
-import Search from '../../UI/Search';
-import { JobType } from '../../types';
-import AdBanner from '../../UI/AdBanner';
-import { Context } from '../../../App';
+import { JobType } from "../../types";
+import Search from "../../UI/Search";
+import Stars from "../../UI/Stars";
+import StatusJobs from "../../UI/StatusJobs";
+import Job from "./Jobs/Job";
+import AsyncStorage from "@react-native-community/async-storage";
 
 interface Props {
   refresh: () => void;
   jobs: JobType[];
   refreshing: boolean;
   navigate: any;
-  favorites?: boolean;
   clearFavorites?: () => void;
   handleClearFavorites?: () => void;
 }
 
-let RatingModal = null;
-let Error = null;
+let RatingModal: any = null;
+const Error: any = null;
 
-export default class ListJobs extends React.Component<Props> {
+export default class ListJobs extends React.PureComponent<Props> {
   state = {
-    filterText: '',
+    filterText: "",
     modalVisible: false,
-    rated: null,
+    rated: false,
     error: false
   };
 
-  _onSearchJobs = filterText => {
+  onSearchJobs = (filterText: string) => {
     this.setState({ filterText });
   };
 
-  _onClearSearch = () => {
-    this.setState({ filterText: '' });
+  onClearSearch = () => {
+    this.setState({ filterText: "" });
   };
 
-  _setModalVisible = visible => {
+  setModalVisible = (visible: boolean) => {
     if (RatingModal === null) {
-      RatingModal = require('../../UI/RatingModal').default;
+      RatingModal = require("../../UI/RatingModal").default;
     }
 
     this.setState({ modalVisible: visible });
   };
 
-  _rated = async rated => {
-    rated = String(rated);
-    await AsyncStorage.setItem('rated', rated).then(async () => {
-      await AsyncStorage.getItem('rated').then(info => {
+  rated = async (rated: string) => {
+    await AsyncStorage.setItem("rated", rated).then(async () => {
+      await AsyncStorage.getItem("rated").then((info) => {
         this.setState({ rated: info });
       });
     });
   };
 
+  renderJobs = (job: any) => {
+    const { refresh, navigate } = this.props;
+    return (
+      <Job
+        data={job.item}
+        navigate={navigate}
+        isFavorite={job.item.isFavorite}
+        refresh={refresh}
+      />
+    );
+  };
+
+  extractKeys = (job: JobType) => job.url;
+
   componentDidMount() {
-    AsyncStorage.getItem('rated').then(rated =>
+    AsyncStorage.getItem("rated").then((rated) =>
       this.setState({ rated: JSON.parse(rated) })
     );
   }
 
-  renderIcons = (name, color = 'white', size = 15) => {
-    return (
-      <View style={{ marginHorizontal: 10 }}>
-        <Icon name={name} size={size} color={color} />
-      </View>
-    );
-  };
-
   render() {
-    const {
-      jobs,
-      favorites,
-      refreshing,
-      navigate,
-      clearFavorites,
-      refresh
-    } = this.props;
+    const { jobs, refreshing, refresh } = this.props;
 
-    const filterRegex = new RegExp(String(this.state.filterText), 'i');
+    const filterRegex: RegExp = new RegExp(String(this.state.filterText), "i");
     const filter = (item: JobType) => filterRegex.test(item.position);
-    // disabling filter for favorites while the data is not on global context
-    const filteredData = !favorites ? jobs : jobs.filter(filter);
+    const filteredData: JobType[] = jobs.filter(filter);
+
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor="#363636" />
+        <StatusBar backgroundColor="#112038" />
         <SafeAreaView>
           <View style={styles.status}>
-            <StatusJobs refreshing={refreshing} length={jobs.length} />
             <Stars
               rated={this.state.rated}
               modalVisible={this.state.modalVisible}
-              setModalVisible={this._setModalVisible}
+              setModalVisible={this.setModalVisible}
             />
             {this.state.modalVisible && (
               <RatingModal
-                rated={this._rated}
+                rated={this.rated}
                 modalVisible={this.state.modalVisible}
-                setModalVisible={this._setModalVisible}
+                setModalVisible={this.setModalVisible}
               />
             )}
           </View>
         </SafeAreaView>
         <Search
-          onChangeText={this._onSearchJobs}
-          onClearText={this._onClearSearch}
-          refresh={refresh}
+          onChangeText={this.onSearchJobs}
+          onClearText={this.onClearSearch}
         />
         {this.state.error && <Error />}
+        <StatusJobs
+          refreshing={refreshing}
+          length={filteredData.length}
+          refresh={refresh}
+        />
         <FlatList
           style={styles.container}
           data={filteredData}
-          renderItem={job => {
-            return (
-              <Job
-                favorites={favorites}
-                data={job.item}
-                navigate={navigate}
-                refresh={refresh}
-              />
-            );
-          }}
-          keyExtractor={(job, i) => i.toString()}
+          renderItem={this.renderJobs}
+          keyExtractor={this.extractKeys}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={refresh} />
           }
         />
-        {clearFavorites && (
-          <Button
-            containerStyle={{
-              flex: 0.06,
-              justifyContent: 'center',
-              alignContent: 'center'
-            }}
-            buttonStyle={{
-              backgroundColor: 'red',
-              height: '100%'
-            }}
-            titleStyle={{
-              fontSize: 15
-            }}
-            icon={this.renderIcons('trash', 'white', 17)}
-            title="Delete all Favorites"
-            onPress={clearFavorites}
-          />
-        )}
-        <View style={{ alignItems: 'center' }}>
-          <AdBanner />
-        </View>
       </View>
     );
   }
@@ -168,17 +132,13 @@ export default class ListJobs extends React.Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e1e8ee'
+    backgroundColor: "#FFFFFF"
   },
   contentContainer: {
     paddingTop: 0
   },
   status: {
-    flexDirection: 'row',
-    backgroundColor: '#363636',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    paddingVertical: 5,
-    paddingHorizontal: 5
+    backgroundColor: "#112038",
+    paddingTop: 0
   }
 });

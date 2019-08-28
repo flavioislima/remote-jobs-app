@@ -1,31 +1,45 @@
-import React from 'react';
-import ListJobs from '../components/Listjobs/ListJobs';
-import { Context } from '../../App';
+import React from "react";
+import ListJobs from "../components/Listjobs/ListJobs";
+import { NavigationParams } from "react-navigation";
+import JobsContext from "../state/JobsContext";
+import { JobType } from "../types";
+import { Button } from "react-native-elements";
 
 interface Props {
   navigation: string;
 }
 
-class Favorites extends React.Component<Props> {
-  static navigationOptions = {
+class Favorites extends React.PureComponent<Props> {
+  static navigationOptions: NavigationParams = {
     header: null
   };
+  static contextType = JobsContext;
 
   render() {
     const navigate: string = this.props.navigation;
+    const { data, refresh, refreshing, handleClearFavorites } = this.context;
+
+    const favFilter = (item: JobType) => item.isFavorite === true;
+    const favorites: JobType[] = data.filter(favFilter);
+
     return (
-      <Context.Consumer>
-        {context => (
-          <ListJobs
-            jobs={context.favorites}
-            navigate={navigate}
-            refresh={context.refresh}
-            refreshing={context.refreshing}
-            clearFavorites={context.handleClearFavorites}
-            favorites
-          />
-        )}
-      </Context.Consumer>
+      <>
+        <ListJobs
+          jobs={favorites}
+          navigate={navigate}
+          refresh={refresh}
+          refreshing={refreshing}
+          clearFavorites={handleClearFavorites}
+        />
+        <Button
+          large
+          textStyle={{ color: "red" }}
+          buttonStyle={{ height: 30, backgroundColor: "transparent" }}
+          icon={{ name: "trash", type: "font-awesome", color: "red" }}
+          title="Delete all Favorites"
+          onPress={handleClearFavorites}
+        />
+      </>
     );
   }
 }

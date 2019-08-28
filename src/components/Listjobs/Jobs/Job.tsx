@@ -1,41 +1,33 @@
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Share } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import moment from 'moment';
+import React from "react";
+import { View, TouchableOpacity, StyleSheet, Share } from "react-native";
+import moment from "moment";
 
-import Description from './SubComponents/Description';
-import Icons from './SubComponents/Icons';
-import Details from './SubComponents/Details';
-import { JobType } from '../../../types';
+import Description from "./SubComponents/Description";
+import Icons from "./SubComponents/Icons";
+import Details from "./SubComponents/Details";
+import { JobType } from "../../../types";
+import JobsContext from "../../../state/JobsContext";
 
 interface Props {
   data: JobType;
-  favorites?: boolean;
   navigate: any;
+  isFavorite: boolean;
   refresh: () => void;
 }
 
-export default class Job extends React.Component<Props> {
-  state = {
-    showDescription: false,
-    isFavorite: false
+const Job: React.FC<Props> = (props: Props) => {
+  const [showDescription, setShowDescription] = React.useState(false);
+  const [isFavorite, setIsFavorite] = React.useState(props.isFavorite);
+  const context = React.useContext(JobsContext);
+  const handleFavorites = context.handleFavorites;
+
+  const openWebView = () => {
+    const url = props.data.url;
+    props.navigate.navigate("Browser", { url });
   };
 
-  static navigationOptions = {
-    header: null
-  };
-
-  _handleDescription = () => {
-    this.setState({
-      showDescription: !this.state.showDescription
-    });
-  };
-
-  _openWebView = url => {
-    this.props.navigate.navigate('Browser', { url: url });
-  };
-
-  _handleSharing = (url, position, company) => {
+  const handleSharing = () => {
+    const { position, company, url } = props.data;
     Share.share(
       {
         message: `Here follows a great Remote Job Opportunity: 
@@ -46,113 +38,82 @@ export default class Job extends React.Component<Props> {
         title: `Remote Work App - ${position} @${company}`
       },
       {
-        subject: 'Job Shared from Remote Work App',
-        dialogTitle: 'Share a Remote Job',
-        tintColor: '#4effa1'
+        subject: "Job Shared from Remote Work App",
+        dialogTitle: "Share a Remote Job",
+        tintColor: "#4effa1"
       }
     );
   };
 
-  _handleFavorite = async data => {
-    const id = data.id;
-
-    this.setState({ isFavorite: !this.state.isFavorite });
-
-    const keys = await AsyncStorage.getAllKeys();
-    if (keys.includes(id)) {
-      await AsyncStorage.removeItem(data.id);
-      this.props.favorites && this.props.refresh();
-    } else {
-      data.isFavorite = true;
-      await AsyncStorage.setItem(id, JSON.stringify(data));
-    }
+  const handleFavorite = () => {
+    const id = props.data.id;
+    handleFavorites(id);
+    setIsFavorite(!isFavorite);
   };
 
-  checkFavorite = async item => {
-    const isFavorite = await AsyncStorage.getItem(item);
-    return Boolean(isFavorite);
-  };
+  const {
+    url,
+    position,
+    tags,
+    dateFormated,
+    type,
+    salary,
+    company,
+    description
+  } = props.data;
+  let { date } = props.data;
 
-  async componentDidMount() {
-    const id = this.props.data.id;
-    const isFavorite = await this.checkFavorite(id);
-    this.setState({ isFavorite });
-  }
+  if (date)
+    date = moment(date)
+      .endOf("day")
+      .fromNow();
 
-  render() {
-    const { showDescription, isFavorite } = this.state;
-    const {
-      url,
-      position,
-      tags,
-      dateFormated,
-      type,
-      salary,
-      company
-    } = this.props.data;
-    let { description, date } = this.props.data;
-
-    if (date)
-      date = moment(date)
-        .endOf('day')
-        .fromNow();
-    description = description
-      ? description
-          .replace(/<(?:.|\n)*?>/gm, '')
-          .replace(/&amp;/gm, '&')
-          .replace(/&#8211;/gm, '-')
-          .replace(
-            /&rsquo;|&#8217;|&#8216;|&#8220;|&#8221;|&nbsp;|&ldquo;|&rdquo;/gm,
-            '"'
-          )
-          .trim()
-      : 'Open Url for more information';
-
-    return (
-      <View style={styles.item}>
-        <TouchableOpacity
-          style={styles.touch}
-          onPress={() => this._handleDescription()}
-        >
-          <Details
-            position={position}
-            company={company}
-            date={date || dateFormated}
+  return (
+    <View style={styles.item}>
+      <TouchableOpacity
+        style={styles.touch}
+        onPress={() => setShowDescription(!showDescription)}
+      >
+        <Details
+          position={position}
+          company={company}
+          date={date || dateFormated}
+        />
+        {description && showDescription && (
+          <Description
+            tags={tags}
+            salary={salary}
+            type={type}
+            description={description}
           />
-          {description && showDescription && (
-            <Description
-              tags={tags}
-              salary={salary}
-              type={type}
-              description={description}
-            />
-          )}
-          <Icons
-            handleFavorite={this._handleFavorite}
-            handleSharing={this._handleSharing}
-            handleUrl={this._openWebView}
-            data={this.props.data}
-            isFavorite={isFavorite}
-            url={url}
-            position={position}
-            company={company}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+        )}
+        <Icons
+          handleFavorite={handleFavorite}
+          handleSharing={handleSharing}
+          handleUrl={openWebView}
+          data={props.data}
+          isFavorite={isFavorite}
+          url={url}
+          position={position}
+          company={company}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   item: {
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   touch: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
     marginHorizontal: 8,
     marginVertical: 5,
     borderRadius: 10,
-    backgroundColor: 'white'
+    backgroundColor: "#F6F9FE"
   }
 });
+
+export default Job;

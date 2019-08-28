@@ -1,10 +1,11 @@
-import React from 'react';
-import { Image } from 'react-native';
-import { createAppContainer, createStackNavigator } from 'react-navigation';
+import React from "react";
+import { Image } from "react-native";
+import { createAppContainer, createStackNavigator } from "react-navigation";
 
-import TabNavigator from './MainTabNavigator';
-import BrowserScreen from '../screens/Browser';
-import BackButton from '../assets/back.png';
+import BrowserScreen from "../screens/Browser";
+import TabNavigator from "./MainTabNavigator";
+
+const BackButton = require("../assets/back.png");
 
 const Back = <Image source={BackButton} style={{ height: 28, width: 35 }} />;
 
@@ -19,20 +20,20 @@ const stackNavigator = createStackNavigator({
     screen: TabNavigator,
     navigationOptions: () => ({
       headerStyle: {
-        display: 'none'
+        display: "none"
       }
     })
   },
   Browser: {
     screen: BrowserStack,
     navigationOptions: () => ({
-      headerTitle: 'Back to Jobs Search',
+      headerTitle: "Back to Jobs Search",
       headerStyle: {
         height: 40,
-        backgroundColor: '#363636'
+        backgroundColor: "#112038"
       },
       headerTitleStyle: {
-        color: 'white',
+        color: "white",
         fontSize: 16
       },
       headerBackImage: Back,
