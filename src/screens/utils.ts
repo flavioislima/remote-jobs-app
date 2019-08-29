@@ -9,6 +9,12 @@ interface ParseHubInfo {
   token: string;
 }
 
+interface State {
+  data: JobType[];
+  favorites: JobType[];
+  keys: string[];
+}
+
 export const getAllJobs = async () => {
   const remoteOkJobs: JobType[] = await getRemoteOk();
   const indeedJobs: JobType[] = await getIndeed();
@@ -67,36 +73,35 @@ const checkToken = async (): Promise<ParseHubInfo> => {
   return parseHubInfo;
 };
 
-export const getFavorites = async () => {
-  const favorites: JobType[] = [];
-  let keys: string[] = [];
-  await AsyncStorage.getAllKeys()
-    .then((storedKeys) => {
-      if (storedKeys.length > 0) {
-        keys.push(...storedKeys);
-        storedKeys.map(
-          async (key) =>
-            await AsyncStorage.getItem(key)
-              .then((item) => {
-                const job: JobType = JSON.parse(item);
-                if (job.id) favorites.push(job);
-              })
-              .catch((err) => console.error(err))
-        );
-      }
-    })
-    .catch((err) => console.error(err));
-  console.log(keys);
+export const storeState = async (state: State) => {
+  console.log("storing state", state);
+  const { data, keys } = state;
+  const favFilter = (job: JobType) => keys.includes(job.id);
+  const dataWithFavorites = data.map((job: JobType) => {
+    return { ...job, isFavorite: favFilter(job) };
+  });
 
-  return { data: favorites, keys };
+  await AsyncStorage.setItem(
+    "state",
+    JSON.stringify({ ...state, data: dataWithFavorites })
+  );
 };
 
-export const clearFavorites = async (favorites: string[]) => {
-  await AsyncStorage.multiRemove(favorites)
-    .then(() => {
-      Alert.alert("Erase Favorites", "Favorites Cleared!", [{ text: "OK" }]);
-    })
-    .catch((err) => Alert.alert("Error on Erase Favorites: ", err));
+export const getStateFromStorage = async () => {
+  const state: State = { data: [], favorites: [], keys: [] };
+  const storageKeys = await AsyncStorage.getAllKeys();
+
+  if (storageKeys.includes("state")) {
+    const storedState = await AsyncStorage.getItem("state");
+    const parsedState: State = JSON.parse(storedState);
+    console.log({ parsedState });
+
+    state.data = parsedState.data;
+    state.favorites = parsedState.favorites;
+    state.keys = parsedState.keys;
+    return state;
+  }
+  return state;
 };
 
 function addIdToJob(jobs: any[]) {

@@ -13,10 +13,6 @@ class Jobs extends React.PureComponent<Props> {
   };
   static contextType = JobsContext;
 
-  componentDidMount() {
-    this.context.refresh();
-  }
-
   render() {
     const navigate: string = this.props.navigation;
     const { data, refresh, refreshing } = this.context;
