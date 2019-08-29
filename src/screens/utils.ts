@@ -74,7 +74,6 @@ const checkToken = async (): Promise<ParseHubInfo> => {
 };
 
 export const storeState = async (state: State) => {
-  console.log("storing state", state);
   const { data, keys } = state;
   const favFilter = (job: JobType) => keys.includes(job.id);
   const dataWithFavorites = data.map((job: JobType) => {

@@ -74,7 +74,6 @@ export default class GlobalState extends React.Component<Props> {
   handleFavorites = (data: JobType) => {
     const { keys, favorites } = this.state;
 
-    console.log(keys.includes(data.id));
     if (keys.includes(data.id)) {
       const filteredKeys: string[] = keys.filter((key) => key !== data.id);
       const filteredFavorites = favorites.filter((fav) => fav.id !== data.id);
@@ -84,7 +83,6 @@ export default class GlobalState extends React.Component<Props> {
         favorites: filteredFavorites
       });
 
-      console.log(this.state.favorites);
       this.storeState();
     } else {
       favorites.push({ ...data, isFavorite: true });
