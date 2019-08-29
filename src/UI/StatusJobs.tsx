@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#A7C8FF",
-    fontSize: 16
+    fontSize: 13
   },
   reloadButton: {
     alignSelf: "center"

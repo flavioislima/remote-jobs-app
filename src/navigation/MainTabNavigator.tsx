@@ -33,13 +33,11 @@ export default createBottomTabNavigator(
   {
     tabBarOptions: {
       tabStyle: {
-        flex: 1,
-        width: "25%",
-        justifyContent: "center",
-        alignItems: "center"
+        alignContent: "center"
       },
       labelStyle: {
-        fontSize: 15
+        fontSize: 15,
+        fontWeight: "bold"
       },
       style: {
         backgroundColor: "#112038",

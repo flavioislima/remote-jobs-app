@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   },
   iconText: {
     fontSize: 13,
+    fontWeight: "bold",
     color: "#112038",
     marginHorizontal: 5,
     textTransform: "uppercase"

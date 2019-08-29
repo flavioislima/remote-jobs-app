@@ -12,9 +12,12 @@ export default (props: Props) => (
     <View style={styles.searchJobs}>
       <SearchBar
         round
-        inputStyle={{ backgroundColor: "white" }}
+        inputStyle={{
+          backgroundColor: "white",
+          textAlign: "center"
+        }}
         clearIcon={{ type: "font-awesome", name: "clear", color: "#A7C8FF" }}
-        placeholder="Search Jobs..."
+        placeholder="Search for remote Jobs..."
         onChangeText={props.onChangeText}
         onClearText={props.onClearText}
         containerStyle={{
