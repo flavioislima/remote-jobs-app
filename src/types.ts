@@ -18,7 +18,7 @@ export interface ContextType {
   keys: string[];
   refreshing: boolean;
   refresh?: () => void;
-  handleFavorites?: (id: string) => void;
+  handleFavorites?: (data: JobType) => void;
   handleClearFavorites?: () => void;
 }
 

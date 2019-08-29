@@ -1,7 +1,7 @@
 import React from "react";
 import JobsContext from "./JobsContext";
 import { JobType } from "../types";
-import { getAllJobs } from "../screens/utils";
+import { getAllJobs, storeState, getStateFromStorage } from "../screens/utils";
 import { Alert } from "react-native";
 
 interface Props {
@@ -32,36 +32,71 @@ export default class GlobalState extends React.Component<Props> {
     const data = allJobs.map((job) => {
       return { ...job, isFavorite: favFilter(job) };
     });
+    const favorites = data.filter(favFilter);
 
     this.setState({
       data,
+      favorites,
       refreshing: false,
       keys
     });
+    this.storeState;
   };
+
+  async componentDidMount() {
+    const storedState = await getStateFromStorage();
+    const { data, favorites, keys } = storedState;
+    if (data.length > 100) {
+      this.setState({ data, favorites, keys });
+    } else {
+      this.refresh();
+    }
+  }
+
+  async componentWillUnmount() {
+    this.storeState();
+  }
 
   handleClearFavorites = () => {
     Alert.alert("Erase Favorites", "Are You Sure?", [
       { text: "Cancel" },
       {
         text: "Yes",
-        onPress: () => this.setState({ keys: [] })
+        onPress: () => {
+          this.setState({ keys: [], favorites: [] });
+          this.refresh();
+          this.storeState();
+        }
       }
     ]);
   };
 
-  handleFavorites = (id: string) => {
-    const { keys } = this.state;
+  handleFavorites = (data: JobType) => {
+    const { keys, favorites } = this.state;
 
-    if (keys.includes(id)) {
-      const filteredKeys = keys.filter((key) => key !== id);
+    console.log(keys.includes(data.id));
+    if (keys.includes(data.id)) {
+      const filteredKeys: string[] = keys.filter((key) => key !== data.id);
+      const filteredFavorites = favorites.filter((fav) => fav.id !== data.id);
+
       this.setState({
-        keys: filteredKeys
+        keys: filteredKeys,
+        favorites: filteredFavorites
       });
+
+      console.log(this.state.favorites);
+      this.storeState();
     } else {
-      keys.push(id);
+      favorites.push({ ...data, isFavorite: true });
+      keys.push(data.id);
+      this.storeState();
     }
   };
+
+  private storeState() {
+    const { data, favorites, keys } = this.state;
+    storeState({ data, favorites, keys });
+  }
 
   render() {
     const { data, favorites, keys, refreshing } = this.state;

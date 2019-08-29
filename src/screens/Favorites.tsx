@@ -2,7 +2,6 @@ import React from "react";
 import ListJobs from "../components/Listjobs/ListJobs";
 import { NavigationParams } from "react-navigation";
 import JobsContext from "../state/JobsContext";
-import { JobType } from "../types";
 import { Button } from "react-native-elements";
 
 interface Props {
@@ -17,10 +16,8 @@ class Favorites extends React.PureComponent<Props> {
 
   render() {
     const navigate: string = this.props.navigation;
-    const { data, refresh, refreshing, handleClearFavorites } = this.context;
-
-    const favFilter = (item: JobType) => item.isFavorite === true;
-    const favorites: JobType[] = data.filter(favFilter);
+    const { favorites, refreshing, handleClearFavorites } = this.context;
+    const refresh = () => this.forceUpdate();
 
     return (
       <>

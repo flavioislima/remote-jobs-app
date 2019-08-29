@@ -11,13 +11,12 @@ import JobsContext from "../../../state/JobsContext";
 interface Props {
   data: JobType;
   navigate: any;
-  isFavorite: boolean;
   refresh: () => void;
 }
 
 const Job: React.FC<Props> = (props: Props) => {
   const [showDescription, setShowDescription] = React.useState(false);
-  const [isFavorite, setIsFavorite] = React.useState(props.isFavorite);
+  const [isFavorite, setIsFavorite] = React.useState(props.data.isFavorite);
   const context = React.useContext(JobsContext);
   const handleFavorites = context.handleFavorites;
 
@@ -47,7 +46,7 @@ const Job: React.FC<Props> = (props: Props) => {
 
   const handleFavorite = () => {
     const id = props.data.id;
-    handleFavorites(id);
+    handleFavorites(props.data);
     setIsFavorite(!isFavorite);
   };
 

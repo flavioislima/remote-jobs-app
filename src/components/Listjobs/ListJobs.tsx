@@ -63,14 +63,7 @@ export default class ListJobs extends React.PureComponent<Props> {
 
   renderJobs = (job: any) => {
     const { refresh, navigate } = this.props;
-    return (
-      <Job
-        data={job.item}
-        navigate={navigate}
-        isFavorite={job.item.isFavorite}
-        refresh={refresh}
-      />
-    );
+    return <Job data={job.item} navigate={navigate} refresh={refresh} />;
   };
 
   extractKeys = (job: JobType) => job.url;
