@@ -49,6 +49,8 @@ export default class ListJobs extends React.PureComponent<Props> {
     }
 
     this.setState({ modalVisible: visible });
+    console.log(this.state.modalVisible);
+    console.log(RatingModal);
   };
 
   rated = async (rated: string) => {

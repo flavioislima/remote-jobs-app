@@ -50,23 +50,29 @@ const RatingModal = (props: Props) => (
             showRating
             type="star"
             fractions={0}
-            startingValue={3.0}
+            startingValue={4.0}
             imageSize={40}
             onFinishRating={onFinishRating.bind(
+              this,
               props.rated,
               props.setModalVisible,
               props.modalVisible
             )}
           />
           <Button
-            // transparent
-            // color="green"
+            color={"red"}
+            fontSize={18}
+            buttonStyle={{
+              backgroundColor: "transparent"
+            }}
             icon={{
               name: "times-circle",
-              type: "font-awesome"
+              type: "font-awesome",
+              color: "red"
             }}
             title="Later!"
             onPress={handleOnPress.bind(
+              this,
               props.setModalVisible,
               props.modalVisible
             )}

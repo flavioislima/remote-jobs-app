@@ -11,7 +11,7 @@ interface Props {
 export default (props: Props) =>
   !props.rated ? (
     <TouchableOpacity
-      onPress={props.setModalVisible.bind(!props.modalVisible)}
+      onPress={props.setModalVisible.bind(this, !props.modalVisible)}
       style={styles.icons}
     >
       <Text style={styles.iconText}>Rate Us</Text>
@@ -19,7 +19,7 @@ export default (props: Props) =>
     </TouchableOpacity>
   ) : (
     <TouchableOpacity
-      onPress={props.setModalVisible.bind(!props.modalVisible)}
+      onPress={props.setModalVisible.bind(this, !props.modalVisible)}
       style={styles.icons}
     >
       <Icon name="star" size={15} color="yellow" />
