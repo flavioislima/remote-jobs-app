@@ -11,7 +11,8 @@
     "eject": "rm -Rf ios android & react-native eject",
     "try-release": "react-native run-android --variant=release",
     "release": "cd ./android && ./gradlew assembleRelease",
-    "clean": "cd ./android && ./gradlew clean build"
+    "clean": "cd ./android && ./gradlew clean build",
+    "bundle": "cd ./android && ./gradlew bundleRelease"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
