@@ -54,12 +54,12 @@ const styles = StyleSheet.create({
   company: {
     fontSize: 13,
     fontWeight: "400",
-    color: "#FFFFFF"
+    color: "#112038"
   },
   date: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: "400",
-    color: "#FFFFFF",
+    color: "#112038",
     marginBottom: 3
   }
 });

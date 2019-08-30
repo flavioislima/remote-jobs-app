@@ -13,11 +13,10 @@ export default (props: Props) => (
       <SearchBar
         round
         inputStyle={{
-          backgroundColor: "white",
-          textAlign: "center"
+          backgroundColor: "white"
         }}
         clearIcon={{ type: "font-awesome", name: "clear", color: "#A7C8FF" }}
-        placeholder="Search for remote Jobs..."
+        placeholder="Search for Jobs..."
         onChangeText={props.onChangeText}
         onClearText={props.onClearText}
         containerStyle={{

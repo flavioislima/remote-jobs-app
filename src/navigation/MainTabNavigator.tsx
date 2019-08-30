@@ -12,8 +12,8 @@ const JobsStack = createStackNavigator({
 });
 
 JobsStack.navigationOptions = {
-  tabBarLabel: "All Jobs",
-  tabBarIcon: () => <Icon name="globe" size={19} color="#A7C8FF" />
+  tabBarLabel: "AllJobs",
+  tabBarIcon: () => <Icon name="briefcase" size={25} color="#A7C8FF" />
 };
 
 const FavoritesStack = createStackNavigator({
@@ -21,8 +21,7 @@ const FavoritesStack = createStackNavigator({
 });
 
 FavoritesStack.navigationOptions = {
-  tabBarLabel: "Saved",
-  tabBarIcon: () => <Icon name="heart" size={19} color="#A7C8FF" />
+  tabBarIcon: () => <Icon name="heart" size={25} color="#A7C8FF" />
 };
 
 export default createBottomTabNavigator(
@@ -36,12 +35,13 @@ export default createBottomTabNavigator(
         alignContent: "center"
       },
       labelStyle: {
+        display: "none",
         fontSize: 15,
         fontWeight: "bold"
       },
       style: {
         backgroundColor: "#112038",
-        height: 50
+        height: 55
       },
       activeTintColor: "white",
       inactiveTintColor: "darkgray"

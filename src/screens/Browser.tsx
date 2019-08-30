@@ -9,8 +9,6 @@ import {
 } from "react-native";
 import { NavigationParams } from "react-navigation";
 
-import AdBanner from "../UI/AdBanner";
-
 interface Props {
   navigation: any;
 }
@@ -39,8 +37,6 @@ export default class BrowserScreen extends React.Component<Props> {
           source={{ uri: url }}
           style={{ marginVertical: 5 }}
         />
-
-        <AdBanner />
       </View>
     );
   }

@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-navigation";
 import { JobType } from "../../types";
 import Search from "../../UI/Search";
 import Stars from "../../UI/Stars";
+import Error from "../../UI/Error";
 import StatusJobs from "../../UI/StatusJobs";
 import Job from "./Jobs/Job";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -25,7 +26,6 @@ interface Props {
 }
 
 let RatingModal: any = null;
-const Error: any = null;
 
 export default class ListJobs extends React.PureComponent<Props> {
   state = {
@@ -69,6 +69,9 @@ export default class ListJobs extends React.PureComponent<Props> {
   extractKeys = (job: JobType) => job.url;
 
   componentDidMount() {
+    if (this.props.jobs.length < 5) {
+      this.setState({ error: true });
+    }
     AsyncStorage.getItem("rated").then((rated) =>
       this.setState({ rated: JSON.parse(rated) })
     );
@@ -104,7 +107,7 @@ export default class ListJobs extends React.PureComponent<Props> {
           onChangeText={this.onSearchJobs}
           onClearText={this.onClearSearch}
         />
-        {this.state.error && <Error />}
+        {/* {this.state.error && <Error />} */}
         <StatusJobs
           refreshing={refreshing}
           length={filteredData.length}
