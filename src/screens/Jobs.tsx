@@ -1,10 +1,12 @@
 import * as React from "react";
 import ListJobs from "../components/Listjobs/ListJobs";
-import { NavigationParams } from "react-navigation";
+import { NavigationParams, withNavigationFocus } from "react-navigation";
 import JobsContext from "../state/JobsContext";
+import { JobType } from "../types";
 
 interface Props {
-  navigation: string;
+  navigation: any;
+  isFocused: boolean;
 }
 
 class Jobs extends React.PureComponent<Props> {
@@ -15,7 +17,7 @@ class Jobs extends React.PureComponent<Props> {
 
   render() {
     const navigate: string = this.props.navigation;
-    const { data, refresh, refreshing } = this.context;
+    const { data, refresh, refreshing, keys } = this.context;
 
     return (
       <>
@@ -30,4 +32,4 @@ class Jobs extends React.PureComponent<Props> {
   }
 }
 
-export default Jobs;
+export default withNavigationFocus(Jobs);

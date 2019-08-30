@@ -1,7 +1,6 @@
 import { JobType } from "../types";
 import axios from "axios";
 import api from "../api";
-import { Alert } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
 interface ParseHubInfo {
@@ -93,12 +92,9 @@ export const getStateFromStorage = async () => {
   if (storageKeys.includes("state")) {
     const storedState = await AsyncStorage.getItem("state");
     const parsedState: State = JSON.parse(storedState);
-    console.log({ parsedState });
+    const { data, favorites, keys } = parsedState;
 
-    state.data = parsedState.data;
-    state.favorites = parsedState.favorites;
-    state.keys = parsedState.keys;
-    return state;
+    return { ...state, data, favorites, keys };
   }
   return state;
 };

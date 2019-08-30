@@ -26,12 +26,9 @@ export default class GlobalState extends React.Component<Props> {
   refresh = async (): Promise<void> => {
     this.setState({ data: [], refreshing: true });
     const keys = this.state.keys;
-    const allJobs: JobType[] = await getAllJobs();
+    const data: JobType[] = await getAllJobs();
 
     const favFilter = (item: JobType) => keys.includes(item.id);
-    const data = allJobs.map((job) => {
-      return { ...job, isFavorite: favFilter(job) };
-    });
     const favorites = data.filter(favFilter);
 
     this.setState({
@@ -64,7 +61,6 @@ export default class GlobalState extends React.Component<Props> {
         text: "Yes",
         onPress: () => {
           this.setState({ keys: [], favorites: [] });
-          this.refresh();
           this.storeState();
         }
       }

@@ -5,7 +5,7 @@ import JobsContext from "../state/JobsContext";
 import { Button } from "react-native-elements";
 
 interface Props {
-  navigation: string;
+  navigation: any;
 }
 
 class Favorites extends React.PureComponent<Props> {
