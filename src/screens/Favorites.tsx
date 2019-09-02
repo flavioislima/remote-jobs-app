@@ -1,11 +1,12 @@
 import React from "react";
 import ListJobs from "../components/Listjobs/ListJobs";
-import { NavigationParams } from "react-navigation";
+import { NavigationParams, withNavigationFocus } from "react-navigation";
 import JobsContext from "../state/JobsContext";
 import { Button } from "react-native-elements";
 
 interface Props {
   navigation: any;
+  isFocused: boolean;
 }
 
 class Favorites extends React.PureComponent<Props> {
@@ -13,6 +14,13 @@ class Favorites extends React.PureComponent<Props> {
     header: null
   };
   static contextType = JobsContext;
+
+  componentDidUpdate(prevProps: Props) {
+    // Not the best solution, working on a new one since the component is not updating itself after changing props;
+    if (prevProps.isFocused !== this.props.isFocused) {
+      this.forceUpdate();
+    }
+  }
 
   render() {
     const navigate: string = this.props.navigation;
@@ -41,4 +49,4 @@ class Favorites extends React.PureComponent<Props> {
   }
 }
 
-export default Favorites;
+export default withNavigationFocus(Favorites);

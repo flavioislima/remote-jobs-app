@@ -15,12 +15,8 @@ interface Props {
 }
 
 const Job: React.FC<Props> = (props: Props) => {
-  const context = React.useContext(JobsContext);
-  const { keys, handleFavorites } = context;
+  const { keys, handleFavorites } = React.useContext(JobsContext);
   const [showDescription, setShowDescription] = React.useState(false);
-  const [isFavorite, setIsFavorite] = React.useState(
-    keys.includes(props.data.id)
-  );
 
   const openWebView = () => {
     const url = props.data.url;
@@ -44,12 +40,6 @@ const Job: React.FC<Props> = (props: Props) => {
         tintColor: "#4effa1"
       }
     );
-  };
-
-  const handleFavorite = () => {
-    const id = props.data.id;
-    handleFavorites(props.data);
-    setIsFavorite(!isFavorite);
   };
 
   const {
@@ -89,7 +79,7 @@ const Job: React.FC<Props> = (props: Props) => {
           />
         )}
         <Icons
-          handleFavorite={handleFavorite}
+          handleFavorite={handleFavorites.bind(this, props.data)}
           handleSharing={handleSharing}
           handleUrl={openWebView}
           data={props.data}
