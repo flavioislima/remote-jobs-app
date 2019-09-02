@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   RefreshControl,
@@ -13,6 +13,7 @@ import Search from "../../UI/Search";
 import Stars from "../../UI/Stars";
 import Error from "../../UI/Error";
 import StatusJobs from "../../UI/StatusJobs";
+import RatingModal from "../../UI/RatingModal";
 import Job from "./Jobs/Job";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -21,111 +22,82 @@ interface Props {
   jobs: JobType[];
   refreshing: boolean;
   navigate: any;
+  error?: boolean;
   clearFavorites?: () => void;
   handleClearFavorites?: () => void;
 }
 
-let RatingModal: any = null;
+const ListJobs: React.FC<Props> = (props: Props) => {
+  const { jobs, refreshing, refresh, error } = props;
 
-export default class ListJobs extends React.PureComponent<Props> {
-  state = {
-    filterText: "",
-    modalVisible: false,
-    rated: false,
-    error: false
-  };
+  const [filterText, setFilterText] = useState("");
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isRated, setRated] = useState(false);
 
-  onSearchJobs = (filterText: string) => {
-    this.setState({ filterText });
-  };
+  const filterRegex: RegExp = new RegExp(String(filterText), "i");
+  const filter = (item: JobType) => filterRegex.test(item.position);
+  const filteredData: JobType[] = jobs.filter(filter);
 
-  onClearSearch = () => {
-    this.setState({ filterText: "" });
-  };
-
-  setModalVisible = (visible: boolean) => {
-    if (RatingModal === null) {
-      RatingModal = require("../../UI/RatingModal").default;
-    }
-
-    this.setState({ modalVisible: visible });
-    console.log(this.state.modalVisible);
-    console.log(RatingModal);
-  };
-
-  rated = async (rated: string) => {
+  const handleRated = async (rated: string) => {
     await AsyncStorage.setItem("rated", rated).then(async () => {
-      await AsyncStorage.getItem("rated").then((info) => {
-        this.setState({ rated: info });
+      await AsyncStorage.getItem("rated").then(() => {
+        setRated(true);
       });
     });
   };
 
-  renderJobs = (job: any) => {
-    const { refresh, navigate } = this.props;
+  const renderJobs = (job: any) => {
+    const { refresh, navigate } = props;
     return <Job data={job.item} navigate={navigate} refresh={refresh} />;
   };
 
-  extractKeys = (job: JobType) => job.url;
+  const extractKeys = (job: JobType) => job.url;
 
-  componentDidMount() {
-    if (this.props.jobs.length < 5) {
-      this.setState({ error: true });
-    }
-    AsyncStorage.getItem("rated").then((rated) =>
-      this.setState({ rated: JSON.parse(rated) })
-    );
-  }
+  useEffect(() => {
+    AsyncStorage.getItem("rated").then((rated) => setRated(JSON.parse(rated)));
+  }, [isRated]);
 
-  render() {
-    const { jobs, refreshing, refresh } = this.props;
-
-    const filterRegex: RegExp = new RegExp(String(this.state.filterText), "i");
-    const filter = (item: JobType) => filterRegex.test(item.position);
-    const filteredData: JobType[] = jobs.filter(filter);
-
-    return (
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#112038" />
-        <SafeAreaView>
-          <View style={styles.status}>
-            <Stars
-              rated={this.state.rated}
-              modalVisible={this.state.modalVisible}
-              setModalVisible={this.setModalVisible}
+  return (
+    <View style={styles.container}>
+      <StatusBar backgroundColor="#112038" />
+      <SafeAreaView>
+        <View style={styles.status}>
+          <Stars
+            isRated={isRated}
+            modalVisible={isModalVisible}
+            setModalVisible={setModalVisible.bind(this, !isModalVisible)}
+          />
+          {isModalVisible && (
+            <RatingModal
+              rated={handleRated}
+              modalVisible={isModalVisible}
+              setModalVisible={setModalVisible}
             />
-            {this.state.modalVisible && (
-              <RatingModal
-                rated={this.rated}
-                modalVisible={this.state.modalVisible}
-                setModalVisible={this.setModalVisible}
-              />
-            )}
-          </View>
-        </SafeAreaView>
-        <Search
-          onChangeText={this.onSearchJobs}
-          onClearText={this.onClearSearch}
-        />
-        {/* {this.state.error && <Error />} */}
-        <StatusJobs
-          refreshing={refreshing}
-          length={filteredData.length}
-          refresh={refresh}
-        />
-        <FlatList
-          style={styles.container}
-          data={filteredData}
-          renderItem={this.renderJobs}
-          keyExtractor={this.extractKeys}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-          }
-        />
-      </View>
-    );
-  }
-}
+          )}
+        </View>
+      </SafeAreaView>
+      <Search
+        onChangeText={setFilterText}
+        onClearText={setFilterText.bind(this, "")}
+      />
+      {error && <Error />}
+      <StatusJobs
+        refreshing={refreshing}
+        length={filteredData.length}
+        refresh={refresh}
+      />
+      <FlatList
+        style={styles.container}
+        data={filteredData}
+        renderItem={renderJobs}
+        keyExtractor={extractKeys}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+        }
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -140,3 +112,5 @@ const styles = StyleSheet.create({
     paddingTop: 0
   }
 });
+
+export default ListJobs;
