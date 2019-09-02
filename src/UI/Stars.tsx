@@ -3,25 +3,19 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 interface Props {
-  rated: boolean;
+  isRated: boolean;
   modalVisible: boolean;
-  setModalVisible: (value: boolean) => void;
+  setModalVisible: () => void;
 }
 
 export default (props: Props) =>
-  !props.rated ? (
-    <TouchableOpacity
-      onPress={props.setModalVisible.bind(this, !props.modalVisible)}
-      style={styles.icons}
-    >
+  !props.isRated ? (
+    <TouchableOpacity onPress={props.setModalVisible} style={styles.icons}>
       <Text style={styles.iconText}>Rate Us</Text>
       <Icon name="star" size={15} color="yellow" />
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity
-      onPress={props.setModalVisible.bind(this, !props.modalVisible)}
-      style={styles.icons}
-    >
+    <TouchableOpacity onPress={props.setModalVisible} style={styles.icons}>
       <Icon name="star" size={15} color="yellow" />
       <Icon name="star" size={15} color="yellow" />
       <Icon name="star" size={15} color="yellow" />

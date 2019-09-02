@@ -39,7 +39,7 @@ class Favorites extends React.PureComponent<Props> {
         <Button
           large
           textStyle={{ color: "red" }}
-          buttonStyle={{ height: 30, backgroundColor: "transparent" }}
+          buttonStyle={{ height: 25, backgroundColor: "transparent" }}
           icon={{ name: "trash", type: "font-awesome", color: "red" }}
           title="Delete all Favorites"
           onPress={handleClearFavorites}

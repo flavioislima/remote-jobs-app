@@ -17,7 +17,7 @@ class Jobs extends React.PureComponent<Props> {
 
   render() {
     const navigate: string = this.props.navigation;
-    const { data, refresh, refreshing, keys } = this.context;
+    const { data, refresh, refreshing, error } = this.context;
 
     return (
       <>
@@ -26,6 +26,7 @@ class Jobs extends React.PureComponent<Props> {
           navigate={navigate}
           refresh={refresh}
           refreshing={refreshing}
+          error={error}
         />
       </>
     );

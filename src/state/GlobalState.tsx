@@ -13,6 +13,7 @@ interface State {
   favorites: JobType[];
   keys: string[];
   refreshing: boolean;
+  error: boolean;
 }
 
 export default class GlobalState extends React.Component<Props> {
@@ -20,7 +21,8 @@ export default class GlobalState extends React.Component<Props> {
     data: [],
     favorites: [],
     keys: [],
-    refreshing: false
+    refreshing: false,
+    error: false
   };
 
   refresh = async (): Promise<void> => {
@@ -28,7 +30,7 @@ export default class GlobalState extends React.Component<Props> {
     const keys = this.state.keys;
     const data: JobType[] = await getAllJobs();
 
-    const favFilter = (item: JobType) => keys.includes(item.id);
+    const favFilter = ({ id }) => keys.includes(id);
     const favorites = data.filter(favFilter);
 
     this.setState({
@@ -72,7 +74,7 @@ export default class GlobalState extends React.Component<Props> {
 
     if (keys.includes(data.id)) {
       const filteredKeys: string[] = keys.filter((key) => key !== data.id);
-      const filteredFavorites = favorites.filter((fav) => fav.id !== data.id);
+      const filteredFavorites = favorites.filter(({ id }) => id !== data.id);
 
       this.setState({
         keys: filteredKeys,
@@ -81,7 +83,7 @@ export default class GlobalState extends React.Component<Props> {
 
       this.storeState();
     } else {
-      favorites.push({ ...data, isFavorite: true });
+      favorites.push(data);
       keys.push(data.id);
       this.storeState();
     }
@@ -93,7 +95,7 @@ export default class GlobalState extends React.Component<Props> {
   }
 
   render() {
-    const { data, favorites, keys, refreshing } = this.state;
+    const { data, favorites, keys, refreshing, error } = this.state;
 
     return (
       <JobsContext.Provider
@@ -102,6 +104,7 @@ export default class GlobalState extends React.Component<Props> {
           favorites,
           keys,
           refreshing,
+          error,
           refresh: this.refresh,
           handleClearFavorites: this.handleClearFavorites,
           handleFavorites: this.handleFavorites

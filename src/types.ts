@@ -17,6 +17,7 @@ export interface ContextType {
   favorites: JobType[];
   keys: string[];
   refreshing: boolean;
+  error: boolean;
   refresh?: () => void;
   handleFavorites?: (data: JobType) => void;
   handleClearFavorites?: () => void;
