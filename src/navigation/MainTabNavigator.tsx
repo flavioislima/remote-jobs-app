@@ -13,7 +13,9 @@ const JobsStack = createStackNavigator({
 
 JobsStack.navigationOptions = {
   tabBarLabel: "AllJobs",
-  tabBarIcon: () => <Icon name="briefcase" size={25} color="#A7C8FF" />
+  tabBarIcon: ({ focused }) => (
+    <Icon name="briefcase" size={25} color={focused ? "#A7C8FF" : "darkgrey"} />
+  )
 };
 
 const FavoritesStack = createStackNavigator({
@@ -21,7 +23,9 @@ const FavoritesStack = createStackNavigator({
 });
 
 FavoritesStack.navigationOptions = {
-  tabBarIcon: () => <Icon name="heart" size={25} color="#A7C8FF" />
+  tabBarIcon: ({ focused }) => (
+    <Icon name="heart" size={25} color={focused ? "#A7C8FF" : "darkgrey"} />
+  )
 };
 
 export default createBottomTabNavigator(
