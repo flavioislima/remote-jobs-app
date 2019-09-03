@@ -25,13 +25,12 @@ const styles = StyleSheet.create({
   statusView: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignContent: "center",
-    marginVertical: 5,
-    marginHorizontal: 5
+    marginTop: 3,
+    marginHorizontal: 10
   },
   title: {
     color: "#A7C8FF",
-    fontSize: 13
+    fontSize: 11
   },
   reloadButton: {
     alignSelf: "center"
