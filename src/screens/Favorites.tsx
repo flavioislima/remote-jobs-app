@@ -1,8 +1,9 @@
 import React from "react";
-import ListJobs from "../components/Listjobs/ListJobs";
-import { NavigationParams, withNavigationFocus } from "react-navigation";
-import JobsContext from "../state/JobsContext";
+import { NavigationParams } from "react-navigation";
 import { Button } from "react-native-elements";
+import ListJobs from "../components/Listjobs/ListJobs";
+import JobsContext from "../state/JobsContext";
+import AdBanner from "../UI/AdBanner";
 
 interface Props {
   navigation: any;
@@ -15,22 +16,16 @@ class Favorites extends React.PureComponent<Props> {
   };
   static contextType = JobsContext;
 
-  componentDidUpdate(prevProps: Props) {
-    // Not the best solution, working on a new one since the component is not updating itself after changing props;
-    if (prevProps.isFocused !== this.props.isFocused) {
-      this.forceUpdate();
-    }
-  }
-
   render() {
     const navigate: string = this.props.navigation;
-    const { favorites, refreshing, handleClearFavorites } = this.context;
+    const { data, keys, refreshing, handleClearFavorites } = this.context;
+    const favs = data.filter(({ id }) => keys.includes(id));
     const refresh = () => this.forceUpdate();
 
     return (
       <>
         <ListJobs
-          jobs={favorites}
+          jobs={favs}
           navigate={navigate}
           refresh={refresh}
           refreshing={refreshing}
@@ -44,9 +39,10 @@ class Favorites extends React.PureComponent<Props> {
           title="Delete all Favorites"
           onPress={handleClearFavorites}
         />
+        <AdBanner />
       </>
     );
   }
 }
 
-export default withNavigationFocus(Favorites);
+export default Favorites;
