@@ -2,7 +2,7 @@ import * as React from "react";
 import ListJobs from "../components/Listjobs/ListJobs";
 import { NavigationParams, withNavigationFocus } from "react-navigation";
 import JobsContext from "../state/JobsContext";
-import { JobType } from "../types";
+import AdBanner from "../UI/AdBanner";
 
 interface Props {
   navigation: any;
@@ -28,6 +28,7 @@ class Jobs extends React.PureComponent<Props> {
           refreshing={refreshing}
           error={error}
         />
+        <AdBanner />
       </>
     );
   }
