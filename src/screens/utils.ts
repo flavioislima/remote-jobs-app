@@ -18,14 +18,14 @@ export const getAllJobs = async () => {
   const indeedJobs: JobType[] = await getIndeed();
   const allJobs: JobType[] = remoteOkJobs.concat(indeedJobs);
 
-  return allJobs;
+  return indeedJobs;
 };
 
 export const getIndeed = async () => {
   const parseHubInfo: ParseHubInfo = await checkToken();
   const url: string = await parseHubInfo.url;
-
   const jobs = await getJobs(url);
+
   return addIdToJob(jobs.Job);
 };
 
@@ -95,5 +95,16 @@ function addIdToJob(jobs: any[]) {
     job = { ...job, id: job.url };
     jobsWithId.push(job);
   });
-  return jobsWithId;
+
+  return removeDuplicates(jobsWithId);
+}
+
+function removeDuplicates(jobsWithId: JobType[]): JobType[] {
+  return jobsWithId.reduce((acc: JobType[], current: JobType) => {
+    const duplicated = acc.find((job) => job.id === current.id);
+    if (!duplicated) {
+      return acc.concat(current);
+    }
+    return acc;
+  }, []);
 }

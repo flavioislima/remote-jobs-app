@@ -40,7 +40,7 @@ const ListJobs: React.FC<Props> = (props: Props) => {
     return <Job data={job.item} navigate={navigate} refresh={refresh} />;
   };
 
-  const extractKeys = (job: JobType) => job.url;
+  const extractKeys = (job: JobType) => job.id;
 
   useEffect(() => {
     AsyncStorage.getItem("rated").then((rated) => setRated(JSON.parse(rated)));
