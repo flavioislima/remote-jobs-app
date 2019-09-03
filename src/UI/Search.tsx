@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     backgroundColor: "#112038",
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18
   },
   searchJobs: {
     width: "92%"
