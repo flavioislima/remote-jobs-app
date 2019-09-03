@@ -10,7 +10,6 @@ interface Props {
 
 interface State {
   data: JobType[];
-  favorites: JobType[];
   keys: string[];
   refreshing: boolean;
   error: boolean;
@@ -19,7 +18,6 @@ interface State {
 export default class GlobalState extends React.Component<Props> {
   state: State = {
     data: [],
-    favorites: [],
     keys: [],
     refreshing: false,
     error: false
@@ -28,25 +26,23 @@ export default class GlobalState extends React.Component<Props> {
   refresh = async (): Promise<void> => {
     this.setState({ data: [], refreshing: true });
     const keys = this.state.keys;
-    const data: JobType[] = await getAllJobs();
+    const data: JobType[] = (await getAllJobs()) || [];
 
-    const favFilter = ({ id }) => keys.includes(id);
-    const favorites = data.filter(favFilter);
-
-    this.setState({
-      data,
-      favorites,
-      refreshing: false,
-      keys
-    });
-    this.storeState;
+    if (data.length > 100) {
+      this.setState({
+        data,
+        refreshing: false,
+        keys
+      });
+      this.storeState();
+    }
   };
 
   async componentDidMount() {
     const storedState = await getStateFromStorage();
-    const { data, favorites, keys } = storedState;
+    const { data, keys } = storedState;
     if (data.length > 100) {
-      this.setState({ data, favorites, keys });
+      this.setState({ data, keys });
     } else {
       this.refresh();
     }
@@ -70,38 +66,36 @@ export default class GlobalState extends React.Component<Props> {
   };
 
   handleFavorites = (data: JobType) => {
-    const { keys, favorites } = this.state;
+    const { keys } = this.state;
 
     if (keys.includes(data.id)) {
       const filteredKeys: string[] = keys.filter((key) => key !== data.id);
-      const filteredFavorites = favorites.filter(({ id }) => id !== data.id);
 
       this.setState({
-        keys: filteredKeys,
-        favorites: filteredFavorites
+        keys: filteredKeys
       });
 
       this.storeState();
     } else {
-      favorites.push(data);
-      keys.push(data.id);
+      this.setState({
+        keys: [...this.state.keys, data.id]
+      });
       this.storeState();
     }
   };
 
   private storeState() {
-    const { data, favorites, keys } = this.state;
-    storeState({ data, favorites, keys });
+    const { data, keys } = this.state;
+    storeState({ data, keys });
   }
 
   render() {
-    const { data, favorites, keys, refreshing, error } = this.state;
+    const { data, keys, refreshing, error } = this.state;
 
     return (
       <JobsContext.Provider
         value={{
           data,
-          favorites,
           keys,
           refreshing,
           error,

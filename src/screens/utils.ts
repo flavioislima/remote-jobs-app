@@ -10,7 +10,6 @@ interface ParseHubInfo {
 
 interface State {
   data: JobType[];
-  favorites: JobType[];
   keys: string[];
 }
 
@@ -73,28 +72,19 @@ const checkToken = async (): Promise<ParseHubInfo> => {
 };
 
 export const storeState = async (state: State) => {
-  const { data, keys } = state;
-  const favFilter = (job: JobType) => keys.includes(job.id);
-  const dataWithFavorites = data.map((job: JobType) => {
-    return { ...job, isFavorite: favFilter(job) };
-  });
-
-  await AsyncStorage.setItem(
-    "state",
-    JSON.stringify({ ...state, data: dataWithFavorites })
-  );
+  await AsyncStorage.setItem("state", JSON.stringify(state));
 };
 
 export const getStateFromStorage = async () => {
-  const state: State = { data: [], favorites: [], keys: [] };
+  const state: State = { data: [], keys: [] };
   const storageKeys = await AsyncStorage.getAllKeys();
 
   if (storageKeys.includes("state")) {
     const storedState = await AsyncStorage.getItem("state");
     const parsedState: State = JSON.parse(storedState);
-    const { data, favorites, keys } = parsedState;
+    const { data, keys } = parsedState;
 
-    return { ...state, data, favorites, keys };
+    return { ...state, data, keys };
   }
   return state;
 };

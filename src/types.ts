@@ -14,7 +14,6 @@ export interface JobType {
 
 export interface ContextType {
   data: JobType[];
-  favorites: JobType[];
   keys: string[];
   refreshing: boolean;
   error: boolean;
