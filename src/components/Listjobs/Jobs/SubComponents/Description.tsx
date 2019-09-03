@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "white",
     borderBottomWidth: 5,
     borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    width: "95%"
+    borderTopLeftRadius: 10
   },
   description: {
     marginLeft: 10,
