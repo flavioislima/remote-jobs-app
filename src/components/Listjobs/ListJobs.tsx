@@ -27,9 +27,11 @@ interface Props {
 
 const ListJobs: React.FC<Props> = (props: Props) => {
   const { jobs, refreshing, refresh, error } = props;
+  console.log("render");
 
   const [filterText, setFilterText] = useState("");
   const [isRated, setRated] = useState(false);
+  const [order, setOrder] = useState(true); // true = descending, false = asscending
   const [pickedDate, setPickedDate] = useState(new Date(2017, 0, 1).toJSON());
 
   const filterRegex: RegExp = new RegExp(String(filterText), "i");
@@ -37,6 +39,8 @@ const ListJobs: React.FC<Props> = (props: Props) => {
   const dateFilter = ({ date }) => Date.parse(date) >= Date.parse(pickedDate);
   const textFilteredData: JobType[] = jobs.filter(textFilter);
   const filteredData: JobType[] = textFilteredData.filter(dateFilter);
+  const handleOrder = () => setOrder(!order);
+  const sortedData = sortJobs(filteredData, order);
 
   const renderJobs = (job: any) => {
     const { refresh, navigate } = props;
@@ -57,6 +61,8 @@ const ListJobs: React.FC<Props> = (props: Props) => {
           onChangeText={setFilterText}
           onClearText={setFilterText.bind(this, "")}
           onDateChange={setPickedDate.bind(this)}
+          order={order}
+          setOrder={handleOrder}
         />
       </SafeAreaView>
       {error && <Error />}
@@ -65,10 +71,11 @@ const ListJobs: React.FC<Props> = (props: Props) => {
         length={filteredData.length}
         refresh={refresh}
         date={pickedDate}
+        order={order}
       />
       <FlatList
         style={styles.container}
-        data={filteredData}
+        data={sortedData}
         renderItem={renderJobs}
         keyExtractor={extractKeys}
         refreshControl={
@@ -77,6 +84,20 @@ const ListJobs: React.FC<Props> = (props: Props) => {
       />
     </View>
   );
+};
+
+const sortJobs = (allJobs: JobType[], order: boolean = true) => {
+  return allJobs.sort((job1, job2) => {
+    const firstDate = Date.parse(job1.date);
+    const secondDate = Date.parse(job2.date);
+    if (firstDate > secondDate) {
+      return order ? -1 : 1;
+    } else if (firstDate < secondDate) {
+      return order ? 1 : -1;
+    } else {
+      return 0;
+    }
+  });
 };
 
 const styles = StyleSheet.create({

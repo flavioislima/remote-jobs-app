@@ -3,12 +3,13 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  DatePickerAndroid,
-  DatePickerAndroidOpenReturn
+  DatePickerAndroid
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
 interface Props {
+  order: boolean;
+  setOrder: () => void;
   onChangeText: (text: string) => void;
   onClearText: () => void;
   onDateChange?: (date: string) => void;
@@ -21,6 +22,8 @@ interface DatePicker {
 }
 
 export default (props: Props) => {
+  const { order, setOrder, onDateChange, onChangeText, onClearText } = props;
+
   const pickDate = async () => {
     DatePickerAndroid.open({
       date: new Date(),
@@ -28,9 +31,9 @@ export default (props: Props) => {
     }).then((res) => {
       if (res.action !== DatePickerAndroid.dismissedAction) {
         const { year, month, day } = res as DatePicker;
-        props.onDateChange(new Date(year, month, day).toJSON());
+        onDateChange(new Date(year, month, day).toJSON());
       } else {
-        props.onDateChange(new Date(2016, 0, 1).toJSON());
+        onDateChange(new Date(2016, 0, 1).toJSON());
       }
     });
   };
@@ -45,8 +48,8 @@ export default (props: Props) => {
           }}
           clearIcon={{ type: "font-awesome", name: "clear", color: "#A7C8FF" }}
           placeholder="Search for Jobs..."
-          onChangeText={props.onChangeText}
-          onClearText={props.onClearText}
+          onChangeText={onChangeText}
+          onClearText={onClearText}
           containerStyle={{
             backgroundColor: "#112038",
             borderTopColor: "#112038",
@@ -55,9 +58,18 @@ export default (props: Props) => {
           placeholderTextColor={"#A7C8FF"}
         />
       </View>
-      <TouchableOpacity onPress={pickDate}>
-        <Icon name="calendar" size={30} color={"#A7C8FF"} />
-      </TouchableOpacity>
+      <View style={styles.icons}>
+        <TouchableOpacity onPress={pickDate}>
+          <Icon name="calendar" size={30} color={"#A7C8FF"} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={setOrder}>
+          <Icon
+            name={order ? "sort-amount-desc" : "sort-amount-asc"}
+            size={25}
+            color={"#A7C8FF"}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -65,13 +77,22 @@ export default (props: Props) => {
 const styles = StyleSheet.create({
   searchView: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
+    alignContent: "space-between",
     backgroundColor: "#112038",
     borderBottomLeftRadius: 18,
     borderBottomRightRadius: 18
   },
   searchJobs: {
-    width: "80%"
+    width: "70%",
+    marginLeft: 15
+  },
+  icons: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "22%",
+    marginRight: 10
   }
 });

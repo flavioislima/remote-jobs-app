@@ -19,7 +19,7 @@ export const getAllJobs = async () => {
   const indeedJobs: JobType[] = await getIndeed();
   const allJobs: JobType[] = remoteOkJobs.concat(indeedJobs);
 
-  return sortJobs(allJobs);
+  return allJobs;
 };
 
 export const getIndeed = async () => {
@@ -90,20 +90,6 @@ export const getStateFromStorage = async () => {
   }
   return state;
 };
-
-function sortJobs(allJobs: JobType[]) {
-  return allJobs.sort((job1, job2) => {
-    const firstDate = Date.parse(job1.date);
-    const secondDate = Date.parse(job2.date);
-    if (firstDate > secondDate) {
-      return -1;
-    } else if (firstDate < secondDate) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-}
 
 function addDate(jobs: JobType[]): JobType[] {
   return jobs.map((job: JobType) => {

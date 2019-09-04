@@ -7,6 +7,7 @@ interface Props {
   length: number;
   refresh: () => void;
   date: string;
+  order: boolean;
 }
 
 export default (props: Props) => (
@@ -16,7 +17,9 @@ export default (props: Props) => (
         ? "Searching for Remote Jobs..."
         : `${props.length} Jobs found from ${new Date(
             props.date
-          ).toLocaleDateString()}`}
+          ).toLocaleDateString()} in ${
+            props.order ? "Descending" : "Ascending"
+          } order`}
     </Text>
     <TouchableOpacity onPress={props.refresh} style={styles.reloadButton}>
       <Icon name="refresh" size={23} color="#112038" />
@@ -28,6 +31,7 @@ const styles = StyleSheet.create({
   statusView: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     marginTop: 3,
     marginHorizontal: 10
   },
