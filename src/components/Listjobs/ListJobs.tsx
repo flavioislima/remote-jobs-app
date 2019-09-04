@@ -30,10 +30,13 @@ const ListJobs: React.FC<Props> = (props: Props) => {
 
   const [filterText, setFilterText] = useState("");
   const [isRated, setRated] = useState(false);
+  const [pickedDate, setPickedDate] = useState(new Date(2017, 0, 1).toJSON());
 
   const filterRegex: RegExp = new RegExp(String(filterText), "i");
-  const filter = (item: JobType) => filterRegex.test(item.position);
-  const filteredData: JobType[] = jobs.filter(filter);
+  const textFilter = ({ position }) => filterRegex.test(position);
+  const dateFilter = ({ date }) => Date.parse(date) >= Date.parse(pickedDate);
+  const textFilteredData: JobType[] = jobs.filter(textFilter);
+  const filteredData: JobType[] = textFilteredData.filter(dateFilter);
 
   const renderJobs = (job: any) => {
     const { refresh, navigate } = props;
@@ -53,6 +56,7 @@ const ListJobs: React.FC<Props> = (props: Props) => {
         <Search
           onChangeText={setFilterText}
           onClearText={setFilterText.bind(this, "")}
+          onDateChange={setPickedDate.bind(this)}
         />
       </SafeAreaView>
       {error && <Error />}
@@ -60,6 +64,7 @@ const ListJobs: React.FC<Props> = (props: Props) => {
         refreshing={refreshing}
         length={filteredData.length}
         refresh={refresh}
+        date={pickedDate}
       />
       <FlatList
         style={styles.container}

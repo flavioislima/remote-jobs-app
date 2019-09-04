@@ -6,6 +6,7 @@ interface Props {
   refreshing: boolean;
   length: number;
   refresh: () => void;
+  date: string;
 }
 
 export default (props: Props) => (
@@ -13,7 +14,9 @@ export default (props: Props) => (
     <Text style={styles.title}>
       {props.refreshing
         ? "Searching for Remote Jobs..."
-        : `${props.length} Jobs found`}
+        : `${props.length} Jobs found from ${new Date(
+            props.date
+          ).toLocaleDateString()}`}
     </Text>
     <TouchableOpacity onPress={props.refresh} style={styles.reloadButton}>
       <Icon name="refresh" size={23} color="#112038" />
