@@ -1,6 +1,5 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Share } from "react-native";
-import moment from "moment";
 
 import Description from "./SubComponents/Description";
 import Icons from "./SubComponents/Icons";
@@ -46,18 +45,13 @@ const Job: React.FC<Props> = (props: Props) => {
     url,
     position,
     tags,
-    dateFormated,
     type,
     salary,
     company,
-    description
+    description,
+    date
   } = props.data;
-  let { date } = props.data;
-
-  if (date)
-    date = moment(date)
-      .endOf("day")
-      .fromNow();
+  const dateFormated = new Date(date).toLocaleDateString();
 
   return (
     <View style={styles.item}>
@@ -65,11 +59,7 @@ const Job: React.FC<Props> = (props: Props) => {
         style={styles.touch}
         onPress={() => setShowDescription(!showDescription)}
       >
-        <Details
-          position={position}
-          company={company}
-          date={date || dateFormated}
-        />
+        <Details position={position} company={company} date={dateFormated} />
         {description && showDescription && (
           <Description
             tags={tags}

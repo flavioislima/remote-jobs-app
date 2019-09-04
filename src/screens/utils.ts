@@ -1,8 +1,9 @@
 import { JobType } from "../types";
 import axios from "axios";
-import api from "../api";
+import { parseDate } from "chrono-node";
 import AsyncStorage from "@react-native-community/async-storage";
 
+import api from "../api";
 interface ParseHubInfo {
   url: string;
   token: string;
@@ -18,15 +19,16 @@ export const getAllJobs = async () => {
   const indeedJobs: JobType[] = await getIndeed();
   const allJobs: JobType[] = remoteOkJobs.concat(indeedJobs);
 
-  return indeedJobs;
+  return sortJobs(allJobs);
 };
 
 export const getIndeed = async () => {
   const parseHubInfo: ParseHubInfo = await checkToken();
   const url: string = await parseHubInfo.url;
   const jobs = await getJobs(url);
+  const withDate: JobType[] = addDate(jobs.Job);
 
-  return addIdToJob(jobs.Job);
+  return addIdToJob(withDate);
 };
 
 export const getRemoteOk = async () => {
@@ -88,6 +90,31 @@ export const getStateFromStorage = async () => {
   }
   return state;
 };
+
+function sortJobs(allJobs: JobType[]) {
+  return allJobs.sort((job1, job2) => {
+    const firstDate = Date.parse(job1.date);
+    const secondDate = Date.parse(job2.date);
+    if (firstDate > secondDate) {
+      return -1;
+    } else if (firstDate < secondDate) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+}
+
+function addDate(jobs: JobType[]): JobType[] {
+  return jobs.map((job: JobType) => {
+    if (job.dateFormated === "Just posted")
+      return { ...job, date: parseDate("a minute ago").toJSON() };
+    return {
+      ...job,
+      date: parseDate(job.dateFormated || "a week ago").toJSON()
+    };
+  });
+}
 
 function addIdToJob(jobs: any[]) {
   const jobsWithId: JobType[] = [];
