@@ -26,9 +26,9 @@ export const getIndeed = async () => {
   const parseHubInfo: ParseHubInfo = await checkToken();
   const url: string = await parseHubInfo.url;
   const jobs = await getJobs(url);
-  const withDate: JobType[] = addDate(jobs.Job);
+  const jobsWithDate = addDate(jobs.Job);
 
-  return addIdToJob(withDate);
+  return removeDuplicates(jobsWithDate);
 };
 
 export const getRemoteOk = async () => {
@@ -114,16 +114,6 @@ function addDate(jobs: JobType[]): JobType[] {
       date: parseDate(job.dateFormated || "a week ago").toJSON()
     };
   });
-}
-
-function addIdToJob(jobs: any[]) {
-  const jobsWithId: JobType[] = [];
-  jobs.forEach((job: JobType) => {
-    job = { ...job, id: job.url };
-    jobsWithId.push(job);
-  });
-
-  return removeDuplicates(jobsWithId);
 }
 
 function removeDuplicates(jobsWithId: JobType[]): JobType[] {
