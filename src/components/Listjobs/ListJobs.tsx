@@ -27,12 +27,11 @@ interface Props {
 
 const ListJobs: React.FC<Props> = (props: Props) => {
   const { jobs, refreshing, refresh, error } = props;
-  console.log("render");
 
   const [filterText, setFilterText] = useState("");
   const [isRated, setRated] = useState(false);
   const [order, setOrder] = useState(true); // true = descending, false = asscending
-  const [pickedDate, setPickedDate] = useState(new Date(2017, 0, 1).toJSON());
+  const [pickedDate, setPickedDate] = useState(new Date(2019, 0, 1).toJSON());
 
   const filterRegex: RegExp = new RegExp(String(filterText), "i");
   const textFilter = ({ position }) => filterRegex.test(position);
