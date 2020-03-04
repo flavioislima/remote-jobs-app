@@ -1,45 +1,45 @@
-import React from "react";
-import { View, TouchableOpacity, StyleSheet, Share } from "react-native";
+import React from 'react'
+import { Share, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-import Description from "./SubComponents/Description";
-import Icons from "./SubComponents/Icons";
-import Details from "./SubComponents/Details";
-import { JobType } from "../../../types";
-import JobsContext from "../../../state/JobsContext";
+import JobsContext from '../../../state/JobsContext'
+import { JobType } from '../../../types'
+import Description from './SubComponents/Description'
+import Details from './SubComponents/Details'
+import Icons from './SubComponents/Icons'
 
 interface Props {
-  data: JobType;
-  navigate: any;
-  refresh: () => void;
+  data: JobType
+  navigate: any
+  refresh: () => void
 }
 
 const Job: React.FC<Props> = (props: Props) => {
-  const { keys, handleFavorites } = React.useContext(JobsContext);
-  const [showDescription, setShowDescription] = React.useState(false);
+  const { keys, handleFavorites } = React.useContext(JobsContext)
+  const [showDescription, setShowDescription] = React.useState(false)
 
   const openWebView = () => {
-    const url = props.data.url;
-    props.navigate.navigate("Browser", { url });
-  };
+    const url = props.data.url
+    props.navigate.navigate('Browser', { url })
+  }
 
   const handleSharing = () => {
-    const { position, company, url } = props.data;
+    const { position, company, url } = props.data
     Share.share(
       {
-        message: `Here follows a great Remote Job Opportunity: 
-        * Position: ${position} 
+        message: `Here follows a great Remote Job Opportunity:
+        * Position: ${position}
         * Company: ${company}
         * Url: ${url}`,
         url,
         title: `Remote Work App - ${position} @${company}`
       },
       {
-        subject: "Job Shared from Remote Work App",
-        dialogTitle: "Share a Remote Job",
-        tintColor: "#4effa1"
+        subject: 'Job Shared from Remote Work App',
+        dialogTitle: 'Share a Remote Job',
+        tintColor: '#4effa1'
       }
-    );
-  };
+    )
+  }
 
   const {
     url,
@@ -50,8 +50,8 @@ const Job: React.FC<Props> = (props: Props) => {
     company,
     description,
     date
-  } = props.data;
-  const dateFormated = new Date(date).toLocaleDateString();
+  } = props.data
+  const dateFormated = new Date(date).toUTCString().slice(5, 16)
 
   return (
     <View style={styles.item}>
@@ -80,21 +80,21 @@ const Job: React.FC<Props> = (props: Props) => {
         />
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   item: {
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   touch: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     marginHorizontal: 8,
     marginVertical: 5,
     borderRadius: 10,
-    backgroundColor: "#F6F9FE"
+    backgroundColor: '#F6F9FE'
   }
-});
+})
 
-export default Job;
+export default Job
