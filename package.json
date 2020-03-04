@@ -37,9 +37,12 @@
     "@types/react": "^16.9.2",
     "@types/react-native": "^0.60.7",
     "babel-jest": "^24.7.1",
+    "babel-loader": "^8.0.6",
     "jest": "^24.7.1",
     "metro-react-native-babel-preset": "^0.53.1",
+    "react-dom": "16.8.3",
     "react-test-renderer": "16.8.3",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.3"
   },
   "jest": {
