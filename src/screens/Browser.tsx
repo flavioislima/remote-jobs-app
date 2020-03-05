@@ -15,10 +15,8 @@ interface Props {
 
 export default class BrowserScreen extends React.Component<Props> {
   render() {
-    const { route } = this.props
-    console.log(route)
+    const { route: { params: { url } } } = this.props
 
-    const {url} = route.params
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
