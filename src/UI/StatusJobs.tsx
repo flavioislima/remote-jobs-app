@@ -22,7 +22,7 @@ export default (props: Props) => (
           } order`}
     </Text>
     <TouchableOpacity onPress={props.refresh} style={styles.reloadButton}>
-      <Icon name="refresh" size={23} color="#112038" />
+      <Icon name="reload" type="material-community" size={23} color="#112038" />
     </TouchableOpacity>
   </View>
 );

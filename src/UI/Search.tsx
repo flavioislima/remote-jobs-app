@@ -31,7 +31,8 @@ export default (props: Props) => {
           inputStyle={{
             backgroundColor: 'white'
           }}
-          clearIcon={{ type: 'material-community-icons', name: 'clear', color: '#A7C8FF' }}
+          clearIcon={{ type: 'material-community', name: 'close', color: '#A7C8FF' }}
+          searchIcon={{ type: 'material-community', name: 'magnify', color: '#A7C8FF' }}
           placeholder="Search for Jobs..."
           onChangeText={onChangeText}
           value={filterText}
