@@ -1,23 +1,22 @@
-import * as React from "react";
-import ListJobs from "../components/Listjobs/ListJobs";
-import { NavigationParams, withNavigationFocus } from "react-navigation";
-import JobsContext from "../state/JobsContext";
-import AdBanner from "../UI/AdBanner";
+import * as React from 'react'
+import ListJobs from '../components/Listjobs/ListJobs'
+import JobsContext from '../state/JobsContext'
+import AdBanner from '../UI/AdBanner'
 
 interface Props {
-  navigation: any;
-  isFocused: boolean;
+  navigation: any
+  isFocused: boolean
 }
 
 class Jobs extends React.PureComponent<Props> {
-  static navigationOptions: NavigationParams = {
+  static navigationOptions = {
     header: null
-  };
-  static contextType = JobsContext;
+  }
+  static contextType = JobsContext
 
   render() {
-    const navigate: string = this.props.navigation;
-    const { data, refresh, refreshing, error } = this.context;
+    const navigate: string = this.props.navigation
+    const { data, refresh, refreshing, error } = this.context
 
     return (
       <>
@@ -30,8 +29,8 @@ class Jobs extends React.PureComponent<Props> {
         />
         <AdBanner />
       </>
-    );
+    )
   }
 }
 
-export default withNavigationFocus(Jobs);
+export default Jobs

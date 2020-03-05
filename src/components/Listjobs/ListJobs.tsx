@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-community/async-storage'
+import DateTimePicker from '@react-native-community/datetimepicker'
 import React, { useEffect, useState } from 'react'
 import {
   FlatList,
@@ -6,14 +8,13 @@ import {
   StyleSheet,
   View
 } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-import AsyncStorage from '@react-native-community/async-storage';
-import { JobType } from '../../types';
-import Error from '../../UI/Error';
-import Search from '../../UI/Search';
-import StatusJobs from '../../UI/StatusJobs';
-import Job from './Jobs/Job';
+import { JobType } from '../../types'
+import Error from '../../UI/Error'
+import Search from '../../UI/Search'
+import StatusJobs from '../../UI/StatusJobs'
+import Job from './Jobs/Job'
 
 interface Props {
   refresh: () => void
@@ -27,12 +28,14 @@ interface Props {
 
 const ListJobs: React.FC<Props> = (props: Props) => {
   const { jobs, refreshing, refresh, error } = props
+  const currentDate = new Date()
 
   // State
   const [filterText, setFilterText] = useState('')
   const [isRated, setRated] = useState(false)
   const [order, setOrder] = useState(true) // true = descending, false = asscending
-  const [pickedDate, setPickedDate] = useState(new Date(2019, 0, 1).toJSON())
+  const [showCalendar, setShowCalendar] = React.useState(false)
+  const [pickedDate, setPickedDate] = useState(new Date(currentDate).toJSON())
 
   // Filter - Text, Date and Sort by date
   const filterRegex: RegExp = new RegExp(String(filterText), 'i')
@@ -48,6 +51,11 @@ const ListJobs: React.FC<Props> = (props: Props) => {
     return <Job data={job.item} navigate={navigate} refresh={refresh} />
   }
 
+  const onChange = (event: any, selectedDate: Date) => {
+    setPickedDate(selectedDate ? selectedDate.toString() : currentDate.toString())
+    setShowCalendar(false)
+  }
+
   const extractKeys = (job: JobType) => job.id
 
   useEffect(() => {
@@ -61,12 +69,21 @@ const ListJobs: React.FC<Props> = (props: Props) => {
         <Search
           onChangeText={setFilterText}
           onClearText={setFilterText.bind(this, '')}
-          onDateChange={setPickedDate.bind(this)}
+          setShowCalendar={() => setShowCalendar(true)}
           order={order}
           setOrder={handleOrder}
         />
       </SafeAreaView>
       {error && <Error />}
+      {showCalendar &&
+          <DateTimePicker
+            value={new Date()}
+            mode={'date'}
+            onChange={onChange}
+            maximumDate={new Date()}
+            minimumDate={new Date(2019, 0, 1)}
+          />
+        }
       <StatusJobs
         refreshing={refreshing}
         length={filteredData.length}

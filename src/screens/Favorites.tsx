@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavigationParams } from 'react-navigation'
 import { Button } from 'react-native-elements'
 import ListJobs from '../components/Listjobs/ListJobs'
 import JobsContext from '../state/JobsContext'
@@ -11,9 +10,6 @@ interface Props {
 }
 
 class Favorites extends React.PureComponent<Props> {
-  static navigationOptions: NavigationParams = {
-    header: null
-  }
   static contextType = JobsContext
 
   render() {
@@ -32,10 +28,10 @@ class Favorites extends React.PureComponent<Props> {
           clearFavorites={handleClearFavorites}
         />
         <Button
-          large
-          textStyle={{ color: 'red' }}
-          buttonStyle={{ height: 25, backgroundColor: 'transparent' }}
-          icon={{ name: 'trash', type: 'font-awesome', color: 'red' }}
+          titleStyle={{ color: 'red' }}
+          type={'outline'}
+          buttonStyle={{ backgroundColor: 'white' }}
+          icon={{ name: 'delete', type: 'material-community-icons', color: 'red' }}
           title="Delete all Favorites"
           onPress={handleClearFavorites}
         />

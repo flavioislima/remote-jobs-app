@@ -13,17 +13,17 @@ interface Props {
   refresh: () => void
 }
 
-const Job: React.FC<Props> = (props: Props) => {
+const Job: React.FC<Props> = ({ data, navigate }: Props) => {
   const { keys, handleFavorites } = React.useContext(JobsContext)
   const [showDescription, setShowDescription] = React.useState(false)
 
   const openWebView = () => {
-    const url = props.data.url
-    props.navigate.navigate('Browser', { url })
+    const { url } = data
+    navigate.navigate('Browser', { url })
   }
 
   const handleSharing = () => {
-    const { position, company, url } = props.data
+    const { position, company, url } = data
     Share.share(
       {
         message: `Here follows a great Remote Job Opportunity:
@@ -50,7 +50,7 @@ const Job: React.FC<Props> = (props: Props) => {
     company,
     description,
     date
-  } = props.data
+  } = data
   const dateFormated = new Date(date).toUTCString().slice(5, 16)
 
   return (
@@ -69,11 +69,11 @@ const Job: React.FC<Props> = (props: Props) => {
           />
         )}
         <Icons
-          handleFavorite={handleFavorites.bind(this, props.data)}
+          handleFavorite={handleFavorites.bind(this, data)}
           handleSharing={handleSharing}
           handleUrl={openWebView}
-          data={props.data}
-          isFavorite={keys.includes(props.data.id)}
+          data={data}
+          isFavorite={keys.includes(data.id)}
           url={url}
           position={position}
           company={company}
