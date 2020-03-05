@@ -41,6 +41,7 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
+!debug.keystore
 *.jks
 api.js
 
@@ -57,3 +58,6 @@ api.js
 
 # Bundle artifact
 *.jsbundle
+
+# CocoaPods
+/ios/Pods/
