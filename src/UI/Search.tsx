@@ -9,8 +9,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 interface Props {
   order: boolean
   setOrder: () => void
+  filterText: string
   onChangeText: (text: string) => void
-  onClearText: () => void
   setShowCalendar?: () => void
 }
 
@@ -21,7 +21,7 @@ interface DatePicker {
 }
 
 export default (props: Props) => {
-  const { order, setOrder, setShowCalendar, onChangeText, onClearText } = props
+  const { order, setOrder, setShowCalendar, onChangeText, filterText } = props
 
   return (
     <View style={styles.searchView}>
@@ -34,7 +34,7 @@ export default (props: Props) => {
           clearIcon={{ type: 'material-community-icons', name: 'clear', color: '#A7C8FF' }}
           placeholder="Search for Jobs..."
           onChangeText={onChangeText}
-          onClearText={onClearText}
+          value={filterText}
           containerStyle={{
             backgroundColor: '#112038',
             borderTopColor: '#112038',

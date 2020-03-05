@@ -14,7 +14,6 @@
         "function": false
       }
     ],
-    "no-console": [true, "log", "error"],
     "no-var-requires": false,
     "object-literal-sort-keys": false,
     "quotemark": [

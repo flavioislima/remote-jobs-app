@@ -26,7 +26,7 @@ export default (props: Props) => (
   <View style={styles.iconsView}>
     <TouchableOpacity onPress={props.handleFavorite} style={styles.icons}>
       <Icon
-        name={props.isFavorite ? 'heart' : 'heart-broken'}
+        name={props.isFavorite ? 'heart-broken' : 'heart'}
         size={iconSize}
         color="#E22525"
       />

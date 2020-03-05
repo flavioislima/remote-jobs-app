@@ -35,7 +35,7 @@ const ListJobs: React.FC<Props> = (props: Props) => {
   const [isRated, setRated] = useState(false)
   const [order, setOrder] = useState(true) // true = descending, false = asscending
   const [showCalendar, setShowCalendar] = React.useState(false)
-  const [pickedDate, setPickedDate] = useState(new Date(currentDate).toJSON())
+  const [pickedDate, setPickedDate] = useState(new Date(2020, 0, 1).toJSON())
 
   // Filter - Text, Date and Sort by date
   const filterRegex: RegExp = new RegExp(String(filterText), 'i')
@@ -68,7 +68,7 @@ const ListJobs: React.FC<Props> = (props: Props) => {
       <SafeAreaView>
         <Search
           onChangeText={setFilterText}
-          onClearText={setFilterText.bind(this, '')}
+          filterText={filterText}
           setShowCalendar={() => setShowCalendar(true)}
           order={order}
           setOrder={handleOrder}
@@ -77,10 +77,10 @@ const ListJobs: React.FC<Props> = (props: Props) => {
       {error && <Error />}
       {showCalendar &&
           <DateTimePicker
-            value={new Date()}
+            value={currentDate}
             mode={'date'}
             onChange={onChange}
-            maximumDate={new Date()}
+            maximumDate={currentDate}
             minimumDate={new Date(2019, 0, 1)}
           />
         }

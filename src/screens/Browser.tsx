@@ -7,21 +7,18 @@ import {
   View
 } from 'react-native'
 import WebView from 'react-native-webview'
-import { NavigationParams } from 'react-navigation'
 import AdBanner from '../UI/AdBanner'
 
 interface Props {
-  navigation: any
+  route: any
 }
 
 export default class BrowserScreen extends React.Component<Props> {
-  static navigationOptions: NavigationParams = {
-    header: null
-  }
-
   render() {
-    const { navigation } = this.props
-    const url = navigation.getParam('url', 'http://google.com')
+    const { route } = this.props
+    console.log(route)
+
+    const {url} = route.params
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity

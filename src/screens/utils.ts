@@ -1,7 +1,7 @@
-import AsyncStorage from "@react-native-community/async-storage"
-import axios from "axios"
-import { parseDate } from "chrono-node"
-import { JobType } from "../types"
+import AsyncStorage from '@react-native-community/async-storage'
+import axios from 'axios'
+import { parseDate } from 'chrono-node'
+import { JobType } from '../types'
 
 import api from '../api'
 interface ParseHubInfo {
