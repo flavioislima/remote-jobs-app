@@ -44,6 +44,7 @@ buck-out/
 !debug.keystore
 *.jks
 api.js
+*.hprof
 
 # fastlane
 #
