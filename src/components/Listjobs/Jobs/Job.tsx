@@ -16,14 +16,22 @@ interface Props {
 const Job: React.FC<Props> = ({ data, navigate }: Props) => {
   const { keys, handleFavorites } = React.useContext(JobsContext)
   const [showDescription, setShowDescription] = React.useState(false)
+  const {
+    url,
+    position,
+    tags,
+    type,
+    salary,
+    company,
+    description,
+    date
+  } = data
 
   const openWebView = () => {
-    const { url } = data
     navigate.navigate('Browser', { url })
   }
 
   const handleSharing = () => {
-    const { position, company, url } = data
     Share.share(
       {
         message: `Here follows a great Remote Job Opportunity:
@@ -41,16 +49,6 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
     )
   }
 
-  const {
-    url,
-    position,
-    tags,
-    type,
-    salary,
-    company,
-    description,
-    date
-  } = data
   const dateFormated = new Date(date).toUTCString().slice(5, 16)
 
   return (
