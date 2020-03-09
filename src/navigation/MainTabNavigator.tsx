@@ -15,8 +15,8 @@ export default function MainTabNavigator() {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             return route.name === 'Jobs' ?
-              <Icon name="briefcase" size={25} color={focused ? '#A7C8FF' : 'darkgrey'} /> :
-              <Icon name="heart-multiple" size={25} color={focused ? '#A7C8FF' : 'darkgrey'} />
+              <Icon name="briefcase" size={25} color={focused ? '#1E2229' : '#858585'} /> :
+              <Icon name="heart-multiple" size={25} color={focused ? '#1E2229' : '#858585'} />
           }
         })}
         tabBarOptions={{
@@ -29,7 +29,7 @@ export default function MainTabNavigator() {
             fontWeight: 'bold'
           },
           style: {
-            backgroundColor: '#112038',
+            backgroundColor: '#F6F9FE',
             height: 55
           },
           activeTintColor: 'white',

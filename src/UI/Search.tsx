@@ -31,28 +31,28 @@ export default (props: Props) => {
           inputStyle={{
             backgroundColor: 'white'
           }}
-          clearIcon={{ type: 'material-community', name: 'close', color: '#A7C8FF' }}
-          searchIcon={{ type: 'material-community', name: 'magnify', color: '#A7C8FF' }}
+          clearIcon={{ type: 'material-community', name: 'close', color: '#FFF' }}
+          searchIcon={{ type: 'material-community', name: 'magnify', color: '#FFF' }}
           placeholder="Search for Jobs..."
           onChangeText={onChangeText}
           value={filterText}
           containerStyle={{
-            backgroundColor: '#112038',
-            borderTopColor: '#112038',
+            backgroundColor: '#1e2229',
+            borderTopColor: '#1e2229',
             height: 60
           }}
-          placeholderTextColor={'#A7C8FF'}
+          placeholderTextColor={'#222b38'}
         />
       </View>
       <View style={styles.icons}>
         <TouchableOpacity onPress={setShowCalendar}>
-          <Icon name="calendar" size={30} color={'#A7C8FF'} />
+          <Icon name="calendar" size={30} color={'#FFF'} />
         </TouchableOpacity>
         <TouchableOpacity onPress={setOrder}>
           <Icon
             name={order ? 'sort-descending' : 'sort-ascending'}
             size={25}
-            color={'#A7C8FF'}
+            color={'#FFF'}
           />
         </TouchableOpacity>
       </View>
@@ -66,9 +66,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     alignContent: 'space-between',
-    backgroundColor: '#112038',
-    borderBottomLeftRadius: 18,
-    borderBottomRightRadius: 18
+    backgroundColor: '#1e2229'
   },
   searchJobs: {
     width: '70%',
