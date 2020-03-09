@@ -43,8 +43,8 @@ export default (props: Props) => (
       onLongPress={Linking.openURL.bind(this, props.url)}
       style={styles.icons}
     >
-      <Text style={styles.iconText}>Open</Text>
       <Icon name="google-chrome" size={iconSize} color="#A7C8FF" />
+      <Text style={styles.iconText}>Open</Text>
     </TouchableOpacity>
   </View>
 )
