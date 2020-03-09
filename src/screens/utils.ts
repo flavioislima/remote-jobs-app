@@ -4,6 +4,8 @@ import { parseDate } from 'chrono-node'
 import { JobType } from '../types'
 
 import api from '../api'
+
+const i_logo = require('../assets/i_logo.png')
 interface ParseHubInfo {
   url: string
   token: string
@@ -27,7 +29,7 @@ export const getIndeed = async () => {
   const url: string = await parseHubInfo.url
   const jobs = await getJobs(url)
 
-  const jobsWithDate = jobs && addDate(jobs.Job)
+  const jobsWithDate = jobs && addLogoAndDate(jobs.Job)
 
   return removeDuplicates(jobsWithDate)
 }
@@ -46,7 +48,7 @@ const getJobs = async (url: string): Promise<any> => {
     .get(url)
     .then((res) => (data = res.data))
     .catch((err) => {
-      console.log(err, 'getData error')
+      console.error(err, 'getData error')
 
       return err
     })
@@ -92,13 +94,14 @@ export const getStateFromStorage = async () => {
   return state
 }
 
-function addDate(jobs: JobType[]): JobType[] {
+function addLogoAndDate(jobs: JobType[]): JobType[] {
   return jobs.map((job: JobType) => {
     if (job.dateFormated === 'Just posted') {
-      return { ...job, date: parseDate('a minute ago') }
+      return { ...job, image: i_logo, date: parseDate('a minute ago')}
     }
     return {
       ...job,
+      image: i_logo,
       date: parseDate(job && job.dateFormated || 'a week ago')
     }
   })

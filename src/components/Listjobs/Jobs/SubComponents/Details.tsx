@@ -1,16 +1,18 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, ImageProps, StyleSheet, Text, View } from 'react-native'
 
 interface Props {
   position: string
   company: string
   date: string
+  image: any
 }
 
 export default (props: Props) => (
   <View style={styles.viewJob}>
+    <Image style={styles.image} source={props.image} />
     <View style={styles.viewPosition}>
-      <Text style={styles.position}>{props.position}</Text>
+        <Text style={styles.position}>{props.position}</Text>
       <Text style={styles.company}>{props.company}</Text>
     </View>
 
@@ -25,16 +27,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#A7C8FF',
-    padding: 5,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    padding: 5
   },
   viewPosition: {
     flexDirection: 'column',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    width: '75%',
+    width: '70%',
     marginLeft: 3
   },
   viewDate: {
@@ -46,19 +47,26 @@ const styles = StyleSheet.create({
     height: 68,
     marginLeft: 3
   },
+  image: {
+    height: 30,
+    width: 30,
+    borderColor: '#858585',
+    borderWidth: 1,
+    borderRadius: 5
+  },
   position: {
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: '700',
     color: '#222B38',
     width: '100%'
   },
   company: {
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: '400',
     color: '#112038'
   },
   date: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '400',
     color: '#112038',
     marginBottom: 3
