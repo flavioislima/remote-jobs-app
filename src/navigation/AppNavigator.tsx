@@ -10,7 +10,6 @@ const BackButton = require('../assets/back.png')
 
 const Back = () => <Image source={BackButton} style={{ height: 28, width: 35 }} />
 
-// const BrowserStack = createStackNavigator()
 const Stack = createStackNavigator()
 
 export default function RootStack() {

@@ -46,9 +46,8 @@ const styles = StyleSheet.create({
   description: {
     marginLeft: 10,
     marginRight: 10,
-    marginTop: 5,
     marginBottom: 5,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '400',
     color: 'black'
   }
