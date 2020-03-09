@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
   position: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#222B38'
+    color: '#222B38',
+    width: '100%'
   },
   company: {
     fontSize: 13,
