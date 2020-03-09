@@ -12,7 +12,7 @@ export default (props: Props) => (
   <View style={styles.viewJob}>
     <Image style={styles.image} source={props.image} />
     <View style={styles.viewPosition}>
-        <Text style={styles.position}>{props.position}</Text>
+      <Text style={styles.position}>{props.position}</Text>
       <Text style={styles.company}>{props.company}</Text>
     </View>
 
@@ -27,32 +27,25 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#FFF',
-    padding: 5
+    height: 50,
+    paddingTop: 4,
+    marginTop: 6,
   },
   viewPosition: {
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    width: '70%',
-    marginLeft: 3
+    width: '66%',
+    marginLeft: 6,
+    marginTop: -4
   },
   viewDate: {
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
     width: '25%',
-    height: 68,
-    marginLeft: 3
+    marginLeft: 2
   },
   image: {
-    height: 30,
-    width: 30,
+    height: 35,
+    width: 35,
     borderColor: '#858585',
     borderWidth: 1,
-    borderRadius: 5
+    borderRadius: 1
   },
   position: {
     fontSize: 12,

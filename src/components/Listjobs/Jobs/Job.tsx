@@ -5,7 +5,7 @@ import JobsContext from '../../../state/JobsContext'
 import { JobType } from '../../../types'
 import Description from './SubComponents/Description'
 import Details from './SubComponents/Details'
-import Icons from './SubComponents/Icons'
+// import Icons from './SubComponents/Icons'
 
 interface Props {
   data: JobType
@@ -24,7 +24,9 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
     salary,
     company,
     description,
-    date
+    date,
+    image,
+    logo
   } = data
 
   const openWebView = () => {
@@ -57,7 +59,7 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
         style={styles.touch}
         onPress={() => setShowDescription(!showDescription)}
       >
-        <Details position={position} company={company} date={dateFormated} />
+        <Details image={image ? image : { uri: logo }} position={position} company={company} date={dateFormated} />
         {description && showDescription && (
           <Description
             tags={tags}
@@ -66,7 +68,7 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
             description={description}
           />
         )}
-        <Icons
+        {/* <Icons
           handleFavorite={handleFavorites.bind(this, data)}
           handleSharing={handleSharing}
           handleUrl={openWebView}
@@ -75,8 +77,9 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
           url={url}
           position={position}
           company={company}
-        />
+        /> */}
       </TouchableOpacity>
+      <View style={{borderBottomColor: '#858585', borderBottomWidth: 3}} />
     </View>
   )
 }
@@ -88,10 +91,8 @@ const styles = StyleSheet.create({
   touch: {
     flex: 1,
     justifyContent: 'space-between',
-    marginHorizontal: 8,
-    marginVertical: 5,
-    borderRadius: 10,
-    backgroundColor: '#F6F9FE'
+    width: '80%',
+    marginHorizontal: 8
   }
 })
 

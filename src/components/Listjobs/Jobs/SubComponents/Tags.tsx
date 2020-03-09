@@ -26,12 +26,13 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   tags: {
-    fontSize: 11,
-    backgroundColor: '#e1e8ee',
+    fontSize: 10,
+    backgroundColor: '#fff',
     color: 'black',
     padding: 4,
     margin: 3,
-    borderWidth: 0.1,
-    borderRadius: 4
+    borderWidth: 1,
+    borderRadius: 1,
+    borderColor: '#000'
   }
 })
