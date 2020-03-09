@@ -63,7 +63,7 @@ const ListJobs: React.FC<Props> = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#112038" />
+      <StatusBar backgroundColor="#1e2229" />
       <SafeAreaView>
         <Search
           onChangeText={setFilterText}
