@@ -1,18 +1,18 @@
-import React from "react";
-import JobsContext from "./JobsContext";
-import { JobType } from "../types";
-import { getAllJobs, storeState, getStateFromStorage } from "../screens/utils";
-import { Alert } from "react-native";
+import React from 'react'
+import { Alert } from 'react-native'
+import { getAllJobs, getStateFromStorage, storeState } from '../screens/utils'
+import { JobType } from '../types'
+import JobsContext from './JobsContext'
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 interface State {
-  data: JobType[];
-  keys: string[];
-  refreshing: boolean;
-  error: boolean;
+  data: JobType[]
+  keys: string[]
+  refreshing: boolean
+  error: boolean
 }
 
 export default class GlobalState extends React.Component<Props> {
@@ -21,76 +21,71 @@ export default class GlobalState extends React.Component<Props> {
     keys: [],
     refreshing: false,
     error: false
-  };
+  }
 
   refresh = async (): Promise<void> => {
-    this.setState({ data: [], refreshing: true });
-    const keys = this.state.keys;
-    const data: JobType[] = (await getAllJobs()) || [];
+    this.setState({ data: [], refreshing: true })
+    const keys = this.state.keys
+    const data: JobType[] = (await getAllJobs()) || []
 
     if (data.length > 100) {
       this.setState({
         data,
         refreshing: false,
         keys
-      });
-      this.storeState();
+      })
+      this.storeState()
     }
-  };
+  }
 
   async componentDidMount() {
-    const storedState = await getStateFromStorage();
-    const { data, keys } = storedState;
+    const storedState = await getStateFromStorage()
+    const { data, keys } = storedState
     if (data.length > 100) {
-      this.setState({ data, keys });
+      this.setState({ data, keys })
     } else {
-      this.refresh();
+      this.refresh()
     }
   }
 
   async componentWillUnmount() {
-    this.storeState();
+    this.storeState()
   }
 
   handleClearFavorites = () => {
-    Alert.alert("Erase Favorites", "Are You Sure?", [
-      { text: "Cancel" },
+    Alert.alert('Erase Favorites', 'Are You Sure?', [
+      { text: 'Cancel' },
       {
-        text: "Yes",
+        text: 'Yes',
         onPress: () => {
-          this.setState({ keys: [], favorites: [] });
-          this.storeState();
+          this.setState({ keys: [], favorites: [] })
+          this.storeState()
         }
       }
-    ]);
-  };
+    ])
+  }
 
   handleFavorites = (data: JobType) => {
-    const { keys } = this.state;
+    const { keys } = this.state
 
     if (keys.includes(data.id)) {
-      const filteredKeys: string[] = keys.filter((key) => key !== data.id);
+      const filteredKeys: string[] = keys.filter((key) => key !== data.id)
 
       this.setState({
         keys: filteredKeys
-      });
+      })
 
-      this.storeState();
+      this.storeState()
     } else {
       this.setState({
         keys: [...this.state.keys, data.id]
-      });
-      this.storeState();
+      })
+      this.storeState()
     }
-  };
-
-  private storeState() {
-    const { data, keys } = this.state;
-    storeState({ data, keys });
   }
 
   render() {
-    const { data, keys, refreshing, error } = this.state;
+    const { data, keys, refreshing, error } = this.state
 
     return (
       <JobsContext.Provider
@@ -106,6 +101,11 @@ export default class GlobalState extends React.Component<Props> {
       >
         {this.props.children}
       </JobsContext.Provider>
-    );
+    )
+  }
+
+  private storeState() {
+    const { data, keys } = this.state
+    storeState({ data, keys })
   }
 }

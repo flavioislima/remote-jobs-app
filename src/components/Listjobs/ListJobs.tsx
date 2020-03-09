@@ -27,7 +27,7 @@ interface Props {
 }
 
 const ListJobs: React.FC<Props> = (props: Props) => {
-  const { jobs, refreshing, refresh, error } = props
+  const { jobs, refreshing, refresh, error, navigate } = props
   const currentDate = new Date()
 
   // State
@@ -47,7 +47,6 @@ const ListJobs: React.FC<Props> = (props: Props) => {
   const sortedData = sortJobs(filteredData, order)
 
   const renderJobs = (job: any) => {
-    const { refresh, navigate } = props
     return <Job data={job.item} navigate={navigate} refresh={refresh} />
   }
 
