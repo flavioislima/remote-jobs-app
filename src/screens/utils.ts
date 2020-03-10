@@ -5,7 +5,8 @@ import { JobType } from '../types'
 
 import api from '../api'
 
-const i_logo = require('../assets/i_logo.png')
+const iLlogo = require('../assets/i_logo.png')
+const rLogo = require('../assets/r_logo.webp')
 interface ParseHubInfo {
   url: string
   token: string
@@ -39,7 +40,13 @@ export const getRemoteOk = async () => {
   const jobs: JobType[] = await getJobs(url)
   jobs.shift() // removes api information
 
-  return jobs
+  return jobs.map((job, i) => {
+    const { logo, company_logo } = job
+    const logoUri = logo ? logo : company_logo
+    const image = logoUri ? {uri: logoUri} : rLogo
+
+    return { ...job, image}
+  })
 }
 
 const getJobs = async (url: string): Promise<any> => {
@@ -97,11 +104,11 @@ export const getStateFromStorage = async () => {
 function addLogoAndDate(jobs: JobType[]): JobType[] {
   return jobs.map((job: JobType) => {
     if (job.dateFormated === 'Just posted') {
-      return { ...job, image: i_logo, date: parseDate('a minute ago')}
+      return { ...job, image: iLlogo, date: parseDate('a minute ago')}
     }
     return {
       ...job,
-      image: i_logo,
+      image: iLlogo,
       date: parseDate(job && job.dateFormated || 'a week ago')
     }
   })

@@ -28,8 +28,7 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
     company,
     description,
     date,
-    image,
-    logo
+    image
   } = data
 
   const openWebView = () => {
@@ -55,6 +54,7 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
   }
 
   const dateFormated = new Date(date).toUTCString().slice(5, 16)
+  position.includes('React') ? window.console.log(data) : window.console.log('')
 
   return (
     <View style={styles.item}>
@@ -63,7 +63,7 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
         onPress={() => setShowDescription(!showDescription)}
       >
         <Details
-          image={image ? image : { uri: logo }}
+          image={image}
           position={position}
           company={company}
           date={dateFormated}
@@ -97,7 +97,6 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
             company={company}
           />
       </Modal>
-      <View style={{borderBottomColor: '#858585', borderBottomWidth: 3}} />
     </View>
   )
 }
@@ -110,11 +109,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     width: '80%',
-    marginHorizontal: 8
+    marginHorizontal: 8,
+    borderBottomColor: '#858585',
+    borderBottomWidth: 2
   },
   modal: {
     justifyContent: 'flex-end',
-    margin: 0
+    margin: 5
   }
 })
 
