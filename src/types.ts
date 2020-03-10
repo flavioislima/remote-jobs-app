@@ -12,8 +12,9 @@ export interface JobType {
   type?: string
   salary?: string
   isFavorite?: boolean
-  image?: ImageProps
-  logo?: ImageProps
+  image?: any
+  logo?: any
+  company_logo?: any
 }
 
 export interface ContextType {

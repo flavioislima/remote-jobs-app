@@ -23,16 +23,15 @@ export default function MainTabNavigator() {
               alignContent: 'center'
             },
           labelStyle: {
-            display: 'none',
-            fontSize: 15,
+            fontSize: 13,
             fontWeight: 'bold'
           },
           style: {
             backgroundColor: '#F6F9FE',
             height: 55
           },
-          activeTintColor: 'white',
-          inactiveTintColor: 'darkgray'
+          activeTintColor: '#1E2229',
+          inactiveTintColor: '#858585'
         }}
       >
         <Tab.Screen name="Jobs" component={Jobs} />
