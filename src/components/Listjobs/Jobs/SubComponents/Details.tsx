@@ -1,26 +1,31 @@
 import React from 'react'
-import { Image, ImageProps, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 interface Props {
   position: string
   company: string
   date: string
   image: any
+  showIcons: () => void
 }
 
-export default (props: Props) => (
+export default ({ image, position, date, company, showIcons }: Props) => {
+
+  return (
   <View style={styles.viewJob}>
-    <Image style={styles.image} source={props.image} />
+    <Image style={styles.image} source={image} />
     <View style={styles.viewPosition}>
-      <Text style={styles.position}>{props.position}</Text>
-      <Text style={styles.company}>{props.company}</Text>
+      <Text style={styles.position}>{position}</Text>
+      <Text style={styles.company}>{company}</Text>
     </View>
 
     <View style={styles.viewDate}>
-      <Text style={styles.date}>{props.date}</Text>
+      <Text style={styles.date}>{date}</Text>
     </View>
+    <Icon name="dots-vertical" color={'#000'} size={20} onPress={showIcons} />
   </View>
-)
+)}
 
 const styles = StyleSheet.create({
   viewJob: {
@@ -29,7 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 50,
     paddingTop: 4,
-    marginTop: 6,
+    marginTop: 6
   },
   viewPosition: {
     width: '66%',
@@ -37,7 +42,7 @@ const styles = StyleSheet.create({
     marginTop: -4
   },
   viewDate: {
-    width: '25%',
+    width: '19%',
     marginLeft: 2
   },
   image: {

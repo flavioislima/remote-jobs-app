@@ -1,11 +1,12 @@
 import React from 'react'
 import { Share, StyleSheet, TouchableOpacity, View } from 'react-native'
+import Modal from 'react-native-modal'
 
 import JobsContext from '../../../state/JobsContext'
 import { JobType } from '../../../types'
 import Description from './SubComponents/Description'
 import Details from './SubComponents/Details'
-// import Icons from './SubComponents/Icons'
+import Icons from './SubComponents/Icons'
 
 interface Props {
   data: JobType
@@ -16,6 +17,8 @@ interface Props {
 const Job: React.FC<Props> = ({ data, navigate }: Props) => {
   const { keys, handleFavorites } = React.useContext(JobsContext)
   const [showDescription, setShowDescription] = React.useState(false)
+  const [showIcons, setShowIcons] = React.useState(false)
+
   const {
     url,
     position,
@@ -59,7 +62,13 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
         style={styles.touch}
         onPress={() => setShowDescription(!showDescription)}
       >
-        <Details image={image ? image : { uri: logo }} position={position} company={company} date={dateFormated} />
+        <Details
+          image={image ? image : { uri: logo }}
+          position={position}
+          company={company}
+          date={dateFormated}
+          showIcons={() => setShowIcons(true)}
+        />
         {description && showDescription && (
           <Description
             tags={tags}
@@ -68,17 +77,26 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
             description={description}
           />
         )}
-        {/* <Icons
-          handleFavorite={handleFavorites.bind(this, data)}
-          handleSharing={handleSharing}
-          handleUrl={openWebView}
-          data={data}
-          isFavorite={keys.includes(data.id)}
-          url={url}
-          position={position}
-          company={company}
-        /> */}
       </TouchableOpacity>
+      <Modal
+        isVisible={showIcons}
+        onBackdropPress={() => setShowIcons(false)}
+        hideModalContentWhileAnimating
+        useNativeDriver
+        swipeDirection={['up', 'left', 'right', 'down']}
+        style={styles.modal}
+      >
+          <Icons
+            handleFavorite={handleFavorites.bind(this, data)}
+            handleSharing={handleSharing}
+            handleUrl={openWebView}
+            data={data}
+            isFavorite={keys.includes(data.id)}
+            url={url}
+            position={position}
+            company={company}
+          />
+      </Modal>
       <View style={{borderBottomColor: '#858585', borderBottomWidth: 3}} />
     </View>
   )
@@ -93,6 +111,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '80%',
     marginHorizontal: 8
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0
   }
 })
 

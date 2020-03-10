@@ -146,7 +146,7 @@ android {
         applicationId "com.remotework"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 54
+        versionCode 56
         versionName "5.0.0"
     }
     splits {
@@ -193,7 +193,7 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                        versionCodes.get(abi) * 2048576 + defaultConfig.versionCode
             }
         }
     }

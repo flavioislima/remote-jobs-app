@@ -20,7 +20,7 @@ interface Props {
   handleFavorite: () => void
 }
 
-const iconSize = 18
+const iconSize = 25
 
 export default (props: Props) => (
   <View style={styles.iconsView}>
@@ -51,19 +51,19 @@ export default (props: Props) => (
 
 const styles = StyleSheet.create({
   iconsView: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignContent: 'center',
-    marginVertical: 5
+    marginVertical: 5,
+    backgroundColor: '#FFF'
   },
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 4,
-    width: '20%'
+    width: '100%'
   },
   iconText: {
-    fontSize: 13,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#112038',
     marginHorizontal: 5,
