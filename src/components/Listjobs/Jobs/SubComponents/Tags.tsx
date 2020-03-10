@@ -2,17 +2,21 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 interface Props {
-  tags: string[]
+  tags?: string[]
+  type?: string
 }
 
-export default (props: Props) => (
+export default ({tags, type}: Props) => (
   <View>
     <View style={styles.tagsView}>
-      {props.tags.map((tag, i) => (
+      {tags ? tags.map((tag, i) => (
         <Text style={styles.tags} key={i}>
-          {tag.toUpperCase()}
+          {tag}
         </Text>
-      ))}
+      )) : <Text style={styles.tags}>
+            {type}
+          </Text>
+      }
     </View>
   </View>
 )
@@ -27,12 +31,14 @@ const styles = StyleSheet.create({
   },
   tags: {
     fontSize: 10,
+    textTransform: 'uppercase',
     backgroundColor: '#fff',
     color: 'black',
     padding: 4,
     margin: 3,
     borderWidth: 1,
-    borderRadius: 1,
-    borderColor: '#000'
+    borderRadius: 10,
+    borderColor: '#000',
+    textAlign: 'center'
   }
 })

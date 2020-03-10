@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Salary from './Salary'
 import Tags from './Tags'
-import Type from './Type'
 
 interface Props {
   description: string
@@ -11,9 +10,9 @@ interface Props {
   tags: string[]
 }
 
-export default (props: Props) => {
-  const description: string = props.description
-    ? props.description
+export default ({ description, salary, tags, type }: Props) => {
+  const formatedDescription: string = description
+    ? description
         .replace(/<(?:.|\n)*?>/gm, '')
         .replace(/&amp;/gm, '&')
         .replace(/&#8211;/gm, '-')
@@ -27,11 +26,10 @@ export default (props: Props) => {
   return (
     <View style={styles.container}>
       <Text numberOfLines={10} style={styles.description}>
-        {description}
+        {formatedDescription}
       </Text>
-      {props.salary && <Salary salary={props.salary} />}
-      {(props.tags && <Tags tags={props.tags} />) ||
-        (props.type && <Type type={props.type} />)}
+      {salary && <Salary salary={salary} />}
+      <Tags tags={tags} type={type} />
     </View>
   )
 }
