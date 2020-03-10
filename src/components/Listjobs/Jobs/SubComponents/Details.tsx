@@ -1,5 +1,6 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 interface Props {
@@ -11,10 +12,9 @@ interface Props {
 }
 
 export default ({ image, position, date, company, showIcons }: Props) => {
-
-  return (
+ return (
   <View style={styles.viewJob}>
-    <Image style={styles.image} source={image} />
+    <Image style={styles.image} source={image} PlaceholderContent={<ActivityIndicator />} />
     <View style={styles.viewPosition}>
       <Text style={styles.position}>{position}</Text>
       <Text style={styles.company}>{company}</Text>
@@ -22,8 +22,10 @@ export default ({ image, position, date, company, showIcons }: Props) => {
 
     <View style={styles.viewDate}>
       <Text style={styles.date}>{date}</Text>
-    </View>
-    <Icon name="dots-vertical" color={'#000'} size={20} onPress={showIcons} />
+      </View>
+      <TouchableOpacity style={styles.dots} onPress={showIcons}>
+        <Icon name="dots-vertical" color={'#000'} size={22} />
+      </TouchableOpacity>
   </View>
 )}
 
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
     marginTop: -4
   },
   viewDate: {
-    width: '19%',
+    width: '18%',
     marginLeft: 2
   },
   image: {
@@ -68,5 +70,8 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     color: '#112038',
     marginBottom: 3
+  },
+  dots: {
+    height: '50%'
   }
 })
