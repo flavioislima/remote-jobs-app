@@ -47,7 +47,7 @@ yarn run android
 ## Built with
 
 - React-Native
-- Axios
+- Firebase
 - React-Native-Elements
 
 ## Author

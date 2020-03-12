@@ -1,10 +1,12 @@
 import React from 'react'
 import { Share, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { ListItem } from 'react-native-elements'
+import Modal from 'react-native-modal'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import JobsContext from '../../../state/JobsContext'
 import { JobType } from '../../../types'
 import Description from './SubComponents/Description'
-import Details from './SubComponents/Details'
 import Icons from './SubComponents/Icons'
 
 interface Props {
@@ -15,7 +17,8 @@ interface Props {
 
 const Job: React.FC<Props> = ({ data, navigate }: Props) => {
   const { keys, handleFavorites } = React.useContext(JobsContext)
-  const [showDescription, setShowDescription] = React.useState(false)
+  const [showIcons, setShowIcons] = React.useState(false)
+
   const {
     url,
     position,
@@ -24,7 +27,8 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
     salary,
     company,
     description,
-    date
+    date,
+    image
   } = data
 
   const openWebView = () => {
@@ -51,21 +55,34 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
 
   const dateFormated = new Date(date).toUTCString().slice(5, 16)
 
+  const dots = (<TouchableOpacity onPress={() => setShowIcons(true)}>
+    <Icon name="dots-vertical" color={'#000'} size={28} />
+  </TouchableOpacity>)
+
   return (
     <View style={styles.item}>
-      <TouchableOpacity
-        style={styles.touch}
-        onPress={() => setShowDescription(!showDescription)}
+      <ListItem
+      title={position}
+      subtitle={company}
+      leftAvatar={{ source: image }}
+      rightIcon={dots}
+      onPress={openWebView}
+    />
+      <Modal
+        isVisible={showIcons}
+        onBackdropPress={() => setShowIcons(false)}
+        hideModalContentWhileAnimating
+        useNativeDriver
+        swipeDirection={['up', 'left', 'right', 'down']}
+        style={styles.modal}
       >
-        <Details position={position} company={company} date={dateFormated} />
-        {description && showDescription && (
-          <Description
-            tags={tags}
-            salary={salary}
-            type={type}
-            description={description}
-          />
-        )}
+        <Description
+          tags={tags}
+          salary={salary}
+          type={type}
+          description={description}
+          date={dateFormated}
+        />
         <Icons
           handleFavorite={handleFavorites.bind(this, data)}
           handleSharing={handleSharing}
@@ -76,22 +93,25 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
           position={position}
           company={company}
         />
-      </TouchableOpacity>
+      </Modal>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   item: {
-    flexDirection: 'row'
+    flexDirection: 'column'
   },
   touch: {
     flex: 1,
     justifyContent: 'space-between',
+    width: '80%',
     marginHorizontal: 8,
-    marginVertical: 5,
-    borderRadius: 10,
-    backgroundColor: '#F6F9FE'
+    borderBottomColor: '#858585',
+    borderBottomWidth: 2
+  },
+  modal: {
+    justifyContent: 'center',
   }
 })
 

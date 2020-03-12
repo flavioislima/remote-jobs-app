@@ -20,7 +20,7 @@ interface Props {
   handleFavorite: () => void
 }
 
-const iconSize = 18
+const iconSize = 25
 
 export default (props: Props) => (
   <View style={styles.iconsView}>
@@ -39,8 +39,7 @@ export default (props: Props) => (
       <Text style={[styles.iconText]}>Share</Text>
     </TouchableOpacity>
     <TouchableOpacity
-      onPress={props.handleUrl}
-      onLongPress={Linking.openURL.bind(this, props.url)}
+      onPress={() => Linking.openURL(props.url)}
       style={styles.icons}
     >
       <Icon name="google-chrome" size={iconSize} color="#A7C8FF" />
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignContent: 'center',
-    marginVertical: 5
+    backgroundColor: '#FFF'
   },
   icons: {
     flexDirection: 'row',

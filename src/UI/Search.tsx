@@ -29,30 +29,33 @@ export default (props: Props) => {
         <SearchBar
           round
           inputStyle={{
-            backgroundColor: 'white'
+            backgroundColor: 'white',
+            fontSize: 12
           }}
-          clearIcon={{ type: 'material-community', name: 'close', color: '#A7C8FF' }}
-          searchIcon={{ type: 'material-community', name: 'magnify', color: '#A7C8FF' }}
+          inputContainerStyle={{
+            height: 30
+          }}
+          containerStyle={{
+            backgroundColor: '#1e2229',
+            borderTopColor: '#1e2229'
+          }}
+          clearIcon={{ type: 'material-community', name: 'close', color: '#FFF' }}
+          searchIcon={{ type: 'material-community', name: 'magnify', color: '#FFF' }}
           placeholder="Search for Jobs..."
           onChangeText={onChangeText}
           value={filterText}
-          containerStyle={{
-            backgroundColor: '#112038',
-            borderTopColor: '#112038',
-            height: 60
-          }}
-          placeholderTextColor={'#A7C8FF'}
+          placeholderTextColor={'#222b38'}
         />
       </View>
       <View style={styles.icons}>
         <TouchableOpacity onPress={setShowCalendar}>
-          <Icon name="calendar" size={30} color={'#A7C8FF'} />
+          <Icon name="calendar-check" size={34} color={'#FFF'} />
         </TouchableOpacity>
         <TouchableOpacity onPress={setOrder}>
           <Icon
             name={order ? 'sort-descending' : 'sort-ascending'}
-            size={25}
-            color={'#A7C8FF'}
+            size={34}
+            color={'#FFF'}
           />
         </TouchableOpacity>
       </View>
@@ -66,19 +69,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     alignContent: 'space-between',
-    backgroundColor: '#112038',
-    borderBottomLeftRadius: 18,
-    borderBottomRightRadius: 18
+    backgroundColor: '#1e2229'
   },
   searchJobs: {
-    width: '70%',
-    marginLeft: 15
+    width: '75%'
   },
   icons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    width: '22%',
-    marginRight: 10
+    width: '25%',
+    marginRight: 5
   }
 })

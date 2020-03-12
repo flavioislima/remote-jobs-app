@@ -1,9 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage'
-import axios from 'axios'
-import { parseDate } from 'chrono-node'
+import database from '@react-native-firebase/database'
+
 import { JobType } from '../types'
 
-import api from '../api'
 interface ParseHubInfo {
   url: string
   token: string
@@ -15,63 +14,10 @@ interface State {
 }
 
 export const getAllJobs = async () => {
-  const remoteOkJobs: JobType[] = await getRemoteOk()
-  const indeedJobs: JobType[] = await getIndeed()
-  const allJobs: JobType[] = remoteOkJobs.concat(indeedJobs)
-
-  return allJobs
-}
-
-export const getIndeed = async () => {
-  const parseHubInfo: ParseHubInfo = await checkToken()
-  const url: string = await parseHubInfo.url
-  const jobs = await getJobs(url)
-
-  const jobsWithDate = jobs && addDate(jobs.Job)
-
-  return removeDuplicates(jobsWithDate)
-}
-
-export const getRemoteOk = async () => {
-  const url: string = 'https://remoteok.io/api'
-  const jobs: JobType[] = await getJobs(url)
-  jobs.shift() // removes api information
+  const ref = database().ref('/jobs')
+  const jobs = await ref.once('value').then(data => data.val())
 
   return jobs
-}
-
-const getJobs = async (url: string): Promise<any> => {
-  let data: JobType[] = []
-  await axios
-    .get(url)
-    .then((res) => (data = res.data))
-    .catch((err) => {
-      console.log(err, 'getData error')
-
-      return err
-    })
-
-  return data
-}
-
-const checkToken = async (): Promise<ParseHubInfo> => {
-  const parseHubInfo: ParseHubInfo = { url: '', token: '' }
-
-  await axios
-    .get(
-      `https://www.parsehub.com/api/v2/projects?api_key=${api}&offset=0&limit=20&include_options=1`
-    )
-    .then((res) => {
-      const data = res.data.projects[0]
-      const runToken = data.last_ready_run.run_token
-      const url = `https://www.parsehub.com/api/v2/runs/${runToken}/data?api_key=${api}`
-      parseHubInfo.url = url
-    })
-    .catch((err) => {
-      console.error(err)
-      return false
-    })
-  return parseHubInfo
 }
 
 export const storeState = async (state: State) => {
@@ -90,26 +36,4 @@ export const getStateFromStorage = async () => {
     return { ...state, data, keys }
   }
   return state
-}
-
-function addDate(jobs: JobType[]): JobType[] {
-  return jobs.map((job: JobType) => {
-    if (job.dateFormated === 'Just posted') {
-      return { ...job, date: parseDate('a minute ago') }
-    }
-    return {
-      ...job,
-      date: parseDate(job && job.dateFormated || 'a week ago')
-    }
-  })
-}
-
-function removeDuplicates(jobsWithId: JobType[]): JobType[] {
-  return jobsWithId.reduce((acc: JobType[], current: JobType) => {
-    const duplicated = acc.find((job) => job.id === current.id)
-    if (!duplicated) {
-      return acc.concat(current)
-    }
-    return acc
-  }, [])
 }

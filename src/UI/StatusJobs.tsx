@@ -1,13 +1,12 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 interface Props {
-  refreshing: boolean;
-  length: number;
-  refresh: () => void;
-  date: string;
-  order: boolean;
+  refreshing: boolean
+  length: number
+  refresh: () => void
+  date: string
+  order: boolean
 }
 
 export default (props: Props) => (
@@ -21,11 +20,8 @@ export default (props: Props) => (
             props.order ? 'Descending' : 'Ascending'
           } order`}
     </Text>
-    <TouchableOpacity onPress={props.refresh} style={styles.reloadButton}>
-      <Icon name="reload" type="material-community" size={23} color="#112038" />
-    </TouchableOpacity>
   </View>
-);
+)
 
 const styles = StyleSheet.create({
   statusView: {
@@ -36,10 +32,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   title: {
-    color: '#A7C8FF',
+    color: '#858585',
     fontSize: 11
   },
   reloadButton: {
     alignSelf: 'center'
   }
-});
+})

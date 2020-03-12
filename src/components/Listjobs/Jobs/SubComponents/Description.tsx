@@ -2,18 +2,18 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import Salary from './Salary'
 import Tags from './Tags'
-import Type from './Type'
 
 interface Props {
   description: string
   salary: string
   type: string
   tags: string[]
+  date: string
 }
 
-export default (props: Props) => {
-  const description: string = props.description
-    ? props.description
+export default ({ description, salary, tags, type, date }: Props) => {
+  const formatedDescription: string = description
+    ? description
         .replace(/<(?:.|\n)*?>/gm, '')
         .replace(/&amp;/gm, '&')
         .replace(/&#8211;/gm, '-')
@@ -26,30 +26,31 @@ export default (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text numberOfLines={10} style={styles.description}>
-        {description}
+      <Text numberOfLines={20} style={styles.description}>
+        {formatedDescription}
       </Text>
-      {props.salary && <Salary salary={props.salary} />}
-      {(props.tags && <Tags tags={props.tags} />) ||
-        (props.type && <Type type={props.type} />)}
+      {salary && <Salary salary={salary} />}
+      <Text style={styles.date}>Posted on: {date}</Text>
+      <Tags tags={tags} type={type} />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomColor: 'white',
-    borderBottomWidth: 5,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10
+    backgroundColor: '#FFF'
   },
   description: {
-    marginLeft: 10,
-    marginRight: 10,
-    marginTop: 5,
-    marginBottom: 5,
-    fontSize: 12,
+    margin: 10,
+    fontSize: 11,
     fontWeight: '400',
     color: 'black'
+  },
+  date: {
+    textAlign: 'center',
+    fontSize: 10,
+    fontWeight: '400',
+    color: '#112038',
+    marginBottom: 5
   }
 })
