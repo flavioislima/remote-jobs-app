@@ -1,14 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import { Image } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import BrowserScreen from '../screens/Browser'
 import TabNavigator from './MainTabNavigator'
 
-const BackButton = require('../assets/back.png')
-
-const Back = () => <Image source={BackButton} style={{ height: 28, width: 35 }} />
+const Back = () => <Icon name="chevron-left" size={35} color={'#FFF'} />
 
 const Stack = createStackNavigator()
 
