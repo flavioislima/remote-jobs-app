@@ -54,7 +54,6 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
   }
 
   const dateFormated = new Date(date).toUTCString().slice(5, 16)
-  position.includes('React') ? window.console.log(data) : window.console.log('')
 
   return (
     <View style={styles.item}>

@@ -1,12 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
-import { parseDate } from 'chrono-node'
+
 import { JobType } from '../types'
 
-import api from '../api'
-
-const iLlogo = require('../assets/i_logo.png')
-const rLogo = require('../assets/r_logo.webp')
 interface ParseHubInfo {
   url: string
   token: string
@@ -18,69 +14,9 @@ interface State {
 }
 
 export const getAllJobs = async () => {
-  const remoteOkJobs: JobType[] = await getRemoteOk()
-  const indeedJobs: JobType[] = await getIndeed()
-  const allJobs: JobType[] = remoteOkJobs.concat(indeedJobs)
-
-  return allJobs
-}
-
-export const getIndeed = async () => {
-  const parseHubInfo: ParseHubInfo = await checkToken()
-  const url: string = await parseHubInfo.url
-  const jobs = await getJobs(url)
-
-  const jobsWithDate = jobs && addLogoAndDate(jobs.Job)
-
-  return removeDuplicates(jobsWithDate)
-}
-
-export const getRemoteOk = async () => {
-  const url: string = 'https://remoteok.io/api'
-  const jobs: JobType[] = await getJobs(url)
-  jobs.shift() // removes api information
-
-  return jobs.map((job, i) => {
-    const { logo, company_logo } = job
-    const logoUri = logo ? logo : company_logo
-    const image = logoUri ? {uri: logoUri} : rLogo
-
-    return { ...job, image}
-  })
-}
-
-const getJobs = async (url: string): Promise<any> => {
-  let data: JobType[] = []
-  await axios
-    .get(url)
-    .then((res) => (data = res.data))
-    .catch((err) => {
-      console.error(err, 'getData error')
-
-      return err
-    })
-
-  return data
-}
-
-const checkToken = async (): Promise<ParseHubInfo> => {
-  const parseHubInfo: ParseHubInfo = { url: '', token: '' }
-
-  await axios
-    .get(
-      `https://www.parsehub.com/api/v2/projects?api_key=${api}&offset=0&limit=20&include_options=1`
-    )
-    .then((res) => {
-      const data = res.data.projects[0]
-      const runToken = data.last_ready_run.run_token
-      const url = `https://www.parsehub.com/api/v2/runs/${runToken}/data?api_key=${api}`
-      parseHubInfo.url = url
-    })
-    .catch((err) => {
-      console.error(err)
-      return false
-    })
-  return parseHubInfo
+  const url = 'https://us-central1-remote-work-br.cloudfunctions.net/getRemoteJobs'
+  const jobs = await axios.get(url).then(res => res.data)
+  return jobs
 }
 
 export const storeState = async (state: State) => {
@@ -99,27 +35,4 @@ export const getStateFromStorage = async () => {
     return { ...state, data, keys }
   }
   return state
-}
-
-function addLogoAndDate(jobs: JobType[]): JobType[] {
-  return jobs.map((job: JobType) => {
-    if (job.dateFormated === 'Just posted') {
-      return { ...job, image: iLlogo, date: parseDate('a minute ago')}
-    }
-    return {
-      ...job,
-      image: iLlogo,
-      date: parseDate(job && job.dateFormated || 'a week ago')
-    }
-  })
-}
-
-function removeDuplicates(jobsWithId: JobType[]): JobType[] {
-  return jobsWithId.reduce((acc: JobType[], current: JobType) => {
-    const duplicated = acc.find((job) => job.id === current.id)
-    if (!duplicated) {
-      return acc.concat(current)
-    }
-    return acc
-  }, [])
 }

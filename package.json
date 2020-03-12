@@ -25,7 +25,6 @@
     "@react-navigation/native": "^5.0.9",
     "@react-navigation/stack": "^5.1.1",
     "axios": "^0.18.1",
-    "chrono-node": "^1.4.3",
     "global": "^4.4.0",
     "react": "16.9.0",
     "react-native": "0.61.5",
@@ -39,6 +38,7 @@
     "react-native-screens": "^2.2.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "^8.1.2",
+    "rss-parser": "^3.7.5",
     "tslint": "^5.19.0"
   },
   "devDependencies": {
