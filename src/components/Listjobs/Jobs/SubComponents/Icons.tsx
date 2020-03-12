@@ -39,8 +39,7 @@ export default (props: Props) => (
       <Text style={[styles.iconText]}>Share</Text>
     </TouchableOpacity>
     <TouchableOpacity
-      onPress={props.handleUrl}
-      onLongPress={Linking.openURL.bind(this, props.url)}
+      onPress={() => Linking.openURL(props.url)}
       style={styles.icons}
     >
       <Icon name="google-chrome" size={iconSize} color="#A7C8FF" />
@@ -51,19 +50,19 @@ export default (props: Props) => (
 
 const styles = StyleSheet.create({
   iconsView: {
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignContent: 'center',
-    marginVertical: 5,
     backgroundColor: '#FFF'
   },
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 4,
-    width: '100%'
+    width: '20%'
   },
   iconText: {
-    fontSize: 18,
+    fontSize: 13,
     fontWeight: 'bold',
     color: '#112038',
     marginHorizontal: 5,

@@ -8,9 +8,10 @@ interface Props {
   salary: string
   type: string
   tags: string[]
+  date: string
 }
 
-export default ({ description, salary, tags, type }: Props) => {
+export default ({ description, salary, tags, type, date }: Props) => {
   const formatedDescription: string = description
     ? description
         .replace(/<(?:.|\n)*?>/gm, '')
@@ -25,10 +26,11 @@ export default ({ description, salary, tags, type }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text numberOfLines={10} style={styles.description}>
+      <Text numberOfLines={20} style={styles.description}>
         {formatedDescription}
       </Text>
       {salary && <Salary salary={salary} />}
+      <Text style={styles.date}>Posted on: {date}</Text>
       <Tags tags={tags} type={type} />
     </View>
   )
@@ -36,17 +38,19 @@ export default ({ description, salary, tags, type }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomColor: 'white',
-    borderBottomWidth: 5,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10
+    backgroundColor: '#FFF'
   },
   description: {
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 5,
+    margin: 10,
     fontSize: 11,
     fontWeight: '400',
     color: 'black'
+  },
+  date: {
+    textAlign: 'center',
+    fontSize: 10,
+    fontWeight: '400',
+    color: '#112038',
+    marginBottom: 5
   }
 })
