@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage'
-import axios from 'axios'
+import database from '@react-native-firebase/database'
 
 import { JobType } from '../types'
 
@@ -14,8 +14,9 @@ interface State {
 }
 
 export const getAllJobs = async () => {
-  const url = 'https://us-central1-remote-work-br.cloudfunctions.net/getRemoteJobs'
-  const jobs = await axios.get(url).then(res => res.data)
+  const ref = database().ref('/jobs')
+  const jobs = await ref.once('value').then(data => data.val())
+
   return jobs
 }
 
