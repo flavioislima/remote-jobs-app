@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Icon } from 'react-native-elements'
 
 interface Props {
   refreshing: boolean
@@ -21,9 +20,6 @@ export default (props: Props) => (
             props.order ? 'Descending' : 'Ascending'
           } order`}
     </Text>
-    <TouchableOpacity onPress={props.refresh} style={styles.reloadButton}>
-      <Icon name="reload" type="material-community" size={23} color="#112038" />
-    </TouchableOpacity>
   </View>
 )
 
