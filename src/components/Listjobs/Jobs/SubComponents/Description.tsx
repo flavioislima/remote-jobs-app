@@ -26,7 +26,7 @@ export default ({ description, salary, tags, type, date }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text numberOfLines={20} style={styles.description}>
+      <Text numberOfLines={15} style={styles.description}>
         {formatedDescription}
       </Text>
       {salary && <Salary salary={salary} />}
