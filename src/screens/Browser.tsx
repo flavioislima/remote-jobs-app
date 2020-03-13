@@ -19,12 +19,6 @@ export default class BrowserScreen extends React.Component<Props> {
 
     return (
       <View style={{ flex: 1 }}>
-        <TouchableOpacity
-          style={styles.touch}
-          onPress={() => Linking.openURL(url)}
-        >
-          <Text style={styles.text}>Open On External Browser</Text>
-        </TouchableOpacity>
         <WebView
           javaScriptEnabled
           domStorageEnabled
@@ -33,17 +27,23 @@ export default class BrowserScreen extends React.Component<Props> {
           source={{ uri: url }}
           style={{ marginVertical: 5 }}
         />
-        <AdBanner />
+        <TouchableOpacity
+          style={styles.touch}
+          onPress={() => Linking.openURL(url)}
+        >
+          <Text style={styles.text}>Open On External Browser</Text>
+        </TouchableOpacity>
+        <AdBanner size={'BANNER'} />
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  text: { fontSize: 16, fontWeight: '700', color: 'white' },
+  text: { fontSize: 15, fontWeight: '700', color: 'white' },
   touch: {
     height: 32,
-    backgroundColor: '#A7C8FF',
+    backgroundColor: '#1e2229',
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center'

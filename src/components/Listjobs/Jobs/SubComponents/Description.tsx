@@ -26,7 +26,7 @@ export default ({ description, salary, tags, type, date }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text numberOfLines={15} style={styles.description}>
+      <Text numberOfLines={20} style={styles.description}>
         {formatedDescription}
       </Text>
       {salary && <Salary salary={salary} />}
@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
   },
   description: {
     margin: 10,
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: '400',
     color: 'black'
   },
   date: {
     textAlign: 'center',
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '400',
     color: '#112038',
     marginBottom: 5

@@ -23,7 +23,7 @@ export default function RootStack() {
           headerTitle: 'Back to Jobs Search',
           headerStyle: {
             height: 40,
-            backgroundColor: '#112038'
+            backgroundColor: '#1e2229'
           },
           headerTitleStyle: {
             color: 'white',

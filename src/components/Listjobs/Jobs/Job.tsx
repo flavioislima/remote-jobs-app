@@ -109,11 +109,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   modalContent: {
-    width: 300
+    width: 300,
+    height: '90%',
+    justifyContent: 'center'
   },
   modal: {
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'center'
   }
 })
 

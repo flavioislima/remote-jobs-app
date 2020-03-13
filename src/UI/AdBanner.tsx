@@ -7,9 +7,9 @@ interface Props {
   size?: string
 }
 
-export default ({size = 'SMART_BANNER'}) => (
-  <BannerAd
-    unitId={unitId}
-    size={size}
-  />
+export default ({ size = 'SMART_BANNER' }) => (
+    <BannerAd
+      unitId={unitId}
+      size={size}
+    />
   )
