@@ -1,9 +1,9 @@
+import analytics from '@react-native-firebase/analytics'
 import React from 'react'
 import { Alert } from 'react-native'
 import { getAllJobs, getStateFromStorage, storeState } from '../screens/utils'
 import { JobType } from '../types'
 import JobsContext from './JobsContext'
-
 interface Props {
   children: React.ReactNode
 }
@@ -27,6 +27,7 @@ export default class GlobalState extends React.Component<Props> {
     this.setState({ data: [], refreshing: true })
     const keys = this.state.keys
     const data: JobType[] = (await getAllJobs()) || []
+    await analytics().logEvent('refresh')
 
     if (data.length > 100) {
       this.setState({
@@ -65,7 +66,7 @@ export default class GlobalState extends React.Component<Props> {
     ])
   }
 
-  handleFavorites = (data: JobType) => {
+  handleFavorites = async (data: JobType) => {
     const { keys } = this.state
 
     if (keys.includes(data.id)) {
@@ -76,11 +77,13 @@ export default class GlobalState extends React.Component<Props> {
       })
 
       this.storeState()
+      await analytics().logEvent('remove favorite')
     } else {
       this.setState({
         keys: [...this.state.keys, data.id]
       })
       this.storeState()
+      await analytics().logEvent('add favorite')
     }
   }
 
