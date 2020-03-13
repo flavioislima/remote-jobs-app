@@ -63,12 +63,14 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
   return (
     <View style={styles.item}>
       <ListItem
-      title={position}
-      subtitle={company}
-      leftAvatar={{ source: image }}
-      rightIcon={dots}
-      onPress={openWebView}
-    />
+        title={position}
+        subtitle={company}
+        leftAvatar={{ source: image }}
+        rightIcon={dots}
+        onPress={openWebView}
+        bottomDivider
+        pad={12}
+      />
       <Modal
         isVisible={showIcons}
         onBackdropPress={() => setShowIcons(false)}
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start'
   }
 })
 
