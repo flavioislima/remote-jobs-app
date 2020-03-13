@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     width: '20%'
   },
   iconText: {
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: 'bold',
     color: '#112038',
     marginHorizontal: 5,

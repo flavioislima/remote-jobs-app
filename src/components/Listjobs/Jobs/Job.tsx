@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import JobsContext from '../../../state/JobsContext'
 import { JobType } from '../../../types'
+import AdBanner from '../../../UI/AdBanner'
 import Description from './SubComponents/Description'
 import Icons from './SubComponents/Icons'
 
@@ -62,12 +63,14 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
   return (
     <View style={styles.item}>
       <ListItem
-      title={position}
-      subtitle={company}
-      leftAvatar={{ source: image }}
-      rightIcon={dots}
-      onPress={openWebView}
-    />
+        title={position}
+        subtitle={company}
+        leftAvatar={{ source: image }}
+        rightIcon={dots}
+        onPress={openWebView}
+        bottomDivider
+        pad={12}
+      />
       <Modal
         isVisible={showIcons}
         onBackdropPress={() => setShowIcons(false)}
@@ -76,23 +79,26 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
         swipeDirection={['up', 'left', 'right', 'down']}
         style={styles.modal}
       >
-        <Description
-          tags={tags}
-          salary={salary}
-          type={type}
-          description={description}
-          date={dateFormated}
-        />
-        <Icons
-          handleFavorite={handleFavorites.bind(this, data)}
-          handleSharing={handleSharing}
-          handleUrl={openWebView}
-          data={data}
-          isFavorite={keys.includes(data.id)}
-          url={url}
-          position={position}
-          company={company}
-        />
+        <View style={styles.modalContent}>
+          <Description
+            tags={tags}
+            salary={salary}
+            type={type}
+            description={description}
+            date={dateFormated}
+            />
+          <Icons
+            handleFavorite={handleFavorites.bind(this, data)}
+            handleSharing={handleSharing}
+            handleUrl={openWebView}
+            data={data}
+            isFavorite={keys.includes(data.id)}
+            url={url}
+            position={position}
+            company={company}
+            />
+          <AdBanner size={'MEDIUM_RECTANGLE'}/>
+        </View>
       </Modal>
     </View>
   )
@@ -102,16 +108,12 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'column'
   },
-  touch: {
-    flex: 1,
-    justifyContent: 'space-between',
-    width: '80%',
-    marginHorizontal: 8,
-    borderBottomColor: '#858585',
-    borderBottomWidth: 2
+  modalContent: {
+    width: 300
   },
   modal: {
-    justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
   }
 })
 

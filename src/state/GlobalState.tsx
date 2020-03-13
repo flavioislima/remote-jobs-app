@@ -3,7 +3,6 @@ import { Alert } from 'react-native'
 import { getAllJobs, getStateFromStorage, storeState } from '../screens/utils'
 import { JobType } from '../types'
 import JobsContext from './JobsContext'
-
 interface Props {
   children: React.ReactNode
 }
@@ -65,7 +64,7 @@ export default class GlobalState extends React.Component<Props> {
     ])
   }
 
-  handleFavorites = (data: JobType) => {
+  handleFavorites = async (data: JobType) => {
     const { keys } = this.state
 
     if (keys.includes(data.id)) {
