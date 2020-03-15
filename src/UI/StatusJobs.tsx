@@ -14,11 +14,7 @@ export default (props: Props) => (
     <Text style={styles.title}>
       {props.refreshing
         ? 'Searching for Remote Jobs...'
-        : `${props.length} Jobs found from ${new Date(
-            props.date
-          ).toUTCString().slice(5, 16)} in ${
-            props.order ? 'Descending' : 'Ascending'
-          } order`}
+        : `${props.length} Jobs found`}
     </Text>
   </View>
 )

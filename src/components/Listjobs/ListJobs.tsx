@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-community/async-storage'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   FlatList,
   RefreshControl,
@@ -32,10 +31,9 @@ const ListJobs: React.FC<Props> = (props: Props) => {
 
   // State
   const [filterText, setFilterText] = useState('')
-  const [isRated, setRated] = useState(false)
   const [order, setOrder] = useState(true) // true = descending, false = asscending
   const [showCalendar, setShowCalendar] = React.useState(false)
-  const [pickedDate, setPickedDate] = useState(new Date(2020, 0, 1).toJSON())
+  const [pickedDate, setPickedDate] = useState(new Date(2018, 0, 1).toJSON())
 
   // Filter - Text, Date and Sort by date
   const filterRegex: RegExp = new RegExp(String(filterText), 'i')
@@ -46,8 +44,8 @@ const ListJobs: React.FC<Props> = (props: Props) => {
   const filteredData: JobType[] = textFilteredData.filter(dateFilter)
   const sortedData = sortJobs(filteredData, order)
 
-  const renderJobs = (job: any) => {
-    return <Job data={job.item} navigate={navigate} refresh={refresh} />
+  const renderJobs = ({ item }: {item: JobType}) => {
+    return <Job data={item} />
   }
 
   const onChange = (event: any, selectedDate: Date) => {
@@ -56,10 +54,6 @@ const ListJobs: React.FC<Props> = (props: Props) => {
   }
 
   const extractKeys = (job: JobType) => job.id
-
-  useEffect(() => {
-    AsyncStorage.getItem('rated').then((rated) => setRated(JSON.parse(rated)))
-  }, [isRated])
 
   return (
     <View style={styles.container}>
@@ -80,7 +74,7 @@ const ListJobs: React.FC<Props> = (props: Props) => {
             mode={'date'}
             onChange={onChange}
             maximumDate={currentDate}
-            minimumDate={new Date(2019, 0, 1)}
+            minimumDate={new Date(2015, 0, 1)}
           />
         }
       <StatusJobs

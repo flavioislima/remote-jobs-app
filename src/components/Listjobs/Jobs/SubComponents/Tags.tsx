@@ -3,20 +3,16 @@ import { StyleSheet, Text, View } from 'react-native'
 
 interface Props {
   tags?: string[]
-  type?: string
 }
 
-export default ({tags, type}: Props) => (
+export default ({tags}: Props) => (
   <View>
     <View style={styles.tagsView}>
-      {tags ? tags.map((tag, i) => (
+      {tags && tags.map((tag, i) => (
         <Text style={styles.tags} key={i}>
           {tag}
         </Text>
-      )) : <Text style={styles.tags}>
-            {type}
-          </Text>
-      }
+      ))}
     </View>
   </View>
 )

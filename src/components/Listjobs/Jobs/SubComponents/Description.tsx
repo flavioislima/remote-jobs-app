@@ -6,12 +6,13 @@ import Tags from './Tags'
 interface Props {
   description: string
   salary: string
-  type: string
   tags: string[]
   date: string
+  company: string
+  position: string
 }
 
-export default ({ description, salary, tags, type, date }: Props) => {
+export default ({ description, salary, tags, date, company, position }: Props) => {
   const formatedDescription: string = description
     ? description
         .replace(/<(?:.|\n)*?>/gm, '')
@@ -26,22 +27,33 @@ export default ({ description, salary, tags, type, date }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text numberOfLines={20} style={styles.description}>
+      <Text style={styles.title}>
+        {`${position} - ${company}`}
+      </Text>
+      <Text numberOfLines={16} style={styles.description}>
         {formatedDescription}
       </Text>
       {salary && <Salary salary={salary} />}
       <Text style={styles.date}>Posted on: {date}</Text>
-      <Tags tags={tags} type={type} />
+      <Tags tags={tags} />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
+    width: '100%'
+  },
+  title: {
+    textAlign: 'center',
+    margin: 5,
+    fontSize: 14,
+    fontWeight: '700',
+    color: 'black'
   },
   description: {
-    margin: 10,
+    margin: 5,
     fontSize: 13,
     fontWeight: '400',
     color: 'black'

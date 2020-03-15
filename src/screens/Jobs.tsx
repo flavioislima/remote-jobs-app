@@ -27,7 +27,6 @@ class Jobs extends React.PureComponent<Props> {
           refreshing={refreshing}
           error={error}
         />
-          <AdBanner />
       </>
     )
   }
