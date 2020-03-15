@@ -2,6 +2,7 @@ import {
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs'
 import React from 'react'
+import { Platform } from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Favorites, Jobs } from '../screens'
@@ -28,7 +29,7 @@ export default function MainTabNavigator() {
           },
           style: {
             backgroundColor: '#F6F9FE',
-            height: 55
+            height: Platform.OS === 'android' ? 55 : 90
           },
           activeTintColor: '#1E2229',
           inactiveTintColor: '#858585'
