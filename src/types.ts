@@ -9,7 +9,7 @@ export interface JobType {
   date: string
   tags?: string[]
   dateFormated?: string
-  type?: string
+  index?: number
   salary?: string
   isFavorite?: boolean
   image?: any

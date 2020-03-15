@@ -6,14 +6,13 @@ import Tags from './Tags'
 interface Props {
   description: string
   salary: string
-  type: string
   tags: string[]
   date: string
   company: string
   position: string
 }
 
-export default ({ description, salary, tags, type, date, company, position }: Props) => {
+export default ({ description, salary, tags, date, company, position }: Props) => {
   const formatedDescription: string = description
     ? description
         .replace(/<(?:.|\n)*?>/gm, '')
@@ -36,7 +35,7 @@ export default ({ description, salary, tags, type, date, company, position }: Pr
       </Text>
       {salary && <Salary salary={salary} />}
       <Text style={styles.date}>Posted on: {date}</Text>
-      <Tags tags={tags} type={type} />
+      <Tags tags={tags} />
     </View>
   )
 }

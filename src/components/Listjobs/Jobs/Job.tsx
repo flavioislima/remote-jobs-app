@@ -21,12 +21,12 @@ const Job: React.FC<Props> = ({ data }: Props) => {
     url,
     position,
     tags,
-    type,
     salary,
     company,
     description,
     date,
-    image
+    image,
+    index
   } = data
 
   const handleSharing = () => {
@@ -48,6 +48,8 @@ const Job: React.FC<Props> = ({ data }: Props) => {
   }
 
   const dateFormated: string = new Date(date).toUTCString().slice(5, 16)
+  const showAd: boolean = index > 10 && index % 20 === 0
+  console.log(index, showAd)
 
   const listIcon = (<TouchableOpacity onPress={() => setShowIcons(true)}>
     <Icon name="chevron-right" color={'#000'} size={28} />
@@ -64,6 +66,7 @@ const Job: React.FC<Props> = ({ data }: Props) => {
         bottomDivider
         pad={12}
       />
+      {showAd ? <AdBanner /> : null}
       <Overlay
         isVisible={showIcons}
         onBackdropPress={() => setShowIcons(false)}
@@ -74,7 +77,6 @@ const Job: React.FC<Props> = ({ data }: Props) => {
           <Description
             tags={tags}
             salary={salary}
-            type={type}
             description={description}
             date={dateFormated}
             company={company}
