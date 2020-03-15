@@ -30,7 +30,8 @@ export default (props: Props) => {
           round
           inputStyle={{
             backgroundColor: 'white',
-            fontSize: 12
+            fontSize: 12,
+            color: '#000'
           }}
           inputContainerStyle={{
             height: 30
@@ -45,6 +46,7 @@ export default (props: Props) => {
           onChangeText={onChangeText}
           value={filterText}
           placeholderTextColor={'#222b38'}
+          showCancel
         />
       </View>
       <View style={styles.icons}>
