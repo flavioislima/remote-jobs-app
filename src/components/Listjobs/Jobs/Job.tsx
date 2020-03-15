@@ -1,7 +1,6 @@
 import React from 'react'
 import { Share, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { ListItem } from 'react-native-elements'
-import Modal from 'react-native-modal'
+import { ListItem, Overlay } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import JobsContext from '../../../state/JobsContext'
@@ -12,11 +11,9 @@ import Icons from './SubComponents/Icons'
 
 interface Props {
   data: JobType
-  navigate: any
-  refresh: () => void
 }
 
-const Job: React.FC<Props> = ({ data, navigate }: Props) => {
+const Job: React.FC<Props> = ({ data }: Props) => {
   const { keys, handleFavorites } = React.useContext(JobsContext)
   const [showIcons, setShowIcons] = React.useState(false)
 
@@ -31,10 +28,6 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
     date,
     image
   } = data
-
-  const openWebView = () => {
-    navigate.navigate('Browser', { url })
-  }
 
   const handleSharing = () => {
     Share.share(
@@ -54,10 +47,10 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
     )
   }
 
-  const dateFormated = new Date(date).toUTCString().slice(5, 16)
+  const dateFormated: string = new Date(date).toUTCString().slice(5, 16)
 
-  const dots = (<TouchableOpacity onPress={() => setShowIcons(true)}>
-    <Icon name="dots-vertical" color={'#000'} size={28} />
+  const listIcon = (<TouchableOpacity onPress={() => setShowIcons(true)}>
+    <Icon name="chevron-right" color={'#000'} size={28} />
   </TouchableOpacity>)
 
   return (
@@ -66,18 +59,16 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
         title={position}
         subtitle={company}
         leftAvatar={{ source: image }}
-        rightIcon={dots}
-        onPress={openWebView}
+        rightIcon={listIcon}
+        onPress={() => setShowIcons(true)}
         bottomDivider
         pad={12}
       />
-      <Modal
+      <Overlay
         isVisible={showIcons}
         onBackdropPress={() => setShowIcons(false)}
-        hideModalContentWhileAnimating
-        useNativeDriver
-        swipeDirection={['up', 'left', 'right', 'down']}
-        style={styles.modal}
+        overlayStyle={styles.modal}
+        height={'auto'}
       >
         <View style={styles.modalContent}>
           <Description
@@ -86,11 +77,12 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
             type={type}
             description={description}
             date={dateFormated}
+            company={company}
+            position={position}
             />
           <Icons
             handleFavorite={handleFavorites.bind(this, data)}
             handleSharing={handleSharing}
-            handleUrl={openWebView}
             data={data}
             isFavorite={keys.includes(data.id)}
             url={url}
@@ -99,7 +91,7 @@ const Job: React.FC<Props> = ({ data, navigate }: Props) => {
             />
           <AdBanner size={'MEDIUM_RECTANGLE'}/>
         </View>
-      </Modal>
+      </Overlay>
     </View>
   )
 }
@@ -109,13 +101,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   modalContent: {
-    width: 300,
-    height: '90%',
-    justifyContent: 'center'
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modal: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start'
   }
 })
 

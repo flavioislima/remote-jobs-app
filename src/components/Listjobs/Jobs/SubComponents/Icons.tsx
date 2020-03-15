@@ -15,7 +15,6 @@ interface Props {
   url: string
   position: string
   company: string
-  handleUrl: () => void
   handleSharing: () => void
   handleFavorite: () => void
 }
@@ -53,7 +52,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignContent: 'center',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
+    width: '100%'
   },
   icons: {
     flexDirection: 'row',
