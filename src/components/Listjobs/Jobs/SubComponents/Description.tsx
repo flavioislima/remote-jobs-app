@@ -9,9 +9,11 @@ interface Props {
   type: string
   tags: string[]
   date: string
+  company: string
+  position: string
 }
 
-export default ({ description, salary, tags, type, date }: Props) => {
+export default ({ description, salary, tags, type, date, company, position }: Props) => {
   const formatedDescription: string = description
     ? description
         .replace(/<(?:.|\n)*?>/gm, '')
@@ -26,7 +28,10 @@ export default ({ description, salary, tags, type, date }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text numberOfLines={20} style={styles.description}>
+      <Text style={styles.title}>
+        {`${position} - ${company}`}
+      </Text>
+      <Text numberOfLines={16} style={styles.description}>
         {formatedDescription}
       </Text>
       {salary && <Salary salary={salary} />}
@@ -38,10 +43,18 @@ export default ({ description, salary, tags, type, date }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
+    width: '100%'
+  },
+  title: {
+    textAlign: 'center',
+    margin: 5,
+    fontSize: 14,
+    fontWeight: '700',
+    color: 'black'
   },
   description: {
-    margin: 10,
+    margin: 5,
     fontSize: 13,
     fontWeight: '400',
     color: 'black'
