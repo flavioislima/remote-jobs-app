@@ -148,7 +148,6 @@
 				2586CBB3DDFA7D5A5B7BF31E /* Pods-RemoteWorkTests.debug.xcconfig */,
 				6012B3C91A5CD373DE1C3AAD /* Pods-RemoteWorkTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -310,6 +309,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -688,6 +688,7 @@
 			baseConfigurationReference = AD94E6E8F77DE6D184AB60EB /* Pods-RemoteWork.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				INFOPLIST_FILE = RemoteWork/Info.plist;
@@ -708,6 +709,7 @@
 			baseConfigurationReference = AABB883BAF8B76C34D00BC19 /* Pods-RemoteWork.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = RemoteWork/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
