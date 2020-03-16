@@ -21,8 +21,6 @@ export default (props: Props) => (
 
 const styles = StyleSheet.create({
   statusView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 3,
     marginHorizontal: 10

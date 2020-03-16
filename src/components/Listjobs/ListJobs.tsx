@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import {
   FlatList,
   RefreshControl,
+  SafeAreaView,
   StatusBar,
   StyleSheet,
   View
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { JobType } from '../../types'
 import Error from '../../UI/Error'
