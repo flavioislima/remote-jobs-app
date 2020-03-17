@@ -35,6 +35,7 @@ class Favorites extends React.PureComponent<Props> {
           title="Delete all Favorites"
           onPress={handleClearFavorites}
         />
+        <AdBanner unitId={'FAVORITES'} size={'SMART'}/>
       </>
     )
   }
