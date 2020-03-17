@@ -20,6 +20,7 @@ interface Props {
 }
 
 const iconSize = 25
+const iconColor = '#666'
 
 export default (props: Props) => (
   <View style={styles.iconsView}>
@@ -27,21 +28,21 @@ export default (props: Props) => (
       <Icon
         name={props.isFavorite ? 'heart-broken' : 'heart'}
         size={iconSize}
-        color="#E22525"
+        color={iconColor}
       />
       <Text style={[styles.iconText]}>
         {props.isFavorite ? 'Saved' : 'Save'}
       </Text>
     </TouchableOpacity>
     <TouchableOpacity onPress={props.handleSharing} style={styles.icons}>
-      <Icon name="share" size={iconSize} color="#A7C8FF" />
+      <Icon name="share" size={iconSize} color={iconColor} />
       <Text style={[styles.iconText]}>Share</Text>
     </TouchableOpacity>
     <TouchableOpacity
       onPress={() => Linking.openURL(props.url)}
       style={styles.icons}
     >
-      <Icon name="google-chrome" size={iconSize} color="#A7C8FF" />
+      <Icon name="google-chrome" size={iconSize} color={iconColor} />
       <Text style={styles.iconText}>Open</Text>
     </TouchableOpacity>
   </View>
@@ -50,22 +51,23 @@ export default (props: Props) => (
 const styles = StyleSheet.create({
   iconsView: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignContent: 'center',
+    justifyContent: 'space-between',
     backgroundColor: '#FFF',
-    width: '100%'
+    width: '90%',
+    marginBottom: 5
   },
   icons: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 4,
-    width: '20%'
+    width: '30%'
   },
   iconText: {
     fontSize: 11,
     fontWeight: 'bold',
     color: '#112038',
-    marginHorizontal: 5,
+    marginLeft: 5,
     textTransform: 'uppercase'
   }
 })
