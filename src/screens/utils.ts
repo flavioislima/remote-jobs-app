@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
 
+import { endpoint } from '../constants'
 import { JobType } from '../types'
 
 interface ParseHubInfo {
@@ -14,8 +15,7 @@ interface State {
 }
 
 export const getAllJobs = async () => {
-  const url = 'https://us-central1-remote-work-br.cloudfunctions.net/getRemoteJobs'
-  const jobs = await axios.get(url).then(res => res.data)
+  const jobs = await axios.get(endpoint).then(res => res.data)
 
   return jobs
 }

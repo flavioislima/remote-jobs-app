@@ -63,3 +63,6 @@ api.js
 # CocoaPods
 /ios/Pods/
 android/app/google-services.json
+
+# api
+constants.ts

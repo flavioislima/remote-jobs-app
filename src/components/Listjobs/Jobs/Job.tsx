@@ -8,6 +8,7 @@ import { JobType } from '../../../types'
 import AdBanner from '../../../UI/AdBanner'
 import Description from './SubComponents/Description'
 import Icons from './SubComponents/Icons'
+import { adVariance } from '../../../constants'
 
 interface Props {
   data: JobType
@@ -48,7 +49,7 @@ const Job: React.FC<Props> = ({ data }: Props) => {
   }
 
   const dateFormated: string = new Date(date).toUTCString().slice(5, 16)
-  const showAd: boolean = index > 10 && index % 20 === 0
+  const showAd = adVariance(index)
 
   const listIcon = (<TouchableOpacity onPress={() => setShowIcons(true)}>
     <Icon name="chevron-right" color={'#000'} size={28} />
@@ -65,12 +66,13 @@ const Job: React.FC<Props> = ({ data }: Props) => {
         bottomDivider
         pad={12}
       />
-      {showAd ? <AdBanner /> : null}
+      {showAd ? <AdBanner size={'SMART'} unitId={'JOBS'}/> : null}
       <Overlay
         isVisible={showIcons}
         onBackdropPress={() => setShowIcons(false)}
         overlayStyle={styles.modal}
         height={'auto'}
+        width={'85%'}
       >
         <View style={styles.modalContent}>
           <Description
@@ -90,7 +92,7 @@ const Job: React.FC<Props> = ({ data }: Props) => {
             position={position}
             company={company}
             />
-          <AdBanner size={'MEDIUM_RECTANGLE'}/>
+          <AdBanner size={'RECTANGLE'} unitId={'SQUARE'}/>
         </View>
       </Overlay>
     </View>
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
   modalContent: {
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   modal: {
     alignItems: 'center',

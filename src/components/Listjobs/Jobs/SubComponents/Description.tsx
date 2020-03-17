@@ -30,7 +30,7 @@ export default ({ description, salary, tags, date, company, position }: Props) =
       <Text style={styles.title}>
         {`${position} - ${company}`}
       </Text>
-      <Text numberOfLines={16} style={styles.description}>
+      <Text numberOfLines={15} style={styles.description}>
         {formatedDescription}
       </Text>
       {salary && <Salary salary={salary} />}

@@ -51,12 +51,12 @@ export default (props: Props) => {
       </View>
       <View style={styles.icons}>
         <TouchableOpacity onPress={setShowCalendar}>
-          <Icon name="calendar-check" size={34} color={'#FFF'} />
+          <Icon name="calendar-check" size={30} color={'#FFF'} />
         </TouchableOpacity>
         <TouchableOpacity onPress={setOrder}>
           <Icon
             name={order ? 'sort-descending' : 'sort-ascending'}
-            size={34}
+            size={30}
             color={'#FFF'}
           />
         </TouchableOpacity>
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: '25%',
+    height: '100%',
     marginRight: 5
   }
 })
