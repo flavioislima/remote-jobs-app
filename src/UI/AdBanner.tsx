@@ -10,7 +10,7 @@ interface Props {
 }
 
 const AdBanner: React.FC<Props> = ({ size, unitId }) => (
-  <View style={size === 'SMART' && { maxHeight: 80 }}>
+  <View style={size === 'SMART' ? { maxHeight: 80 } : {height: 250, width: 300}}>
     <BannerAd
       unitId={adUnitIds[unitId]}
       size={adSizes[size]}

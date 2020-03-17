@@ -72,6 +72,7 @@ const Job: React.FC<Props> = ({ data }: Props) => {
         onBackdropPress={() => setShowIcons(false)}
         overlayStyle={styles.modal}
         height={'auto'}
+        width={'85%'}
       >
         <View style={styles.modalContent}>
           <Description
@@ -91,7 +92,7 @@ const Job: React.FC<Props> = ({ data }: Props) => {
             position={position}
             company={company}
             />
-          <AdBanner size={'RECTANGLE'} unitId={'SQUARE'} />
+          <AdBanner size={'RECTANGLE'} unitId={'SQUARE'}/>
         </View>
       </Overlay>
     </View>
