@@ -3,12 +3,12 @@ import { Share, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ListItem, Overlay } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
+import { adVariance } from '../../../constants'
 import JobsContext from '../../../state/JobsContext'
 import { JobType } from '../../../types'
 import AdBanner from '../../../UI/AdBanner'
 import Description from './SubComponents/Description'
 import Icons from './SubComponents/Icons'
-import { adVariance } from '../../../constants'
 
 interface Props {
   data: JobType

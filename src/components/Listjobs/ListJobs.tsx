@@ -8,7 +8,9 @@ import {
   StyleSheet,
   View
 } from 'react-native'
+import { Button, Icon, Overlay, Text } from 'react-native-elements'
 
+import { getTags } from '../../screens/utils'
 import { JobType } from '../../types'
 import Error from '../../UI/Error'
 import Search from '../../UI/Search'
@@ -26,23 +28,33 @@ interface Props {
 }
 
 const ListJobs: React.FC<Props> = (props: Props) => {
-  const { jobs, refreshing, refresh, error, navigate } = props
+  const { jobs, refreshing, refresh, error } = props
   const currentDate = new Date()
 
   // State
   const [filterText, setFilterText] = useState('')
   const [order, setOrder] = useState(true) // true = descending, false = asscending
   const [showCalendar, setShowCalendar] = React.useState(false)
+  const [showTagFilter, setShowTagFilter] = React.useState(false)
   const [pickedDate, setPickedDate] = useState(new Date(2018, 0, 1).toJSON())
+  const [pickedTag, setPickedTag] = useState([])
 
   // Filter - Text, Date and Sort by date
   const filterRegex: RegExp = new RegExp(String(filterText), 'i')
   const textFilter = ({ position }) => filterRegex.test(position)
   const dateFilter = ({ date }) => Date.parse(date) >= Date.parse(pickedDate)
+  const tagFilter = ({ tags, position }: JobType) => tags.some(tag => {
+    if (pickedTag.includes(tag)) {
+      window.console.log(pickedTag.includes(tag), position)
+    }
+    return pickedTag.includes(tag)
+  })
   const handleOrder = () => setOrder(!order)
-  const textFilteredData: JobType[] = jobs.filter(textFilter)
+  const tagFilteredData: JobType[] = pickedTag.length > 0 ? jobs.filter(tagFilter) : jobs
+  const textFilteredData: JobType[] = tagFilteredData.filter(textFilter)
   const filteredData: JobType[] = textFilteredData.filter(dateFilter)
   const sortedData = sortJobs(filteredData, order)
+  window.console.log(filteredData)
 
   const renderJobs = ({ item }: {item: JobType}) => {
     return <Job data={item} />
@@ -62,21 +74,71 @@ const ListJobs: React.FC<Props> = (props: Props) => {
         <Search
           onChangeText={setFilterText}
           filterText={filterText}
-          setShowCalendar={() => setShowCalendar(true)}
+          setShowTagFilter={() => setShowTagFilter(true)}
           order={order}
           setOrder={handleOrder}
         />
       </SafeAreaView>
       {error && <Error />}
-      {showCalendar &&
-          <DateTimePicker
-            value={currentDate}
-            mode={'date'}
-            onChange={onChange}
-            maximumDate={currentDate}
-            minimumDate={new Date(2015, 0, 1)}
-          />
-        }
+      {showTagFilter &&
+        <Overlay
+          isVisible={showTagFilter}
+          onBackdropPress={() => setShowTagFilter(false)}
+          height={'auto'}
+          width={'90%'}
+        >
+          <View>
+            <Text>Showing Jobs since: {new Date(pickedDate).toUTCString().slice(0, 11)}</Text>
+            <Text>Selected Tags:{pickedTag.join(', ')}</Text>
+            <Text>Filter by:</Text>
+            <Button title="Date" onPress={() => setShowCalendar(true)} />
+            {showCalendar &&
+              <DateTimePicker
+                value={currentDate}
+                mode={'date'}
+                onChange={onChange}
+                maximumDate={currentDate}
+                minimumDate={new Date(2015, 0, 1)}
+            />
+            }
+            <Text>Filter by common Tags:</Text>
+            <View style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly'
+            }}>
+            {getTags(jobs).map((tag, i) => <Button
+              key={i}
+              buttonStyle={{
+                backgroundColor: pickedTag.includes(tag) ? 'white' : 'yellow',
+                borderRadius: 10,
+                borderColor: 'black',
+                borderWidth: 1,
+                margin: 1,
+                justifyContent: 'center',
+                alignContent: 'center',
+                maxWidth: 150,
+                padding: 4
+              }}
+              titleStyle={{fontSize: 11, marginRight: 2, textTransform: 'uppercase'}}
+              title={tag}
+              iconRight
+              type={'outline'}
+              icon={pickedTag.includes(tag) &&
+              <Icon
+                type={'material-community'}
+                name={'close-circle'}
+                size={12}
+                color={'red'}
+              />}
+              onPress={() =>
+                setPickedTag(pickedTag.includes(tag) ?
+                  pickedTag.filter(selTag => selTag !== tag) : [...pickedTag, tag])}
+            />)}
+            </View>
+          </View>
+        </Overlay>
+      }
       <StatusJobs
         refreshing={refreshing}
         length={filteredData.length}
