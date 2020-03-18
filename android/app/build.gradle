@@ -146,8 +146,8 @@ android {
         applicationId "com.remotework"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 60
-        versionName "5.1.1"
+        versionCode 61
+        versionName "5.2.0"
     }
     splits {
         abi {
