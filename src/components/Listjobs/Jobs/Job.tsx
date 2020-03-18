@@ -3,7 +3,6 @@ import { Share, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ListItem, Overlay } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import { adVariance } from '../../../constants'
 import JobsContext from '../../../state/JobsContext'
 import { JobType } from '../../../types'
 import AdBanner from '../../../UI/AdBanner'
@@ -49,7 +48,6 @@ const Job: React.FC<Props> = ({ data }: Props) => {
   }
 
   const dateFormated: string = new Date(date).toUTCString().slice(5, 16)
-  const showAd = adVariance(index)
 
   const listIcon = (<TouchableOpacity onPress={() => setShowIcons(true)}>
     <Icon name="chevron-right" color={'#000'} size={28} />
@@ -66,7 +64,6 @@ const Job: React.FC<Props> = ({ data }: Props) => {
         bottomDivider
         pad={12}
       />
-      {showAd ? <AdBanner size={'SMART'} unitId={'JOBS'}/> : null}
       <Overlay
         isVisible={showIcons}
         onBackdropPress={() => setShowIcons(false)}
