@@ -11,7 +11,7 @@ interface Props {
   setOrder: () => void
   filterText: string
   onChangeText: (text: string) => void
-  setShowCalendar?: () => void
+  setShowTagFilter: () => void
 }
 
 interface DatePicker {
@@ -21,7 +21,7 @@ interface DatePicker {
 }
 
 export default (props: Props) => {
-  const { order, setOrder, setShowCalendar, onChangeText, filterText } = props
+  const { order, setOrder, setShowTagFilter, onChangeText, filterText } = props
 
   return (
     <View style={styles.searchView}>
@@ -50,8 +50,8 @@ export default (props: Props) => {
         />
       </View>
       <View style={styles.icons}>
-        <TouchableOpacity onPress={setShowCalendar}>
-          <Icon name="calendar-check" size={30} color={'#FFF'} />
+        <TouchableOpacity onPress={setShowTagFilter}>
+          <Icon name="filter" size={30} color={'#FFF'} />
         </TouchableOpacity>
         <TouchableOpacity onPress={setOrder}>
           <Icon
