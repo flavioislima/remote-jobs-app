@@ -25,13 +25,15 @@ interface Props {
   handleClearFavorites?: () => void
 }
 
+const initialDate: Date = new Date(2019, 0, 2)
+
 const ListJobs: React.FC<Props> = (props: Props) => {
   const { jobs, refreshing, refresh, error } = props
 
   // State
   const [filterText, setFilterText] = useState('')
   const [showFilterModal, setShowFilterModal] = React.useState(false)
-  const [pickedDate, setPickedDate] = useState(new Date(2019, 0, 2).toJSON())
+  const [pickedDate, setPickedDate] = useState(initialDate.toJSON())
   const [pickedTags, setPickedTags] = useState([])
 
   // Filter - Text, Date and Sort by date
@@ -44,7 +46,7 @@ const ListJobs: React.FC<Props> = (props: Props) => {
   const filteredData: JobType[] = textFilteredData.filter(dateFilter)
 
   const clearAllFilter = () => {
-    setPickedDate(new Date(2018, 1, 1).toString())
+    setPickedDate(initialDate.toJSON())
     setPickedTags([])
     setFilterText('')
   }
