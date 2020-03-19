@@ -7,8 +7,6 @@ import {
 import { SearchBar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 interface Props {
-  order: boolean
-  setOrder: () => void
   filterText: string
   onChangeText: (text: string) => void
   setShowTagFilter: () => void
@@ -21,7 +19,7 @@ interface DatePicker {
 }
 
 export default (props: Props) => {
-  const { order, setOrder, setShowTagFilter, onChangeText, filterText } = props
+  const { setShowTagFilter, onChangeText, filterText } = props
 
   return (
     <View style={styles.searchView}>
@@ -53,13 +51,6 @@ export default (props: Props) => {
         <TouchableOpacity onPress={setShowTagFilter}>
           <Icon name="filter" size={30} color={'#FFF'} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={setOrder}>
-          <Icon
-            name={order ? 'sort-descending' : 'sort-ascending'}
-            size={30}
-            color={'#FFF'}
-          />
-        </TouchableOpacity>
       </View>
     </View>
   )
@@ -74,13 +65,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e2229'
   },
   searchJobs: {
-    width: '75%'
+    flex: 9,
+    backgroundColor: 'pink'
   },
   icons: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
-    width: '25%',
     height: '100%',
     marginRight: 5
   }

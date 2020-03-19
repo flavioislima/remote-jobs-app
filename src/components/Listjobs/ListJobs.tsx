@@ -12,7 +12,6 @@ import { Button, Icon, Overlay, Text } from 'react-native-elements'
 import { JobType } from '../../types'
 import Error from '../../UI/Error'
 import Search from '../../UI/Search'
-import StatusJobs from '../../UI/StatusJobs'
 import FilterModal from '../FilterModal/FilterModal'
 import Job from './Jobs/Job'
 
@@ -31,7 +30,6 @@ const ListJobs: React.FC<Props> = (props: Props) => {
 
   // State
   const [filterText, setFilterText] = useState('')
-  const [order, setOrder] = useState(true) // true = descending, false = asscending
   const [showFilterModal, setShowFilterModal] = React.useState(false)
   const [pickedDate, setPickedDate] = useState(new Date(2019, 0, 2).toJSON())
   const [pickedTags, setPickedTags] = useState([])
@@ -41,11 +39,9 @@ const ListJobs: React.FC<Props> = (props: Props) => {
   const textFilter = ({ position }) => filterRegex.test(position)
   const dateFilter = ({ date }) => Date.parse(date) >= Date.parse(pickedDate)
   const tagFilter = ({ tags }: JobType) => tags.some(tag => pickedTags.includes(tag))
-  const handleOrder = () => setOrder(!order)
   const tagFilteredData: JobType[] = pickedTags.length > 0 ? jobs.filter(tagFilter) : jobs
   const textFilteredData: JobType[] = tagFilteredData.filter(textFilter)
   const filteredData: JobType[] = textFilteredData.filter(dateFilter)
-  const sortedData = sortJobs(filteredData, order)
 
   const clearAllFilter = () => {
     setPickedDate(new Date(2018, 1, 1).toString())
@@ -67,8 +63,6 @@ const ListJobs: React.FC<Props> = (props: Props) => {
           onChangeText={setFilterText}
           filterText={filterText}
           setShowTagFilter={() => setShowFilterModal(true)}
-          order={order}
-          setOrder={handleOrder}
         />
       </SafeAreaView>
       {error && <Error />}
@@ -81,17 +75,11 @@ const ListJobs: React.FC<Props> = (props: Props) => {
         pickedDate={pickedDate}
         pickedTags={pickedTags}
         setPickedTags={setPickedTags}
-      />
-      <StatusJobs
-        refreshing={refreshing}
-        length={filteredData.length}
-        refresh={refresh}
-        date={pickedDate}
-        order={order}
+        numberOfItems={filteredData.length}
       />
       <FlatList
         style={styles.container}
-        data={sortedData}
+        data={filteredData}
         renderItem={renderJobs}
         keyExtractor={extractKeys}
         refreshControl={
