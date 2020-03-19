@@ -7,25 +7,17 @@ import { JobType } from '../../types'
 
 interface Props {
   showFilterModal: boolean
-  setShowFilterModal: (value: boolean) => void
   pickedTags: string[]
   pickedDate: string
   jobs: JobType[]
+  numberOfItems: number
+  setShowFilterModal: (value: boolean) => void
   setPickedTags: (jobs: JobType[]) => void
   clearAll: () => void
   setPickedDate: (date: string) => void
 }
 
 const currentDate = new Date()
-const dayInMs = 3600 * 1000 * 24
-
-const predDate = {
-  anyTime: new Date(currentDate.getTime() - new Date(dayInMs * 720).getTime()),
-  threeDaysAgo: new Date(currentDate.getTime() - new Date(dayInMs * 3).getTime()),
-  oneWeekAgo: new Date(currentDate.getTime() - new Date(dayInMs * 7).getTime()),
-  oneMonthAgo: new Date(currentDate.getTime() - new Date(dayInMs * 30).getTime()),
-  oneYearAgo: new Date(currentDate.getTime() - new Date(dayInMs * 365).getTime())
-}
 
 const FilterModal: React.FC<Props> = ({
   showFilterModal,
@@ -35,19 +27,20 @@ const FilterModal: React.FC<Props> = ({
   setPickedTags,
   setPickedDate,
   clearAll,
-  jobs
+  jobs,
+  numberOfItems
 }) => {
   const [showCalendar, setShowCalendar] = React.useState(false)
-  const [pickedPreDate, setPickedPreDate] = React.useState(predDate.anyTime)
 
   const onChange = (event: any, selectedDate: Date) => {
     const newDate = selectedDate ? selectedDate.toString() : currentDate.toString()
     setShowCalendar(false)
-    setPickedPreDate(predDate.anyTime)
     setPickedDate(newDate)
   }
 
-  const formatedDate = new Date(pickedDate).toUTCString().slice(0, 16)
+  const formatedDate = new Date(pickedDate).toUTCString().slice(5, 16)
+
+  const onValueChange: (itemValue: any) => void = (value) => setPickedDate(value)
 
   return (
     <Overlay
@@ -58,7 +51,7 @@ const FilterModal: React.FC<Props> = ({
     >
       <View>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Refine</Text>
+          <Text style={styles.title}>Refine {numberOfItems} Jobs</Text>
           <Text style={styles.clearButton} onPress={() => clearAll()}>Reset</Text>
         </View>
         <Divider style={{height: 1, backgroundColor: '#999'}} />
@@ -87,30 +80,14 @@ const FilterModal: React.FC<Props> = ({
         </View>
         <View style={styles.container}>
           <Text style={styles.containerTitle}>Jobs Posted Since {formatedDate}</Text>
-          <Picker
-            mode={'dropdown'}
-            selectedValue={pickedPreDate}
-            onValueChange={(value) => {
-            setPickedDate(value)
-            setPickedPreDate(value)
-          }}>
-            <Picker.Item label="Anytime" value={predDate.anyTime}/>
-            <Picker.Item label="3 Days Ago" value={predDate.threeDaysAgo}/>
-            <Picker.Item label="7 Days Ago" value={predDate.oneWeekAgo}/>
-            <Picker.Item label="30 Days Ago" value={predDate.oneMonthAgo}/>
-            <Picker.Item label="1 Year Ago" value={predDate.oneYearAgo}/>
-          </Picker>
-          {
-            !showCalendar &&
-              <Button
-                raised
-                type={'outline'}
-                title={'Select a Date'}
-                onPress={() => setShowCalendar(true)}
-                containerStyle={{marginTop: 4}}
-                titleStyle={{ fontSize: 13, color: '#666' }}
-              />
-          }
+            <Button
+              raised
+              type={'outline'}
+              title={'Select a Date'}
+              onPress={() => setShowCalendar(true)}
+              containerStyle={{marginTop: 4}}
+              titleStyle={{ fontSize: 13, color: '#666' }}
+            />
         {showCalendar &&
           <DateTimePicker
             value={currentDate}
@@ -146,14 +123,7 @@ const styles = StyleSheet.create({
     borderColor: '#CCC',
     borderWidth: 1,
     marginTop: 10,
-    padding: 8,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.10,
-    shadowRadius: 0.44
+    padding: 8
   },
   containerTitle: {
     fontSize: 14,
