@@ -1,6 +1,6 @@
 import DateTimePicker from '@react-native-community/datetimepicker'
 import * as React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Picker, StyleSheet, View } from 'react-native'
 import { Button, Divider, Icon, Overlay, Text } from 'react-native-elements'
 import { getTags } from '../../screens/utils'
 import { JobType } from '../../types'
@@ -16,6 +16,17 @@ interface Props {
   setPickedDate: (date: string) => void
 }
 
+const currentDate = new Date()
+const dayInMs = 3600 * 1000 * 24
+
+const predDate = {
+  anyTime: new Date(currentDate.getTime() - new Date(dayInMs * 720).getTime()),
+  threeDaysAgo: new Date(currentDate.getTime() - new Date(dayInMs * 3).getTime()),
+  oneWeekAgo: new Date(currentDate.getTime() - new Date(dayInMs * 7).getTime()),
+  oneMonthAgo: new Date(currentDate.getTime() - new Date(dayInMs * 30).getTime()),
+  oneYearAgo: new Date(currentDate.getTime() - new Date(dayInMs * 365).getTime())
+}
+
 const FilterModal: React.FC<Props> = ({
   showFilterModal,
   setShowFilterModal,
@@ -26,12 +37,14 @@ const FilterModal: React.FC<Props> = ({
   clearAll,
   jobs
 }) => {
-  const currentDate = new Date()
   const [showCalendar, setShowCalendar] = React.useState(false)
+  const [pickedPreDate, setPickedPreDate] = React.useState(predDate.anyTime)
 
   const onChange = (event: any, selectedDate: Date) => {
-    setPickedDate(selectedDate ? selectedDate.toString() : currentDate.toString())
+    const newDate = selectedDate ? selectedDate.toString() : currentDate.toString()
     setShowCalendar(false)
+    setPickedPreDate(predDate.anyTime)
+    setPickedDate(newDate)
   }
 
   const formatedDate = new Date(pickedDate).toUTCString().slice(0, 16)
@@ -74,12 +87,25 @@ const FilterModal: React.FC<Props> = ({
         </View>
         <View style={styles.container}>
           <Text style={styles.containerTitle}>Jobs Posted Since {formatedDate}</Text>
+          <Picker
+            mode={'dropdown'}
+            selectedValue={pickedPreDate}
+            onValueChange={(value) => {
+            setPickedDate(value)
+            setPickedPreDate(value)
+          }}>
+            <Picker.Item label="Anytime" value={predDate.anyTime}/>
+            <Picker.Item label="3 Days Ago" value={predDate.threeDaysAgo}/>
+            <Picker.Item label="7 Days Ago" value={predDate.oneWeekAgo}/>
+            <Picker.Item label="30 Days Ago" value={predDate.oneMonthAgo}/>
+            <Picker.Item label="1 Year Ago" value={predDate.oneYearAgo}/>
+          </Picker>
           {
             !showCalendar &&
               <Button
                 raised
                 type={'outline'}
-                title={'Press to Change Date'}
+                title={'Select a Date'}
                 onPress={() => setShowCalendar(true)}
                 containerStyle={{marginTop: 4}}
                 titleStyle={{ fontSize: 13, color: '#666' }}
@@ -126,9 +152,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.15,
-    shadowRadius: 4.84,
-    elevation: 5
+    shadowOpacity: 0.10,
+    shadowRadius: 0.44
   },
   containerTitle: {
     fontSize: 14,
