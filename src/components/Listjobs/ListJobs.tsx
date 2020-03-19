@@ -7,7 +7,6 @@ import {
   StyleSheet,
   View
 } from 'react-native'
-import { Button, Icon, Overlay, Text } from 'react-native-elements'
 
 import { JobType } from '../../types'
 import Error from '../../UI/Error'
@@ -90,20 +89,6 @@ const ListJobs: React.FC<Props> = (props: Props) => {
       />
     </View>
   )
-}
-
-const sortJobs = (allJobs: JobType[], order: boolean = true) => {
-  return allJobs.sort((job1, job2) => {
-    const firstDate = Date.parse(job1.date)
-    const secondDate = Date.parse(job2.date)
-    if (firstDate > secondDate) {
-      return order ? -1 : 1
-    } else if (firstDate < secondDate) {
-      return order ? 1 : -1
-    } else {
-      return 0
-    }
-  })
 }
 
 const styles = StyleSheet.create({

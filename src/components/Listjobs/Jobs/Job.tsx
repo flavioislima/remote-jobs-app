@@ -1,5 +1,5 @@
 import React from 'react'
-import { Share, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Dimensions, Share, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Divider, ListItem, Overlay, Text } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -13,6 +13,8 @@ interface Props {
   data: JobType
 }
 
+const screenHeight =  Dimensions.get('screen').height
+
 const Job: React.FC<Props> = ({ data }: Props) => {
   const { keys, handleFavorites } = React.useContext(JobsContext)
   const [showIcons, setShowIcons] = React.useState(false)
@@ -25,8 +27,7 @@ const Job: React.FC<Props> = ({ data }: Props) => {
     company,
     description,
     date,
-    image,
-    index
+    image
   } = data
 
   const handleSharing = () => {
@@ -69,7 +70,7 @@ const Job: React.FC<Props> = ({ data }: Props) => {
         onBackdropPress={() => setShowIcons(false)}
         overlayStyle={styles.modal}
         height={'auto'}
-        width={'85%'}
+        width={'90%'}
       >
         <View>
         <View style={styles.titleContainer}>
@@ -78,27 +79,27 @@ const Job: React.FC<Props> = ({ data }: Props) => {
         </View>
         <Divider style={{height: 1, backgroundColor: '#999'}} />
         <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Description
-            tags={tags}
-            salary={salary}
-            description={description}
-            date={dateFormated}
-            company={company}
-            position={position}
-            />
-          <Icons
-            handleFavorite={handleFavorites.bind(this, data)}
-            handleSharing={handleSharing}
-            data={data}
-            isFavorite={keys.includes(data.id)}
-            url={url}
-            position={position}
-            company={company}
-            />
-          </View>
-          <AdBanner size={'RECTANGLE'} unitId={'SQUARE'}/>
-          </View>
+          <View style={styles.modalContent}>
+            <Description
+              tags={tags}
+              salary={salary}
+              description={description}
+              date={dateFormated}
+              company={company}
+              position={position}
+              />
+            <Icons
+              handleFavorite={handleFavorites.bind(this, data)}
+              handleSharing={handleSharing}
+              data={data}
+              isFavorite={keys.includes(data.id)}
+              url={url}
+              position={position}
+              company={company}
+              />
+            </View>
+            {screenHeight > 1200 && <AdBanner size={'RECTANGLE'} unitId={'SQUARE'}/>}
+            </View>
           </View>
       </Overlay>
     </View>
@@ -113,7 +114,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   modalContent: {
-    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    alignContent: 'center'
+    alignContent: 'center',
   },
   position: {
     fontSize: 15,

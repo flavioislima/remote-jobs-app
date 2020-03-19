@@ -1,9 +1,10 @@
 import DateTimePicker from '@react-native-community/datetimepicker'
 import * as React from 'react'
-import { Picker, StyleSheet, View } from 'react-native'
-import { Button, Divider, Icon, Overlay, Text } from 'react-native-elements'
+import { Dimensions, StyleSheet, View } from 'react-native'
+import { Button, Divider, Overlay, Text } from 'react-native-elements'
 import { getTags } from '../../screens/utils'
 import { JobType } from '../../types'
+import AdBanner from '../../UI/AdBanner'
 
 interface Props {
   showFilterModal: boolean
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const currentDate = new Date()
+const screenHeight =  Dimensions.get('screen').height
 
 const FilterModal: React.FC<Props> = ({
   showFilterModal,
@@ -98,6 +100,7 @@ const FilterModal: React.FC<Props> = ({
           />
         }
         </View>
+        {screenHeight > 1200 && <AdBanner size={'SMART'} unitId={'SQUARE'}/>}
       </View>
     </Overlay>
   )
