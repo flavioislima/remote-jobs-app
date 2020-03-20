@@ -100,7 +100,7 @@ const FilterModal: React.FC<Props> = ({
           />
         }
         </View>
-        {screenHeight > 1200 && <AdBanner size={'SMART'} unitId={'SQUARE'}/>}
+        {screenHeight > 680 && <AdBanner size={'SMALL'} unitId={'SQUARE'}/>}
       </View>
     </Overlay>
   )

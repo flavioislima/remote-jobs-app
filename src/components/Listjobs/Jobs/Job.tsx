@@ -13,7 +13,9 @@ interface Props {
   data: JobType
 }
 
-const screenHeight =  Dimensions.get('screen').height
+const screenHeight = Dimensions.get('screen').height
+console.log(screenHeight);
+
 
 const Job: React.FC<Props> = ({ data }: Props) => {
   const { keys, handleFavorites } = React.useContext(JobsContext)
@@ -98,7 +100,7 @@ const Job: React.FC<Props> = ({ data }: Props) => {
               company={company}
               />
             </View>
-            {screenHeight > 1200 && <AdBanner size={'RECTANGLE'} unitId={'SQUARE'}/>}
+            {screenHeight > 680 && <AdBanner size={'RECTANGLE'} unitId={'SQUARE'}/>}
             </View>
           </View>
       </Overlay>

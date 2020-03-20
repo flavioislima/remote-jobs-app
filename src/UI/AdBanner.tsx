@@ -6,11 +6,11 @@ import { adSizes, adUnitIds } from '../constants'
 
 interface Props {
   unitId: 'JOBS' | 'SQUARE' | 'FAVORITES'
-  size: 'SMART' | 'RECTANGLE'
+  size: 'SMART' | 'RECTANGLE' | 'SMALL'
 }
 
 const AdBanner: React.FC<Props> = ({ size, unitId }) => (
-  <View style={size === 'SMART' ? styles.smartBanner : styles.squareBanner}>
+  <View style={styles[size]}>
     <BannerAd
       unitId={adUnitIds[unitId]}
       size={adSizes[size]}
@@ -19,12 +19,18 @@ const AdBanner: React.FC<Props> = ({ size, unitId }) => (
 )
 
 const styles = StyleSheet.create({
-  smartBanner: {
+  SMART: {
     maxHeight: 80,
     backgroundColor: '#FFF'
-  }, squareBanner: {
+  },
+  RECTANGLE: {
     height: 250,
     width: 300
+  },
+  SMALL: {
+    marginTop: 4,
+    height: 50,
+    alignSelf: 'center'
   }
 })
 
