@@ -21,7 +21,8 @@ const AdBanner: React.FC<Props> = ({ size, unitId }) => (
 const styles = StyleSheet.create({
   SMART: {
     maxHeight: 80,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
+    alignSelf: 'center',
   },
   RECTANGLE: {
     height: 250,
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
   SMALL: {
     marginTop: 4,
     height: 50,
+    width: 320,
     alignSelf: 'center'
   }
 })

@@ -14,8 +14,6 @@ interface Props {
 }
 
 const screenHeight = Dimensions.get('screen').height
-console.log(screenHeight);
-
 
 const Job: React.FC<Props> = ({ data }: Props) => {
   const { keys, handleFavorites } = React.useContext(JobsContext)
