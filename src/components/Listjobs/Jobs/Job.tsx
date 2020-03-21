@@ -1,6 +1,6 @@
 import React from 'react'
-import { Share, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { ListItem, Overlay } from 'react-native-elements'
+import { Dimensions, Share, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Divider, ListItem, Overlay, Text } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import JobsContext from '../../../state/JobsContext'
@@ -8,11 +8,12 @@ import { JobType } from '../../../types'
 import AdBanner from '../../../UI/AdBanner'
 import Description from './SubComponents/Description'
 import Icons from './SubComponents/Icons'
-import { adVariance } from '../../../constants'
 
 interface Props {
   data: JobType
 }
+
+const screenHeight = Dimensions.get('screen').height
 
 const Job: React.FC<Props> = ({ data }: Props) => {
   const { keys, handleFavorites } = React.useContext(JobsContext)
@@ -26,8 +27,7 @@ const Job: React.FC<Props> = ({ data }: Props) => {
     company,
     description,
     date,
-    image,
-    index
+    image
   } = data
 
   const handleSharing = () => {
@@ -49,7 +49,6 @@ const Job: React.FC<Props> = ({ data }: Props) => {
   }
 
   const dateFormated: string = new Date(date).toUTCString().slice(5, 16)
-  const showAd = adVariance(index)
 
   const listIcon = (<TouchableOpacity onPress={() => setShowIcons(true)}>
     <Icon name="chevron-right" color={'#000'} size={28} />
@@ -66,51 +65,81 @@ const Job: React.FC<Props> = ({ data }: Props) => {
         bottomDivider
         pad={12}
       />
-      {showAd ? <AdBanner size={'SMART'} unitId={'JOBS'}/> : null}
       <Overlay
         isVisible={showIcons}
         onBackdropPress={() => setShowIcons(false)}
         overlayStyle={styles.modal}
         height={'auto'}
-        width={'85%'}
+        width={'90%'}
       >
-        <View style={styles.modalContent}>
-          <Description
-            tags={tags}
-            salary={salary}
-            description={description}
-            date={dateFormated}
-            company={company}
-            position={position}
-            />
-          <Icons
-            handleFavorite={handleFavorites.bind(this, data)}
-            handleSharing={handleSharing}
-            data={data}
-            isFavorite={keys.includes(data.id)}
-            url={url}
-            position={position}
-            company={company}
-            />
-          <AdBanner size={'RECTANGLE'} unitId={'SQUARE'}/>
+        <View>
+        <View style={styles.titleContainer}>
+          <Text style={styles.position}>{position}</Text>
+          <Text style={styles.company}>{company}</Text>
         </View>
+        <Divider style={{height: 1, backgroundColor: '#999'}} />
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Description
+              tags={tags}
+              salary={salary}
+              description={description}
+              date={dateFormated}
+              company={company}
+              position={position}
+              />
+            <Icons
+              handleFavorite={handleFavorites.bind(this, data)}
+              handleSharing={handleSharing}
+              data={data}
+              isFavorite={keys.includes(data.id)}
+              url={url}
+              position={position}
+              company={company}
+              />
+            </View>
+            {screenHeight > 680 && <AdBanner size={'RECTANGLE'} unitId={'SQUARE'}/>}
+            </View>
+          </View>
       </Overlay>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  modalContainer: {
+    alignItems: 'center'
+  },
   item: {
     flexDirection: 'column'
   },
   modalContent: {
-    width: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: '#CCC',
+    borderWidth: 1,
+    paddingHorizontal: 8,
+    paddingTop: 6,
+    marginVertical: 6
   },
   modal: {
     alignItems: 'center',
     justifyContent: 'flex-start'
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+  },
+  position: {
+    fontSize: 15,
+    color: '#444'
+  },
+  company: {
+    fontSize: 12,
+    color: '#666'
   }
 })
 

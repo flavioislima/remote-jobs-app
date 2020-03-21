@@ -20,8 +20,9 @@ export default function MainTabNavigator() {
         })}
         tabBarOptions={{
           style: {
-            backgroundColor: '#F6F9FE',
+            backgroundColor: '#F6F9FE'
           },
+          showLabel: false,
           activeTintColor: '#1E2229',
           inactiveTintColor: '#858585'
         }}

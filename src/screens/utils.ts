@@ -37,3 +37,16 @@ export const getStateFromStorage = async () => {
   }
   return state
 }
+
+export const getTags = (jobs: JobType[]) => {
+  const tags = {}
+  const topTags = []
+  jobs.forEach((job: JobType) =>
+    job.tags.forEach((tag) => tags[tag] = tags[tag] + 1 || 1))
+  for (const tag in tags) {
+    if (tags[tag] > 15) {
+      topTags.push(tag)
+    }
+  }
+  return topTags
+}

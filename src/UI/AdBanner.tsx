@@ -1,21 +1,39 @@
 import { BannerAd } from '@react-native-firebase/admob'
 import React from 'react'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { adSizes, adUnitIds } from '../constants'
 
 interface Props {
   unitId: 'JOBS' | 'SQUARE' | 'FAVORITES'
-  size: 'SMART' | 'RECTANGLE'
+  size: 'SMART' | 'RECTANGLE' | 'SMALL'
 }
 
 const AdBanner: React.FC<Props> = ({ size, unitId }) => (
-  <View style={size === 'SMART' ? { maxHeight: 80 } : {height: 250, width: 300}}>
+  <View style={styles[size]}>
     <BannerAd
       unitId={adUnitIds[unitId]}
       size={adSizes[size]}
       />
   </View>
-  )
+)
+
+const styles = StyleSheet.create({
+  SMART: {
+    maxHeight: 80,
+    backgroundColor: '#FFF',
+    alignSelf: 'center',
+  },
+  RECTANGLE: {
+    height: 250,
+    width: 300
+  },
+  SMALL: {
+    marginTop: 4,
+    height: 50,
+    width: 320,
+    alignSelf: 'center'
+  }
+})
 
 export default AdBanner

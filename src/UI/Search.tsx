@@ -7,11 +7,9 @@ import {
 import { SearchBar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 interface Props {
-  order: boolean
-  setOrder: () => void
   filterText: string
   onChangeText: (text: string) => void
-  setShowCalendar?: () => void
+  setShowTagFilter: () => void
 }
 
 interface DatePicker {
@@ -21,7 +19,7 @@ interface DatePicker {
 }
 
 export default (props: Props) => {
-  const { order, setOrder, setShowCalendar, onChangeText, filterText } = props
+  const { setShowTagFilter, onChangeText, filterText } = props
 
   return (
     <View style={styles.searchView}>
@@ -50,15 +48,8 @@ export default (props: Props) => {
         />
       </View>
       <View style={styles.icons}>
-        <TouchableOpacity onPress={setShowCalendar}>
-          <Icon name="calendar-check" size={30} color={'#FFF'} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={setOrder}>
-          <Icon
-            name={order ? 'sort-descending' : 'sort-ascending'}
-            size={30}
-            color={'#FFF'}
-          />
+        <TouchableOpacity onPress={setShowTagFilter}>
+          <Icon name="filter" size={30} color={'#FFF'} />
         </TouchableOpacity>
       </View>
     </View>
@@ -74,13 +65,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e2229'
   },
   searchJobs: {
-    width: '75%'
+    flex: 9,
+    backgroundColor: 'pink'
   },
   icons: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
-    width: '25%',
+    justifyContent: 'center',
     height: '100%',
     marginRight: 5
   }

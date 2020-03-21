@@ -27,9 +27,6 @@ export default ({ description, salary, tags, date, company, position }: Props) =
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {`${position} - ${company}`}
-      </Text>
       <Text numberOfLines={15} style={styles.description}>
         {formatedDescription}
       </Text>
@@ -45,15 +42,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     width: '100%'
   },
-  title: {
-    textAlign: 'center',
-    margin: 5,
-    fontSize: 14,
-    fontWeight: '700',
-    color: 'black'
-  },
   description: {
-    margin: 5,
+    marginBottom: 4,
     fontSize: 13,
     fontWeight: '400',
     color: 'black'
