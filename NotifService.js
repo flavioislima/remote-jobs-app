@@ -41,7 +41,6 @@ export default class NotifService {
 
   notificationContent = {
     largeIcon: 'ic_launcher',
-    smallIcon: 'ic_notification',
     /* iOS and Android properties */
     title: 'Remote Work',
     message: 'Found new jobs for you!'
