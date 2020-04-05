@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import Salary from './Salary'
 import Tags from './Tags'
 
@@ -11,6 +11,8 @@ interface Props {
   company: string
   position: string
 }
+
+const screenHeight = Dimensions.get('window').height
 
 export default ({ description, salary, tags, date, company, position }: Props) => {
   const formatedDescription: string = description
@@ -27,7 +29,7 @@ export default ({ description, salary, tags, date, company, position }: Props) =
 
   return (
     <View style={styles.container}>
-      <Text numberOfLines={15} style={styles.description}>
+      <Text numberOfLines={screenHeight > 600 ? 18 : 10} style={styles.description}>
         {formatedDescription}
       </Text>
       {salary && <Salary salary={salary} />}
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
   },
   description: {
     marginBottom: 4,
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '400',
     color: 'black'
   },
