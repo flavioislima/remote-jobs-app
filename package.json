@@ -30,7 +30,6 @@
     "global": "^4.4.0",
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-cli": "^2.0.1",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-push-notification": "^3.1.9",
@@ -38,7 +37,6 @@
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.2.0",
     "react-native-vector-icons": "^6.6.0",
-    "rss-parser": "^3.7.5",
     "tslint": "^5.19.0"
   },
   "devDependencies": {
