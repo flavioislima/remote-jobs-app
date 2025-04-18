@@ -1,12 +1,12 @@
 {
   "name": "remotework",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "6.0.0",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint"
@@ -16,13 +16,12 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
-    "@react-native-async-storage/async-storage": "^2.1.2",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
-    "@react-navigation/native": "^7.1.6",
+    "@react-navigation/native": "^7.0.14",
     "@rneui/themed": "^4.0.0-rc.8",
     "axios": "^1.8.4",
     "expo": "~52.0.46",
-    "expo-ads-admob": "^13.0.0",
     "expo-blur": "~14.0.3",
     "expo-constants": "~17.0.8",
     "expo-font": "~13.0.4",

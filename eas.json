@@ -1,0 +1,20 @@
+{
+    "build": {
+        "development": {
+            "ios": {
+                "image": "latest"
+            },
+            "android": {
+                "image": "latest"
+            }
+        },
+        "production": {
+            "ios": {
+                "image": "latest"
+            },
+            "android": {
+                "image": "latest"
+            }
+        }
+    }
+}

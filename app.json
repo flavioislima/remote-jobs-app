@@ -1,7 +1,6 @@
 {
   "expo": {
     "name": "RemoteWork",
-    "displayName": "Remote Work",
     "slug": "remotework",
     "version": "6.0.0",
     "orientation": "portrait",
@@ -16,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.remotework"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "4dd67be0-c966-11e9-8c3b-0d1f6b0ad975"
+      }
     }
   }
 }
