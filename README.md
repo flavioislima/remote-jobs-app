@@ -61,10 +61,3 @@ npm run start
 - [Flávio F Lima](https://github.com/flavioislima)
 
 ---
-
-### Notes
-- The app no longer requires `react-native-cli` or direct native linking.
-- All date picking is now handled by a custom, cross-platform component (no native modules required).
-- If you encounter issues with ads, make sure to configure your AdMob IDs in `app/constants.ts` and check Expo documentation for permissions.
-- For contributions, please use the Expo workflow and test on both web and native platforms.
-
