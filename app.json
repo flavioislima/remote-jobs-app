@@ -3,6 +3,7 @@
     "name": "RemoteWork",
     "slug": "remotework",
     "version": "6.0.0",
+    "versionCode": 600,
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
