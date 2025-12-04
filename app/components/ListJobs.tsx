@@ -20,7 +20,6 @@ interface ListJobsProps {
   refresh: () => void;
   jobs: JobType[];
   refreshing: boolean;
-  navigate: any;
   error?: boolean;
   clearFavorites?: () => void;
 }

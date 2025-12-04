@@ -1,12 +1,11 @@
 import React, { useContext, useState } from 'react';
 import {
-  Dimensions,
   Share,
   StyleSheet,
   TouchableOpacity,
   View
 } from 'react-native';
-import { Divider, List, Modal, Portal, Text } from 'react-native-paper';
+import { List, Modal, Portal, Text } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import JobsContext from '../context/JobsContext';
@@ -18,8 +17,6 @@ import Icons from './Icons';
 interface JobProps {
   data: JobType;
 }
-
-const screenHeight = Dimensions.get('window').height;
 
 const Job: React.FC<JobProps> = ({ data }) => {
   const { keys, handleFavorites } = useContext(JobsContext);
@@ -34,8 +31,7 @@ const Job: React.FC<JobProps> = ({ data }) => {
     salary,
     company,
     description,
-    date,
-    company_logo
+    date
   } = data;
 
   const handleSharing = () => {

@@ -6,9 +6,9 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color }) => {
-          let iconName = route.name === 'index' ? 'briefcase' : 'heart-multiple';
-          return <MaterialCommunityIcons name={iconName as any} size={25} color={color} />;
+        tabBarIcon: ({ color }) => {
+          const iconName = route.name === 'index' ? 'briefcase' : 'heart-multiple';
+          return <MaterialCommunityIcons name={iconName} size={25} color={color} />;
         },
         tabBarActiveTintColor: '#1E2229',
         tabBarInactiveTintColor: '#858585',

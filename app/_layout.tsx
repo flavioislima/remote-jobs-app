@@ -29,6 +29,7 @@ const theme = {
 
 export default function RootLayout() {
   const [loaded] = useFonts({
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 

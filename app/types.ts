@@ -1,5 +1,4 @@
 // Types for the Remote Work app
-import { ImageProps } from 'react-native'
 
 export interface JobType {
   id: string
@@ -12,9 +11,9 @@ export interface JobType {
   dateFormated?: string
   salary?: string
   isFavorite?: boolean
-  image?: any
-  logo?: any
-  company_logo?: any
+  image?: string
+  logo?: string
+  company_logo?: string
 }
 
 export interface ContextType {
