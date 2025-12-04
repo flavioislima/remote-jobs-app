@@ -3,7 +3,6 @@
     "name": "RemoteWork",
     "slug": "remotework",
     "version": "6.0.3",
-    "versionCode": 601,
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -35,7 +34,9 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
