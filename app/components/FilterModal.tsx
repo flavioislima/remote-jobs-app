@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {  StyleSheet, View, ScrollView } from 'react-native';
-import { Button, Divider, Text, Overlay, Chip } from '@rneui/themed';
+import { Button, Divider, Text, Modal, Portal, Chip } from 'react-native-paper';
 import { getTags } from '../utils';
 import { JobType } from '../types';
 import DatePicker from './DatePicker';
@@ -53,29 +53,30 @@ const FilterModal: React.FC<FilterModalProps> = ({
   };
 
   return (
-    <Overlay
-      isVisible={visible}
-      onBackdropPress={onDismiss}
-      overlayStyle={styles.overlay}
-    >
-      <View style={styles.modalContent}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Refine Jobs ({filteredJobs.length})</Text>
-          <Text style={styles.clearButton} onPress={clearFilters}>Reset</Text>
-        </View>
-        
-        <Divider style={{height: 1, backgroundColor: '#999', marginVertical: 10}} />
+    <Portal>
+      <Modal
+        visible={visible}
+        onDismiss={onDismiss}
+        contentContainerStyle={styles.overlay}
+      >
+        <View style={styles.modalContent}>
+          <View style={styles.titleContainer}>
+            <Text variant="titleLarge" style={styles.title}>Refine Jobs ({filteredJobs.length})</Text>
+            <Button onPress={clearFilters} textColor="#2196f3">Reset</Button>
+          </View>
+          
+          <Divider style={{marginVertical: 10}} />
         
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.container}>
-            <Text style={styles.containerTitle}>Filter by Date</Text>
+            <Text variant="titleMedium" style={styles.containerTitle}>Filter by Date</Text>
             <Button
-              title={`Posted after: ${formattedDate}`}
-              type="outline"
+              mode="outlined"
               onPress={() => setShowCalendar(true)}
-              buttonStyle={styles.dateButton}
-              titleStyle={styles.dateButtonText}
-            />
+              style={styles.dateButton}
+            >
+              Posted after: {formattedDate}
+            </Button>
             
             <DatePicker
               isVisible={showCalendar}
@@ -87,25 +88,18 @@ const FilterModal: React.FC<FilterModalProps> = ({
           </View>
 
           <View style={styles.container}>
-            <Text style={styles.containerTitle}>Filter by Tags</Text>
+            <Text variant="titleMedium" style={styles.containerTitle}>Filter by Tags</Text>
             <View style={styles.tagsContainer}>
               {allTags.map((tag, index) => (
                 <Chip
                   key={index}
-                  title={tag}
-                  type={pickedTags.includes(tag) ? "solid" : "outline"}
-                  buttonStyle={
-                    pickedTags.includes(tag)
-                      ? styles.selectedChip
-                      : styles.chip
-                  }
-                  titleStyle={
-                    pickedTags.includes(tag)
-                      ? styles.selectedChipText
-                      : styles.chipText
-                  }
+                  selected={pickedTags.includes(tag)}
                   onPress={() => toggleTag(tag)}
-                />
+                  style={styles.chip}
+                  textStyle={styles.chipText}
+                >
+                  {tag}
+                </Chip>
               ))}
             </View>
           </View>
@@ -113,32 +107,31 @@ const FilterModal: React.FC<FilterModalProps> = ({
           {clearFavorites && (
             <View style={styles.container}>
               <Button
-                title="Clear All Favorites"
-                buttonStyle={styles.clearFavoritesButton}
-                titleStyle={styles.clearFavoritesText}
-                icon={{
-                  name: 'delete',
-                  type: 'material',
-                  size: 20,
-                  color: 'white'
-                }}
+                mode="contained"
+                buttonColor="#f44336"
+                icon="delete"
                 onPress={clearFavorites}
-              />
+              >
+                Clear All Favorites
+              </Button>
             </View>
           )}
         </ScrollView>
         
         <View style={styles.footer}>
           <Button
-            title="Apply Filters"
-            buttonStyle={styles.applyButton}
+            mode="contained"
+            buttonColor="#4caf50"
             onPress={onDismiss}
-          />
+          >
+            Apply Filters
+          </Button>
         </View>
         
         {/* <AdBanner unitId={'SQUARE'} size={'SMALL'} /> */}
       </View>
-    </Overlay>
+      </Modal>
+    </Portal>
   );
 };
 
@@ -149,8 +142,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 0,
     overflow: 'hidden',
-    position: 'absolute', // Ensure proper positioning on Android
-    backgroundColor: '#fff' // Explicitly set background color
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    marginHorizontal: '5%'
   },
   modalContent: {
     flex: 1,
@@ -168,29 +162,16 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   title: {
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  clearButton: {
-    color: '#2196f3',
-    fontSize: 16
+    flex: 1
   },
   container: {
     marginVertical: 10
   },
   containerTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
     marginBottom: 10
   },
   dateButton: {
-    backgroundColor: '#fff',
-    borderColor: '#ddd',
-    borderWidth: 1,
     marginBottom: 10
-  },
-  dateButtonText: {
-    color: '#333'
   },
   tagsContainer: {
     flexDirection: 'row',
@@ -198,35 +179,14 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   chip: {
-    backgroundColor: '#fff',
-    marginRight: 6,
-    marginBottom: 6
-  },
-  selectedChip: {
-    backgroundColor: '#2196f3',
     marginRight: 6,
     marginBottom: 6
   },
   chipText: {
-    color: '#333',
     fontSize: 12
-  },
-  selectedChipText: {
-    color: '#fff',
-    fontSize: 12
-  },
-  clearFavoritesButton: {
-    backgroundColor: '#f44336',
-    marginTop: 10
-  },
-  clearFavoritesText: {
-    color: 'white'
   },
   footer: {
     marginTop: 10
-  },
-  applyButton: {
-    backgroundColor: '#4caf50'
   }
 });
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
-import { Button, Text, Overlay } from '@rneui/themed';
+import { Button, Text, Modal, Portal } from 'react-native-paper';
 
 interface DatePickerProps {
   isVisible: boolean;
@@ -53,15 +53,16 @@ const DatePicker: React.FC<DatePickerProps> = ({
   ];
 
   return (
-    <Overlay
-      isVisible={isVisible}
-      onBackdropPress={onCancel}
-      overlayStyle={styles.datePickerOverlay}
-    >
-      <View style={styles.datePickerContent}>
-        <Text style={styles.datePickerTitle}>Select Date</Text>
+    <Portal>
+      <Modal
+        visible={isVisible}
+        onDismiss={onCancel}
+        contentContainerStyle={styles.datePickerOverlay}
+      >
+        <View style={styles.datePickerContent}>
+          <Text variant="titleLarge" style={styles.datePickerTitle}>Select Date</Text>
         
-        <Text style={styles.datePickerLabel}>Year</Text>
+        <Text variant="titleMedium" style={styles.datePickerLabel}>Year</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.yearPicker}>
           {years.map(y => (
             <TouchableOpacity
@@ -82,7 +83,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           ))}
         </ScrollView>
         
-        <Text style={styles.datePickerLabel}>Month</Text>
+        <Text variant="titleMedium" style={styles.datePickerLabel}>Month</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.monthPicker}>
           {months.map((m, index) => (
             <TouchableOpacity
@@ -105,21 +106,23 @@ const DatePicker: React.FC<DatePickerProps> = ({
         
         <View style={styles.datePickerButtons}>
           <Button
-            title="Cancel"
-            type="outline"
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.cancelButton}
+            mode="outlined"
+            style={styles.buttonContainer}
             onPress={onCancel}
-          />
+          >
+            Cancel
+          </Button>
           <Button
-            title="Apply"
-            containerStyle={styles.buttonContainer}
-            buttonStyle={styles.applyDateButton}
+            mode="contained"
+            style={styles.buttonContainer}
             onPress={handleApply}
-          />
+          >
+            Apply
+          </Button>
         </View>
       </View>
-    </Overlay>
+      </Modal>
+    </Portal>
   );
 };
 
@@ -128,20 +131,18 @@ const styles = StyleSheet.create({
     width: '90%',
     borderRadius: 10,
     padding: 20,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    marginHorizontal: '5%'
   },
   datePickerContent: {
     width: '100%'
   },
   datePickerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
     marginBottom: 15,
     textAlign: 'center'
   },
   datePickerLabel: {
-    fontSize: 16,
-    fontWeight: '500',
     marginTop: 10,
     marginBottom: 8
   },
@@ -193,16 +194,8 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   buttonContainer: {
-    width: '48%'
-  },
-  cancelButton: {
-    borderColor: '#ddd',
-    borderWidth: 1,
-    paddingVertical: 10
-  },
-  applyDateButton: {
-    backgroundColor: '#2196f3',
-    paddingVertical: 10
+    flex: 1,
+    marginHorizontal: 5
   }
 });
 

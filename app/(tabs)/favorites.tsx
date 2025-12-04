@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useRouter } from 'expo-router';
 import { View, StyleSheet } from 'react-native';
-import { Button } from '@rneui/themed';
+import { Button } from 'react-native-paper';
 import JobsContext from '../context/JobsContext';
 import ListJobs from '../components/ListJobs';
 // import AdBanner from '../components/AdBanner';
@@ -27,13 +27,14 @@ export default function FavoritesScreen() {
       />
       {favs.length > 0 && (
         <Button
-          titleStyle={{ color: 'red' }}
-          type="outline"
-          buttonStyle={styles.clearButton}
-          icon={{ name: 'delete', type: 'material-community', color: 'red' }}
-          title="Delete all Favorites"
+          mode="outlined"
+          textColor="red"
+          style={styles.clearButton}
+          icon="delete"
           onPress={handleClearFavorites}
-        />
+        >
+          Delete all Favorites
+        </Button>
       )}
 {/*       <AdBanner unitId={'FAVORITES'} size={'SMART'} /> */}
     </View>

@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { 
-  Dimensions, 
-  Share, 
-  StyleSheet, 
-  TouchableOpacity, 
-  View 
+import {
+  Dimensions,
+  Share,
+  StyleSheet,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { Divider, ListItem, Overlay, Text } from '@rneui/themed'; // Using React Native Elements v4
-import { MaterialCommunityIcons } from '@expo/vector-icons'; // Using Expo's vector icons
+import { Divider, List, Modal, Portal, Text } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import JobsContext from '../context/JobsContext';
 import { JobType } from '../types';
@@ -61,52 +61,59 @@ const Job: React.FC<JobProps> = ({ data }) => {
 
   return (
     <View style={styles.item}>
-      <ListItem onPress={() => setShowDescription(true)}>
-        <ListItem.Content>
-          <ListItem.Title style={styles.title}>{position}</ListItem.Title>
-          <ListItem.Subtitle style={styles.company}>{company}</ListItem.Subtitle>
-          <View style={styles.dateContainer}>
-            <Text style={styles.date}>{dateFormatted}</Text>
-          </View>
-        </ListItem.Content>
-        <TouchableOpacity onPress={() => setShowIcons(true)}>
-          <MaterialCommunityIcons name="chevron-right" color={'#000'} size={28} />
-        </TouchableOpacity>
-      </ListItem>
+      <List.Item
+        title={position}
+        description={company}
+        titleStyle={styles.title}
+        descriptionStyle={styles.company}
+        onPress={() => setShowDescription(true)}
+        right={() => (
+          <TouchableOpacity onPress={() => setShowIcons(true)} style={styles.chevronButton}>
+            <MaterialCommunityIcons name="chevron-right" color={'#000'} size={28} />
+          </TouchableOpacity>
+        )}
+      />
+      <View style={styles.dateContainer}>
+        <Text variant="bodySmall" style={styles.date}>{dateFormatted}</Text>
+      </View>
       
       {/* Description modal */}
-      <Overlay 
-        isVisible={showDescription} 
-        onBackdropPress={() => setShowDescription(false)}
-        overlayStyle={styles.overlay}
-      >
-        <Description 
-          description={description} 
-          tags={tags}
+      <Portal>
+        <Modal
+          visible={showDescription}
+          onDismiss={() => setShowDescription(false)}
+          contentContainerStyle={styles.overlay}
+        >
+          <Description
+            description={description}
+            tags={tags}
             salary={salary}
             date={date}
-          url={url} 
-          company={company}
-          position={position}
-          onClose={() => setShowDescription(false)}
-        />
-      </Overlay>
+            url={url}
+            company={company}
+            position={position}
+            onClose={() => setShowDescription(false)}
+          />
+        </Modal>
+      </Portal>
       
       {/* Icons modal */}
-      <Overlay 
-        isVisible={showIcons} 
-        onBackdropPress={() => setShowIcons(false)}
-        overlayStyle={styles.iconsOverlay}
-      >
-        <Icons 
-          onClose={() => setShowIcons(false)}
-          onShare={handleSharing}
-          onFavorite={() => handleFavorites && handleFavorites(data)}
-          isFavorite={isFavorite}
-          url={url}
-        />
-        {/* <AdBanner unitId={'SQUARE'} size={'RECTANGLE'} /> */}
-      </Overlay>
+      <Portal>
+        <Modal
+          visible={showIcons}
+          onDismiss={() => setShowIcons(false)}
+          contentContainerStyle={styles.iconsOverlay}
+        >
+          <Icons
+            onClose={() => setShowIcons(false)}
+            onShare={handleSharing}
+            onFavorite={() => handleFavorites && handleFavorites(data)}
+            isFavorite={isFavorite}
+            url={url}
+          />
+          {/* <AdBanner unitId={'SQUARE'} size={'RECTANGLE'} /> */}
+        </Modal>
+      </Portal>
     </View>
   );
 };
@@ -125,25 +132,33 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555'
   },
+  chevronButton: {
+    justifyContent: 'center',
+    paddingRight: 8
+  },
   dateContainer: {
     flexDirection: 'row',
-    marginTop: 5
+    paddingHorizontal: 16,
+    paddingBottom: 8
   },
   date: {
-    fontSize: 12,
     color: '#888'
   },
   overlay: {
     width: '90%',
     height: '80%',
     padding: 0,
-    borderRadius: 10
+    borderRadius: 10,
+    alignSelf: 'center',
+    marginHorizontal: '5%'
   },
   iconsOverlay: {
     width: '80%',
     padding: 20,
     borderRadius: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginHorizontal: '10%'
   }
 });
 

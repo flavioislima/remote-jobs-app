@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { SearchBar } from '@rneui/themed'; // Using React Native Elements v4
+import { Searchbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 interface SearchProps {
@@ -17,25 +17,13 @@ const Search: React.FC<SearchProps> = ({ onFilter, onChangeText, value }) => {
   return (
     <View style={styles.searchView}>
       <View style={styles.searchJobs}>
-        <SearchBar
-          round
-          inputStyle={{
-            backgroundColor: 'white',
-            fontSize: 14,
-          }}
-          inputContainerStyle={{
-            backgroundColor: 'white',
-            height: 35
-          }}
-          containerStyle={{
-            backgroundColor: '#1e2229',
-            borderTopWidth: 0,
-            borderBottomWidth: 0,
-            flex: 0
-          }}
+        <Searchbar
           placeholder="Search job position..."
           onChangeText={onChangeText}
           value={value}
+          style={styles.searchBar}
+          inputStyle={styles.searchInput}
+          elevation={0}
         />
       </View>
       <TouchableOpacity style={styles.filterButton} onPress={onFilter}>
@@ -49,10 +37,22 @@ const styles = StyleSheet.create({
   searchView: {
     flexDirection: 'row',
     backgroundColor: '#1e2229',
+    alignItems: 'center',
   },
   searchJobs: {
     flex: 1,
-        justifyContent: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    paddingLeft: 10,
+  },
+  searchBar: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    elevation: 0,
+  },
+  searchInput: {
+    fontSize: 14,
+    minHeight: 0,
   },
   filterButton: {
     backgroundColor: '#1e2229',
