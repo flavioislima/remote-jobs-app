@@ -16,13 +16,14 @@ export default function TabLayout() {
           backgroundColor: '#F6F9FE' 
         },
         tabBarShowLabel: true,
-        headerShown: true // Show header on all tabs
+        headerShown: true, // Show header on all tabs,
+        headerStyle: { backgroundColor: '#F6F9FE', height: 60 },
       })}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Remote Jobs',
+          title: 'All Jobs',
         }}
       />
       <Tabs.Screen
