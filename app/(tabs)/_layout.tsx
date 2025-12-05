@@ -16,8 +16,7 @@ export default function TabLayout() {
           backgroundColor: '#F6F9FE' 
         },
         tabBarShowLabel: true,
-        headerShown: true, // Show header on all tabs,
-        headerStyle: { backgroundColor: '#F6F9FE', height: 60 },
+        headerShown: false, // Show header on all tabss
       })}
     >
       <Tabs.Screen

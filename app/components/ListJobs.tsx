@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import {
   FlatList,
   RefreshControl,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   View
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { JobType } from '../types';
 import Job from './Job';
@@ -100,8 +100,7 @@ const ListJobs: React.FC<ListJobsProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F6F9FE'
+       backgroundColor: '#1e2229'
   }
 });
-
 export default ListJobs;

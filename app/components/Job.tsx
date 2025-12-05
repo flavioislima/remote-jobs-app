@@ -146,15 +146,16 @@ const styles = StyleSheet.create({
     padding: 0,
     borderRadius: 10,
     alignSelf: 'center',
-    marginHorizontal: '5%'
+    marginHorizontal: '5%',
   },
   iconsOverlay: {
     width: '80%',
-    padding: 20,
+    padding: 0,
     borderRadius: 10,
     alignItems: 'center',
     alignSelf: 'center',
-    marginHorizontal: '10%'
+    marginHorizontal: '10%',
+    backgroundColor: '#fff'
   }
 });
 
