@@ -67,7 +67,7 @@ const ListJobs: React.FC<ListJobsProps> = ({
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#1e2229" />
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView>
         <Search
           value={filterText}
           onChangeText={setFilterText}
@@ -99,8 +99,7 @@ const ListJobs: React.FC<ListJobsProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-       backgroundColor: '#1e2229'
+    flex: 1
   }
 });
 export default ListJobs;
