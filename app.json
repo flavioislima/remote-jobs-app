@@ -2,7 +2,7 @@
   "expo": {
     "name": "RemoteWork",
     "slug": "remotework",
-    "version": "6.1.1",
+    "version": "6.1.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
