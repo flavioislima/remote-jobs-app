@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { List, Modal, Portal, Text } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import JobsContext from '../context/JobsContext';
 import { JobType } from '../types';
@@ -20,6 +21,7 @@ interface JobProps {
 
 const Job: React.FC<JobProps> = ({ data }) => {
   const { keys, handleFavorites } = useContext(JobsContext);
+  const { t } = useTranslation();
   const [showIcons, setShowIcons] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
 
@@ -37,16 +39,13 @@ const Job: React.FC<JobProps> = ({ data }) => {
   const handleSharing = () => {
     Share.share(
       {
-        message: `Here follows a great Remote Job Opportunity:
-        * Position: ${position}
-        * Company: ${company}
-        * Url: ${url}`,
+        message: t('share.message', { position, company, url }),
         url,
-        title: `Remote Work App - ${position} @${company}`
+        title: t('share.title', { position, company })
       },
       {
-        subject: 'Job Shared from Remote Work App',
-        dialogTitle: 'Share a Remote Job',
+        subject: t('share.subject'),
+        dialogTitle: t('share.dialogTitle'),
         tintColor: '#4effa1'
       }
     );

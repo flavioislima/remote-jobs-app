@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 // We'll implement these components next
 import Salary from './Salary';
@@ -19,16 +20,17 @@ interface DescriptionProps {
 
 const screenHeight = Dimensions.get('window').height;
 
-const Description: React.FC<DescriptionProps> = ({ 
-  description, 
-  salary, 
-  tags, 
-  date, 
-  company, 
-  position, 
+const Description: React.FC<DescriptionProps> = ({
+  description,
+  salary,
+  tags,
+  date,
+  company,
+  position,
   url,
   onClose
 }) => {
+  const { t } = useTranslation();
   // Format description by removing HTML tags and replacing special characters
   const formattedDescription: string = description
     ? description
@@ -40,7 +42,7 @@ const Description: React.FC<DescriptionProps> = ({
           '"'
         )
         .trim()
-    : 'Open Url for more information';
+    : t('description.openUrlMessage');
 
   const handleOpenUrl = () => {
     Linking.openURL(url).catch(err => console.error('Error opening URL:', err));
@@ -63,12 +65,12 @@ const Description: React.FC<DescriptionProps> = ({
         </Text>
         
         {salary && <Salary salary={salary} />}
-        {date && <Text style={styles.date}>Posted on: {date}</Text>}
+        {date && <Text style={styles.date}>{t('description.postedOn')}: {date}</Text>}
         {tags && tags.length > 0 && <Tags tags={tags} />}
       </ScrollView>
       
       <TouchableOpacity style={styles.applyButton} onPress={handleOpenUrl}>
-        <Text style={styles.applyButtonText}>Apply / View Details</Text>
+        <Text style={styles.applyButtonText}>{t('description.applyViewDetails')}</Text>
       </TouchableOpacity>
     </View>
   );

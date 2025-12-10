@@ -1,25 +1,30 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorProps {
   onPress?: () => void;
 }
 
-const Error: React.FC<ErrorProps> = ({ onPress }) => (
-  <View style={styles.container}>
-    <MaterialCommunityIcons name="alert-circle-outline" size={60} color="#f44336" />
-    <Text style={styles.title}>Something went wrong</Text>
-    <Text style={styles.description}>
-      Sorry, no jobs found! This is probably a server or network error.
-    </Text>
-    {onPress && (
-      <TouchableOpacity style={styles.retryButton} onPress={onPress}>
-        <Text style={styles.retryText}>Try Again</Text>
-      </TouchableOpacity>
-    )}
-  </View>
-);
+const Error: React.FC<ErrorProps> = ({ onPress }) => {
+  const { t } = useTranslation();
+
+  return (
+    <View style={styles.container}>
+      <MaterialCommunityIcons name="alert-circle-outline" size={60} color="#f44336" />
+      <Text style={styles.title}>{t('error.title')}</Text>
+      <Text style={styles.description}>
+        {t('error.description')}
+      </Text>
+      {onPress && (
+        <TouchableOpacity style={styles.retryButton} onPress={onPress}>
+          <Text style={styles.retryText}>{t('error.tryAgain')}</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

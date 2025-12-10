@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {  StyleSheet, View, ScrollView } from 'react-native';
 import { Button, Divider, Text, Modal, Portal, Chip } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { getTags } from '../utils';
 import { JobType } from '../types';
 import DatePicker from './DatePicker';
@@ -30,7 +31,8 @@ const FilterModal: React.FC<FilterModalProps> = ({
   clearFavorites
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  
+  const { t } = useTranslation();
+
   // Handle date selection from our custom DatePicker
   const handleDateConfirm = (selectedDate: Date) => {
     setPickedDate(selectedDate.toJSON());
@@ -61,22 +63,22 @@ const FilterModal: React.FC<FilterModalProps> = ({
       >
         <View style={styles.modalContent}>
           <View style={styles.titleContainer}>
-            <Text variant="titleLarge" style={styles.title}>Refine Jobs ({filteredJobs.length})</Text>
-            <Button onPress={clearFilters} textColor="#2196f3">Reset</Button>
+            <Text variant="titleLarge" style={styles.title}>{t('filter.refineJobs')} ({filteredJobs.length})</Text>
+            <Button onPress={clearFilters} textColor="#2196f3">{t('filter.reset')}</Button>
           </View>
           
           <Divider style={{marginVertical: 10}} />
         
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.container}>
-            <Text variant="titleMedium" style={styles.containerTitle}>Filter by Date</Text>
-            <Button
-              mode="outlined"
-              onPress={() => setShowCalendar(true)}
-              style={styles.dateButton}
-            >
-              Posted after: {formattedDate}
-            </Button>
+           <Text variant="titleMedium" style={styles.containerTitle}>{t('filter.filterByDate')}</Text>
+           <Button
+             mode="outlined"
+             onPress={() => setShowCalendar(true)}
+             style={styles.dateButton}
+           >
+             {t('filter.postedAfter')}: {formattedDate}
+           </Button>
             
             <DatePicker
               isVisible={showCalendar}
@@ -88,7 +90,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
           </View>
 
           <View style={styles.container}>
-            <Text variant="titleMedium" style={styles.containerTitle}>Filter by Tags</Text>
+            <Text variant="titleMedium" style={styles.containerTitle}>{t('filter.filterByTags')}</Text>
             <View style={styles.tagsContainer}>
               {allTags.map((tag, index) => (
                 <Chip
@@ -107,13 +109,13 @@ const FilterModal: React.FC<FilterModalProps> = ({
           {clearFavorites && (
             <View style={styles.container}>
               <Button
-                mode="contained"
-                buttonColor="#f44336"
-                icon="delete"
-                onPress={clearFavorites}
-              >
-                Clear All Favorites
-              </Button>
+                  mode="contained"
+                  buttonColor="#f44336"
+                  icon="delete"
+                  onPress={clearFavorites}
+                >
+                  {t('filter.clearAllFavorites')}
+                </Button>
             </View>
           )}
         </ScrollView>
@@ -124,7 +126,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
             buttonColor="#4caf50"
             onPress={onDismiss}
           >
-            Apply Filters
+            {t('filter.applyFilters')}
           </Button>
         </View>
         

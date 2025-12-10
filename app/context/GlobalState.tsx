@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { getAllJobs, getStateFromStorage, storeState } from '../utils';
 import { JobType } from '../types';
 import JobsContext from './JobsContext';
@@ -11,6 +12,7 @@ interface GlobalStateProviderProps {
 // GlobalStateProvider component as named export
 // Component for providing global state
 export function GlobalStateProvider({ children }: GlobalStateProviderProps) {
+  const { t } = useTranslation();
   const [data, setData] = useState<JobType[]>([]);
   const [keys, setKeys] = useState<string[]>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -70,16 +72,16 @@ export function GlobalStateProvider({ children }: GlobalStateProviderProps) {
   }, []);
 
   const handleClearFavorites = useCallback(() => {
-    Alert.alert('Erase Favorites', 'Are You Sure?', [
-      { text: 'Cancel' },
+    Alert.alert(t('alerts.eraseFavorites'), t('alerts.eraseFavoritesMessage'), [
+      { text: t('common.cancel') },
       {
-        text: 'Yes',
+        text: t('common.yes'),
         onPress: () => {
           setKeys([]);
         }
       }
     ]);
-  }, []);
+  }, [t]);
 
   const handleFavorites = useCallback((job: JobType) => {
     setKeys(prevKeys => {

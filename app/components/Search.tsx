@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 interface SearchProps {
   value: string;
@@ -14,11 +15,13 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = ({ onFilter, onChangeText, value }) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.searchView}>
       <View style={styles.searchJobs}>
         <Searchbar
-          placeholder="Search job position..."
+          placeholder={t('search.placeholder')}
           onChangeText={onChangeText}
           value={value}
           style={styles.searchBar}

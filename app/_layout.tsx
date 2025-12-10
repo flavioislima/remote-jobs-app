@@ -5,6 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { PaperProvider, MD3LightTheme } from 'react-native-paper';
 import { GlobalStateProvider } from './context/GlobalState';
+import i18n from './i18n'; // Initialize i18n
+import { I18nextProvider } from 'react-i18next';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -44,14 +46,16 @@ export default function RootLayout() {
   }
 
   return (
-    <PaperProvider theme={theme}>
-      <GlobalStateProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </GlobalStateProvider>
-    </PaperProvider>
+    <I18nextProvider i18n={i18n}>
+      <PaperProvider theme={theme}>
+        <GlobalStateProvider>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </GlobalStateProvider>
+      </PaperProvider>
+    </I18nextProvider>
   );
 }

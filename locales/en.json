@@ -1,0 +1,83 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "apply": "Apply",
+    "yes": "Yes",
+    "no": "No",
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry"
+  },
+  "navigation": {
+    "home": "Home",
+    "favorites": "Favorites",
+    "search": "Search"
+  },
+  "jobs": {
+    "noJobs": "No jobs found",
+    "loadMore": "Load more",
+    "apply": "Apply",
+    "save": "Save",
+    "unsave": "Unsave"
+  },
+  "search": {
+    "placeholder": "Search job position..."
+  },
+  "alerts": {
+    "eraseFavorites": "Erase Favorites",
+    "eraseFavoritesMessage": "Are you sure?",
+    "noFavorites": "No favorites yet"
+  },
+  "description": {
+    "openUrlMessage": "Open Url for more information",
+    "postedOn": "Posted on",
+    "applyViewDetails": "Apply / View Details"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "Sorry, no jobs found! This is probably a server or network error.",
+    "tryAgain": "Try Again"
+  },
+  "filter": {
+    "refineJobs": "Refine Jobs",
+    "reset": "Reset",
+    "filterByDate": "Filter by Date",
+    "postedAfter": "Posted after",
+    "filterByTags": "Filter by Tags",
+    "clearAllFavorites": "Clear All Favorites",
+    "applyFilters": "Apply Filters"
+  },
+  "share": {
+    "message": "Here follows a great Remote Job Opportunity:\n* Position: {{position}}\n* Company: {{company}}\n* Url: {{url}}",
+    "title": "Remote Work App - {{position}} @{{company}}",
+    "subject": "Job Shared from Remote Work App",
+    "dialogTitle": "Share a Remote Job"
+  },
+  "datepicker": {
+    "selectDate": "Select Date",
+    "year": "Year",
+    "month": "Month",
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ]
+  },
+  "tabs": {
+    "allJobs": "All Jobs",
+    "favorites": "Favorites"
+  },
+  "favorites": {
+    "deleteAll": "Delete all Favorites"
+  }
+}

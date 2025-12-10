@@ -1,8 +1,11 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={({ route }) => ({
@@ -22,13 +25,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'All Jobs',
+          title: t('tabs.allJobs'),
         }}
       />
       <Tabs.Screen
         name="favorites"
         options={{
-          title: 'Favorites',
+          title: t('tabs.favorites'),
         }}
       />
     </Tabs>

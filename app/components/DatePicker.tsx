@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Text, Modal, Portal } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 interface DatePickerProps {
   isVisible: boolean;
@@ -19,6 +20,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   minimumDate = new Date(2023, 0, 1),
   maximumDate = new Date()
 }) => {
+  const { t } = useTranslation();
   const [year, setYear] = useState(initialDate.getFullYear());
   const [month, setMonth] = useState(initialDate.getMonth());
   
@@ -46,11 +48,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   );
   
   // Month names
-  const months = [
-    'January', 'February', 'March', 'April', 
-    'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'
-  ];
+  const months = t('datepicker.months', { returnObjects: true }) as string[];
 
   return (
     <Portal>
@@ -60,9 +58,9 @@ const DatePicker: React.FC<DatePickerProps> = ({
         contentContainerStyle={styles.datePickerOverlay}
       >
         <View style={styles.datePickerContent}>
-          <Text variant="titleLarge" style={styles.datePickerTitle}>Select Date</Text>
-        
-        <Text variant="titleMedium" style={styles.datePickerLabel}>Year</Text>
+          <Text variant="titleLarge" style={styles.datePickerTitle}>{t('datepicker.selectDate')}</Text>
+
+        <Text variant="titleMedium" style={styles.datePickerLabel}>{t('datepicker.year')}</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.yearPicker}>
           {years.map(y => (
             <TouchableOpacity
@@ -83,7 +81,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           ))}
         </ScrollView>
         
-        <Text variant="titleMedium" style={styles.datePickerLabel}>Month</Text>
+        <Text variant="titleMedium" style={styles.datePickerLabel}>{t('datepicker.month')}</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.monthPicker}>
           {months.map((m, index) => (
             <TouchableOpacity
@@ -110,14 +108,14 @@ const DatePicker: React.FC<DatePickerProps> = ({
             style={styles.buttonContainer}
             onPress={onCancel}
           >
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button
             mode="contained"
             style={styles.buttonContainer}
             onPress={handleApply}
           >
-            Apply
+            {t('common.apply')}
           </Button>
         </View>
       </View>

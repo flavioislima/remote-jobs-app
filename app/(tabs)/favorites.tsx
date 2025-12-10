@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import { useRouter } from 'expo-router';
 import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import JobsContext from '../context/JobsContext';
 import ListJobs from '../components/ListJobs';
 // import AdBanner from '../components/AdBanner';
 
 export default function FavoritesScreen() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { data, keys, refreshing, handleClearFavorites } = useContext(JobsContext);
   
@@ -33,7 +35,7 @@ export default function FavoritesScreen() {
           icon="delete"
           onPress={handleClearFavorites}
         >
-          Delete all Favorites
+          {t('favorites.deleteAll')}
         </Button>
       )}
 {/*       <AdBanner unitId={'FAVORITES'} size={'SMART'} /> */}
