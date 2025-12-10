@@ -1,0 +1,85 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "キャンセル",
+    "yes": "はい",
+    "no": "いいえ",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "retry": "再試行",
+    "apply": "All Jobs"
+  },
+  "navigation": {
+    "home": "ホーム",
+    "favorites": "お気に入り",
+    "search": "検索"
+  },
+  "jobs": {
+    "noJobs": "仕事が見つかりません",
+    "loadMore": "もっと読み込む",
+    "apply": "応募する",
+    "save": "保存",
+    "unsave": "削除"
+  },
+  "search": {
+    "placeholder": "仕事を検索...",
+    "filter": "フィルター",
+    "clear": "クリア"
+  },
+  "alerts": {
+    "eraseFavorites": "お気に入りを削除",
+    "eraseFavoritesMessage": "本当に削除しますか？",
+    "noFavorites": "まだお気に入りがありません"
+  },
+  "description": {
+    "openUrlMessage": "詳細情報のためにURLを開く",
+    "postedOn": "投稿日",
+    "applyViewDetails": "応募 / 詳細を見る"
+  },
+  "error": {
+    "title": "問題が発生しました",
+    "description": "申し訳ありません、仕事が見つかりません！サーバーまたはネットワークエラーである可能性があります。",
+    "tryAgain": "再試行"
+  },
+  "filter": {
+    "refineJobs": "仕事を絞り込む",
+    "reset": "リセット",
+    "filterByDate": "日付でフィルター",
+    "postedAfter": "次の日付以降に投稿",
+    "filterByTags": "タグでフィルター",
+    "clearAllFavorites": "すべての favorites を削除",
+    "applyFilters": "フィルターを適用"
+  },
+  "share": {
+    "message": "ここに素晴らしいリモートワークの機会があります：\n* ポジション：{{position}}\n* 会社：{{company}}\n* URL：{{url}}",
+    "title": "リモートワークアプリ - {{position}} @{{company}}",
+    "subject": "リモートワークアプリから共有された仕事",
+    "dialogTitle": "リモートワークの仕事を共有"
+  },
+  "datepicker": {
+    "selectDate": "日付を選択",
+    "year": "年",
+    "month": "月",
+    "months": [
+      "1月",
+      "2月",
+      "3月",
+      "4月",
+      "5月",
+      "6月",
+      "7月",
+      "8月",
+      "9月",
+      "10月",
+      "11月",
+      "12月"
+    ]
+  },
+  "tabs": {
+    "allJobs": "すべての仕事",
+    "favorites": "お気に入り"
+  },
+  "favorites": {
+    "deleteAll": "すべての favorites を削除"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "common": {
+    "ok": "Aceptar",
+    "cancel": "Cancelar",
+    "apply": "Aplicar",
+    "yes": "Sí",
+    "no": "No",
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Reintentar"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "favorites": "Favoritos",
+    "search": "Buscar"
+  },
+  "jobs": {
+    "noJobs": "No se encontraron trabajos",
+    "loadMore": "Cargar más",
+    "apply": "Aplicar",
+    "save": "Guardar",
+    "unsave": "Quitar"
+  },
+  "search": {
+    "placeholder": "Buscar trabajos...",
+    "filter": "Filtrar",
+    "clear": "Limpiar"
+  },
+  "alerts": {
+    "eraseFavorites": "Borrar favoritos",
+    "eraseFavoritesMessage": "¿Estás seguro?",
+    "noFavorites": "Aún no hay favoritos"
+  },
+  "description": {
+    "openUrlMessage": "Abrir URL para más información",
+    "postedOn": "Publicado el",
+    "applyViewDetails": "Aplicar / Ver detalles"
+  },
+  "error": {
+    "title": "Algo salió mal",
+    "description": "¡Lo sentimos, no se encontraron trabajos! Probablemente sea un error de servidor o red.",
+    "tryAgain": "Intentar de nuevo"
+  },
+  "filter": {
+    "refineJobs": "Refinar trabajos",
+    "reset": "Restablecer",
+    "filterByDate": "Filtrar por fecha",
+    "postedAfter": "Publicado después de",
+    "filterByTags": "Filtrar por etiquetas",
+    "clearAllFavorites": "Borrar todos los favoritos",
+    "applyFilters": "Aplicar filtros"
+  },
+  "share": {
+    "message": "Aquí hay una gran oportunidad de trabajo remoto:\n* Posición: {{position}}\n* Empresa: {{company}}\n* URL: {{url}}",
+    "title": "App de Trabajo Remoto - {{position}} @{{company}}",
+    "subject": "Trabajo compartido desde App de Trabajo Remoto",
+    "dialogTitle": "Compartir un trabajo remoto"
+  },
+  "datepicker": {
+    "selectDate": "Seleccionar Fecha",
+    "year": "Año",
+    "month": "Mes",
+    "months": [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre"
+    ]
+  },
+  "tabs": {
+    "allJobs": "Todos los Trabajos",
+    "favorites": "Favoritos"
+  },
+  "favorites": {
+    "deleteAll": "Eliminar todos los Favoritos"
+  }
+}

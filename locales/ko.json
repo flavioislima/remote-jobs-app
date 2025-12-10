@@ -1,0 +1,85 @@
+{
+  "common": {
+    "ok": "확인",
+    "cancel": "취소",
+    "yes": "예",
+    "no": "아니요",
+    "loading": "로딩 중...",
+    "error": "오류",
+    "retry": "다시 시도",
+    "apply": "All Jobs"
+  },
+  "navigation": {
+    "home": "홈",
+    "favorites": "즐겨찾기",
+    "search": "검색"
+  },
+  "jobs": {
+    "noJobs": "직업을 찾을 수 없습니다",
+    "loadMore": "더 불러오기",
+    "apply": "지원하기",
+    "save": "저장",
+    "unsave": "제거"
+  },
+  "search": {
+    "placeholder": "직업 검색...",
+    "filter": "필터",
+    "clear": "지우기"
+  },
+  "alerts": {
+    "eraseFavorites": "즐겨찾기 삭제",
+    "eraseFavoritesMessage": "정말로 삭제하시겠습니까?",
+    "noFavorites": "아직 즐겨찾기가 없습니다"
+  },
+  "description": {
+    "openUrlMessage": "더 많은 정보를 위해 URL 열기",
+    "postedOn": "게시일",
+    "applyViewDetails": "지원 / 세부 정보 보기"
+  },
+  "error": {
+    "title": "문제가 발생했습니다",
+    "description": "죄송합니다, 직업을 찾을 수 없습니다! 서버 또는 네트워크 오류일 수 있습니다.",
+    "tryAgain": "다시 시도"
+  },
+  "filter": {
+    "refineJobs": "직업 정제",
+    "reset": "재설정",
+    "filterByDate": "날짜로 필터링",
+    "postedAfter": "다음 이후 게시",
+    "filterByTags": "태그로 필터링",
+    "clearAllFavorites": "모든 즐겨찾기 삭제",
+    "applyFilters": "필터 적용"
+  },
+  "share": {
+    "message": "여기 훌륭한 원격 직업 기회가 있습니다:\n* 직위: {{position}}\n* 회사: {{company}}\n* URL: {{url}}",
+    "title": "원격 근무 앱 - {{position}} @{{company}}",
+    "subject": "원격 근무 앱에서 공유된 직업",
+    "dialogTitle": "원격 직업 공유"
+  },
+  "datepicker": {
+    "selectDate": "날짜 선택",
+    "year": "년",
+    "month": "월",
+    "months": [
+      "1월",
+      "2월",
+      "3월",
+      "4월",
+      "5월",
+      "6월",
+      "7월",
+      "8월",
+      "9월",
+      "10월",
+      "11월",
+      "12월"
+    ]
+  },
+  "tabs": {
+    "allJobs": "모든 직업",
+    "favorites": "즐겨찾기"
+  },
+  "favorites": {
+    "deleteAll": "모든 즐겨찾기 삭제"
+  }
+}

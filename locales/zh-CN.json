@@ -1,0 +1,85 @@
+{
+  "common": {
+    "ok": "确定",
+    "cancel": "取消",
+    "yes": "是",
+    "no": "否",
+    "loading": "加载中...",
+    "error": "错误",
+    "retry": "重试",
+    "apply": "All Jobs"
+  },
+  "navigation": {
+    "home": "首页",
+    "favorites": "收藏",
+    "search": "搜索"
+  },
+  "jobs": {
+    "noJobs": "未找到工作",
+    "loadMore": "加载更多",
+    "apply": "申请",
+    "save": "保存",
+    "unsave": "移除"
+  },
+  "search": {
+    "placeholder": "搜索工作...",
+    "filter": "筛选",
+    "clear": "清除"
+  },
+  "alerts": {
+    "eraseFavorites": "删除收藏",
+    "eraseFavoritesMessage": "确定要删除吗？",
+    "noFavorites": "还没有收藏"
+  },
+  "description": {
+    "openUrlMessage": "打开URL获取更多信息",
+    "postedOn": "发布于",
+    "applyViewDetails": "申请 / 查看详情"
+  },
+  "error": {
+    "title": "出错了",
+    "description": "抱歉，未找到工作！这可能是服务器或网络错误。",
+    "tryAgain": "重试"
+  },
+  "filter": {
+    "refineJobs": "优化工作",
+    "reset": "重置",
+    "filterByDate": "按日期筛选",
+    "postedAfter": "发布于之后",
+    "filterByTags": "按标签筛选",
+    "clearAllFavorites": "清除所有收藏",
+    "applyFilters": "应用筛选"
+  },
+  "share": {
+    "message": "这里有一个很棒的远程工作机会：\n* 职位：{{position}}\n* 公司：{{company}}\n* URL：{{url}}",
+    "title": "远程工作应用 - {{position}} @{{company}}",
+    "subject": "从远程工作应用分享的工作",
+    "dialogTitle": "分享远程工作"
+  },
+  "datepicker": {
+    "selectDate": "选择日期",
+    "year": "年",
+    "month": "月",
+    "months": [
+      "一月",
+      "二月",
+      "三月",
+      "四月",
+      "五月",
+      "六月",
+      "七月",
+      "八月",
+      "九月",
+      "十月",
+      "十一月",
+      "十二月"
+    ]
+  },
+  "tabs": {
+    "allJobs": "所有工作",
+    "favorites": "收藏夹"
+  },
+  "favorites": {
+    "deleteAll": "删除所有收藏"
+  }
+}

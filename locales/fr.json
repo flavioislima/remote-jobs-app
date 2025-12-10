@@ -1,0 +1,85 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Annuler",
+    "yes": "Oui",
+    "no": "Non",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "apply": "All Jobs"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "favorites": "Favoris",
+    "search": "Rechercher"
+  },
+  "jobs": {
+    "noJobs": "Aucun emploi trouvé",
+    "loadMore": "Charger plus",
+    "apply": "Postuler",
+    "save": "Sauvegarder",
+    "unsave": "Retirer"
+  },
+  "search": {
+    "placeholder": "Rechercher des emplois...",
+    "filter": "Filtrer",
+    "clear": "Effacer"
+  },
+  "alerts": {
+    "eraseFavorites": "Effacer les favoris",
+    "eraseFavoritesMessage": "Êtes-vous sûr ?",
+    "noFavorites": "Pas encore de favoris"
+  },
+  "description": {
+    "openUrlMessage": "Ouvrir l'URL pour plus d'informations",
+    "postedOn": "Publié le",
+    "applyViewDetails": "Postuler / Voir les détails"
+  },
+  "error": {
+    "title": "Quelque chose s'est mal passé",
+    "description": "Désolé, aucun emploi trouvé ! C'est probablement une erreur de serveur ou de réseau.",
+    "tryAgain": "Réessayer"
+  },
+  "filter": {
+    "refineJobs": "Affiner les emplois",
+    "reset": "Réinitialiser",
+    "filterByDate": "Filtrer par date",
+    "postedAfter": "Publié après le",
+    "filterByTags": "Filtrer par tags",
+    "clearAllFavorites": "Effacer tous les favoris",
+    "applyFilters": "Appliquer les filtres"
+  },
+  "share": {
+    "message": "Voici une excellente opportunité d'emploi à distance :\n* Poste : {{position}}\n* Entreprise : {{company}}\n* URL : {{url}}",
+    "title": "App Travail à Distance - {{position}} @{{company}}",
+    "subject": "Emploi partagé depuis App Travail à Distance",
+    "dialogTitle": "Partager un emploi à distance"
+  },
+  "datepicker": {
+    "selectDate": "Sélectionner la date",
+    "year": "Année",
+    "month": "Mois",
+    "months": [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre"
+    ]
+  },
+  "tabs": {
+    "allJobs": "Tous les emplois",
+    "favorites": "Favoris"
+  },
+  "favorites": {
+    "deleteAll": "Supprimer tous les favoris"
+  }
+}
