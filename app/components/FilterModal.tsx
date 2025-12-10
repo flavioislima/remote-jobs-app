@@ -76,6 +76,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
              mode="outlined"
              onPress={() => setShowCalendar(true)}
              style={styles.dateButton}
+             textColor='#032038ff'
            >
              {t('filter.postedAfter')}: {formattedDate}
            </Button>
@@ -86,6 +87,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
               onConfirm={handleDateConfirm}
               initialDate={new Date(pickedDate)}
               maximumDate={new Date()}
+              
             />
           </View>
 
@@ -173,7 +175,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   dateButton: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   tagsContainer: {
     flexDirection: 'row',

@@ -106,6 +106,8 @@ const DatePicker: React.FC<DatePickerProps> = ({
           <Button
             mode="outlined"
             style={styles.buttonContainer}
+            buttonColor='#c00505ff'
+            textColor='#fff'
             onPress={onCancel}
           >
             {t('common.cancel')}
