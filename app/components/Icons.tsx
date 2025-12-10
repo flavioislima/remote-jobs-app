@@ -35,7 +35,6 @@ const Icons: React.FC<IconsProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>{t('icons.jobActions')}</Text>
         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <MaterialCommunityIcons name="close" size={24} color="#333" />
         </TouchableOpacity>
