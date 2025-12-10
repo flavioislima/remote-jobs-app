@@ -151,7 +151,6 @@ const styles = StyleSheet.create({
     marginHorizontal: '5%'
   },
   modalContent: {
-    flex: 1,
     padding: 15,
     width: '100%', // Ensure full width on Android
     height: '100%' // Ensure full height on Android
