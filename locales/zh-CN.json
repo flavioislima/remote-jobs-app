@@ -81,5 +81,12 @@
   },
   "favorites": {
     "deleteAll": "删除所有收藏"
+  },
+  "icons": {
+    "jobActions": "工作操作",
+    "addToFavorites": "添加到收藏",
+    "removeFromFavorites": "从收藏中移除",
+    "share": "分享",
+    "openUrl": "打开URL"
   }
 }

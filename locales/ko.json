@@ -81,5 +81,12 @@
   },
   "favorites": {
     "deleteAll": "모든 즐겨찾기 삭제"
+  },
+  "icons": {
+    "jobActions": "직업 액션",
+    "addToFavorites": "즐겨찾기에 추가",
+    "removeFromFavorites": "즐겨찾기에서 제거",
+    "share": "공유",
+    "openUrl": "URL 열기"
   }
 }

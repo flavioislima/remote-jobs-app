@@ -81,5 +81,12 @@
   },
   "favorites": {
     "deleteAll": "すべての favorites を削除"
+  },
+  "icons": {
+    "jobActions": "仕事アクション",
+    "addToFavorites": "お気に入りに追加",
+    "removeFromFavorites": "お気に入りから削除",
+    "share": "共有",
+    "openUrl": "URLを開く"
   }
 }

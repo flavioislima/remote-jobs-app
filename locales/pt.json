@@ -81,5 +81,12 @@
   },
   "favorites": {
     "deleteAll": "Excluir todos os Favoritos"
+  },
+  "icons": {
+    "jobActions": "Ações do Trabalho",
+    "addToFavorites": "Adicionar aos Favoritos",
+    "removeFromFavorites": "Remover dos Favoritos",
+    "share": "Compartilhar",
+    "openUrl": "Abrir URL"
   }
 }

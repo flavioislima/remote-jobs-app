@@ -7,6 +7,7 @@ import {
   View
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; // Using Expo's vector icons
+import { useTranslation } from 'react-i18next';
 
 interface IconsProps {
   isFavorite: boolean;
@@ -19,13 +20,14 @@ interface IconsProps {
 const iconSize = 25;
 const iconColor = '#666';
 
-const Icons: React.FC<IconsProps> = ({ 
-  isFavorite, 
-  url, 
+const Icons: React.FC<IconsProps> = ({
+  isFavorite,
+  url,
   onShare,
   onFavorite,
   onClose
 }) => {
+  const { t } = useTranslation();
   const handleOpenUrl = () => {
     Linking.openURL(url).catch(err => console.error('Error opening URL:', err));
   };
@@ -33,7 +35,7 @@ const Icons: React.FC<IconsProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Job Actions</Text>
+        <Text style={styles.title}>{t('icons.jobActions')}</Text>
         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <MaterialCommunityIcons name="close" size={24} color="#333" />
         </TouchableOpacity>
@@ -46,25 +48,25 @@ const Icons: React.FC<IconsProps> = ({
             size={iconSize}
             color={isFavorite ? '#f44336' : iconColor}
           />
-          <Text style={styles.iconText}>{isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}</Text>
+          <Text style={styles.iconText}>{t(isFavorite ? 'icons.removeFromFavorites' : 'icons.addToFavorites')}</Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity onPress={onShare} style={styles.iconButton}>
           <MaterialCommunityIcons
             name="share-variant"
             size={iconSize}
             color={iconColor}
           />
-          <Text style={styles.iconText}>Share</Text>
+          <Text style={styles.iconText}>{t('icons.share')}</Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity onPress={handleOpenUrl} style={styles.iconButton}>
           <MaterialCommunityIcons
             name="web"
             size={iconSize}
             color={iconColor}
           />
-          <Text style={styles.iconText}>Open URL</Text>
+          <Text style={styles.iconText}>{t('icons.openUrl')}</Text>
         </TouchableOpacity>
       </View>
     </View>
