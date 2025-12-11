@@ -39,3 +39,4 @@ app-example
 android
 ios
 credentials.json
+.firebase/**.cache
