@@ -2,7 +2,9 @@ import React from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
+  Dimensions,
+  Platform
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -14,12 +16,15 @@ interface SearchProps {
   onFilter: () => void;
 }
 
+const { width } = Dimensions.get('window');
+const isDesktop = Platform.OS === 'web' && width > 1024;
+
 const Search: React.FC<SearchProps> = ({ onFilter, onChangeText, value }) => {
   const { t } = useTranslation();
 
   return (
     <View style={styles.searchView}>
-      <View style={styles.searchJobs}>
+      <View style={[styles.searchJobs, isDesktop && styles.searchJobsDesktop]}>
         <Searchbar
           placeholder={t('search.placeholder')}
           onChangeText={onChangeText}
@@ -47,6 +52,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 8,
     paddingLeft: 10,
+  },
+  searchJobsDesktop: {
+    alignSelf: 'center',
   },
   searchBar: {
     backgroundColor: 'white',

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Linking,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -12,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 interface IconsProps {
   isFavorite: boolean;
   url: string;
+  position?: string;
   onShare: () => void;
   onFavorite: () => void;
   onClose: () => void;
@@ -23,6 +25,7 @@ const iconColor = '#666';
 const Icons: React.FC<IconsProps> = ({
   isFavorite,
   url,
+  position,
   onShare,
   onFavorite,
   onClose
@@ -30,11 +33,14 @@ const Icons: React.FC<IconsProps> = ({
   const { t } = useTranslation();
   const handleOpenUrl = () => {
     Linking.openURL(url).catch(err => console.error('Error opening URL:', err));
-  };
+  };  
+
+  const isDesktop = Platform.OS === 'web';
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <Text style={styles.title}>{position || 'Job'}</Text>
         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <MaterialCommunityIcons name="close" size={24} color="#333" />
         </TouchableOpacity>
@@ -50,14 +56,14 @@ const Icons: React.FC<IconsProps> = ({
           <Text style={styles.iconText}>{t(isFavorite ? 'icons.removeFromFavorites' : 'icons.addToFavorites')}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={onShare} style={styles.iconButton}>
+        {isDesktop ? null : <TouchableOpacity onPress={onShare} style={styles.iconButton}>
           <MaterialCommunityIcons
             name="share-variant"
             size={iconSize}
             color={iconColor}
           />
           <Text style={styles.iconText}>{t('icons.share')}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
 
         <TouchableOpacity onPress={handleOpenUrl} style={styles.iconButton}>
           <MaterialCommunityIcons
@@ -83,12 +89,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
   closeButton: {
     padding: 5
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333'
   },
   iconsContainer: {
     alignItems: 'center'
