@@ -19,6 +19,8 @@ import Search from './Search';
 import FilterModal from './FilterModal';
 
 const PageStructuredData: React.FC = () => {
+  if (Platform.OS !== 'web') return null;
+
   const schema = {
     "@context": "https://schema.org/",
     "@type": "WebSite",
@@ -87,10 +89,10 @@ const ListJobs: React.FC<ListJobsProps> = ({
   }
 
   return (
-    <View style={styles.container}>
-      <PageStructuredData />
-      <StatusBar backgroundColor="#1e2229" />
       <SafeAreaView style={styles.safeArea}>
+    <View style={styles.container}>
+      <StatusBar />
+      <PageStructuredData />
         <Search
           value={filterText}
           onChangeText={setFilterText}
@@ -117,8 +119,8 @@ const ListJobs: React.FC<ListJobsProps> = ({
           clearFilters={clearAllFilter}
           clearFavorites={clearFavorites}
         />
-      </SafeAreaView>
     </View>
+      </SafeAreaView>
   );
 };
 
@@ -134,6 +136,7 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
+    backgroundColor: '#ffffff',
   },
   flatList: {
     flex: 1,

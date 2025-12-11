@@ -18,6 +18,8 @@ import Description from './Description';
 import Icons from './Icons';
 
 const JobStructuredData: React.FC<{ job: JobType }> = ({ job }) => {
+  if (Platform.OS !== 'web') return null;
+
   const schema = {
     "@context": "https://schema.org/",
     "@type": "JobPosting",
