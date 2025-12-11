@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
   clearButton: { 
     backgroundColor: 'white',
     marginHorizontal: 15,
-    marginBottom: 10
+    marginBottom: 10,
+    maxWidth: 600,
+    alignSelf: 'center'
   }
 });

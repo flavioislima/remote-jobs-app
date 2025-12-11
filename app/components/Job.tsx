@@ -3,7 +3,9 @@ import {
   Share,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
+  Dimensions,
+  Platform
 } from 'react-native';
 import { List, Modal, Portal, Text } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -113,6 +115,9 @@ const Job: React.FC<JobProps> = ({ data }) => {
   );
 };
 
+const { width } = Dimensions.get('window');
+const isDesktop = Platform.OS === 'web' && width > 1024;
+
 const styles = StyleSheet.create({
   item: {
     backgroundColor: '#fff',
@@ -120,11 +125,11 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E0E0E0'
   },
   title: {
-    fontSize: 16,
+    fontSize: isDesktop ? 18 : 16,
     fontWeight: 'bold'
   },
   company: {
-    fontSize: 14,
+    fontSize: isDesktop ? 16 : 14,
     color: '#555'
   },
   chevronButton: {
@@ -140,20 +145,20 @@ const styles = StyleSheet.create({
     color: '#888'
   },
   overlay: {
-    width: '90%',
-    height: '80%',
+    width: isDesktop ? '70%' : '90%',
+    height: isDesktop ? '70%' : '80%',
     padding: 0,
     borderRadius: 10,
     alignSelf: 'center',
-    marginHorizontal: '5%',
+    marginHorizontal: isDesktop ? '15%' : '5%',
   },
   iconsOverlay: {
-    width: '80%',
+    width: isDesktop ? '50%' : '80%',
     padding: 0,
     borderRadius: 10,
     alignItems: 'center',
     alignSelf: 'center',
-    marginHorizontal: '10%',
+    marginHorizontal: isDesktop ? '25%' : '10%',
     backgroundColor: '#fff'
   }
 });

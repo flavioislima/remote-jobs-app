@@ -4,7 +4,9 @@ import {
   RefreshControl,
   StatusBar,
   StyleSheet,
-  View
+  View,
+  Dimensions,
+  Platform
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -67,7 +69,7 @@ const ListJobs: React.FC<ListJobsProps> = ({
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#1e2229" />
-      <SafeAreaView>
+      <SafeAreaView style={styles.safeArea}>
         <Search
           value={filterText}
           onChangeText={setFilterText}
@@ -80,6 +82,8 @@ const ListJobs: React.FC<ListJobsProps> = ({
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={refresh} />
           }
+          style={styles.flatList}
+          contentContainerStyle={styles.flatListContent}
         />
         <FilterModal
           visible={showFilterModal}
@@ -97,9 +101,24 @@ const ListJobs: React.FC<ListJobsProps> = ({
   );
 };
 
+const { width } = Dimensions.get('window');
+const isDesktop = Platform.OS === 'web' && width > 1024;
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
+    flex: 1,
+    maxWidth: isDesktop ? 1200 : undefined,
+    alignSelf: isDesktop ? 'center' : undefined,
+    width: isDesktop ? '100%' : undefined,
+  },
+  safeArea: {
+    flex: 1,
+  },
+  flatList: {
+    flex: 1,
+  },
+  flatListContent: {
+    flexGrow: 1,
+  },
 });
 export default ListJobs;
