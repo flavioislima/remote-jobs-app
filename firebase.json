@@ -3,8 +3,7 @@
     "public": "dist",
     "ignore": [
       "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+      "**/.*"
     ],
     "rewrites": [
       {
@@ -18,7 +17,7 @@
         "headers": [
           {
             "key": "Content-Type",
-            "value": "font/ttf"
+            "value": "font/truetype"
           },
           {
             "key": "Access-Control-Allow-Origin",
