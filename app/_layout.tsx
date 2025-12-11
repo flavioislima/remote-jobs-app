@@ -8,6 +8,23 @@ import { GlobalStateProvider } from './context/GlobalState';
 import i18n from './i18n'; // Initialize i18n
 import { I18nextProvider } from 'react-i18next';
 
+export const metadata = {
+  title: 'RemoteWork - Find Remote Jobs Worldwide',
+  description: 'Discover remote job opportunities across industries. Search, filter, and apply to remote positions from top companies.',
+  keywords: 'remote jobs, work from home, freelance, telecommute, job search',
+  openGraph: {
+    title: 'RemoteWork - Remote Job Search',
+    description: 'Find your next remote job with RemoteWork.',
+    images: [{ url: '/assets/images/icon.png' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RemoteWork - Remote Job Search',
+    description: 'Find your next remote job with RemoteWork.',
+    images: ['/assets/images/icon.png'],
+  },
+};
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 

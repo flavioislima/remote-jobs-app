@@ -18,6 +18,26 @@ import Error from './Error';
 import Search from './Search';
 import FilterModal from './FilterModal';
 
+const PageStructuredData: React.FC = () => {
+  const schema = {
+    "@context": "https://schema.org/",
+    "@type": "WebSite",
+    "name": "RemoteWork",
+    "description": "Find remote job opportunities worldwide",
+    "url": "https://remotework.example.com", // Replace with actual URL
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://remotework.example.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
+  return React.createElement('script', {
+    type: 'application/ld+json',
+    dangerouslySetInnerHTML: { __html: JSON.stringify(schema) }
+  });
+};
+
 interface ListJobsProps {
   refresh: () => void;
   jobs: JobType[];
@@ -68,6 +88,7 @@ const ListJobs: React.FC<ListJobsProps> = ({
 
   return (
     <View style={styles.container}>
+      <PageStructuredData />
       <StatusBar backgroundColor="#1e2229" />
       <SafeAreaView style={styles.safeArea}>
         <Search

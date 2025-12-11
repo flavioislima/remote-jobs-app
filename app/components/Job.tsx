@@ -17,6 +17,36 @@ import { JobType } from '../types';
 import Description from './Description';
 import Icons from './Icons';
 
+const JobStructuredData: React.FC<{ job: JobType }> = ({ job }) => {
+  const schema = {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": job.position,
+    "description": job.description,
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": job.company
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Remote"
+      }
+    },
+    "employmentType": "REMOTE",
+    "datePosted": job.date,
+    "url": job.url,
+    ...(job.salary && { "baseSalary": job.salary }),
+    ...(job.tags && { "skills": job.tags.join(', ') })
+  };
+
+  return React.createElement('script', {
+    type: 'application/ld+json',
+    dangerouslySetInnerHTML: { __html: JSON.stringify(schema) }
+  });
+};
+
 interface JobProps {
   data: JobType;
 }
@@ -58,6 +88,7 @@ const Job: React.FC<JobProps> = ({ data }) => {
 
   return (
     <View style={styles.item}>
+      <JobStructuredData job={data} />
       <List.Item
         title={position}
         description={company}
