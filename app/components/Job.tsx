@@ -107,6 +107,7 @@ const Job: React.FC<JobProps> = ({ data }) => {
             onFavorite={() => handleFavorites && handleFavorites(data)}
             isFavorite={isFavorite}
             url={url}
+            position={position}
           />
           {/* <AdBanner unitId={'SQUARE'} size={'RECTANGLE'} /> */}
         </Modal>

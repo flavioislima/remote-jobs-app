@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Dimensions,
   Linking,
   Platform,
   StyleSheet,
@@ -14,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 interface IconsProps {
   isFavorite: boolean;
   url: string;
+  position?: string;
   onShare: () => void;
   onFavorite: () => void;
   onClose: () => void;
@@ -25,6 +25,7 @@ const iconColor = '#666';
 const Icons: React.FC<IconsProps> = ({
   isFavorite,
   url,
+  position,
   onShare,
   onFavorite,
   onClose
@@ -33,13 +34,13 @@ const Icons: React.FC<IconsProps> = ({
   const handleOpenUrl = () => {
     Linking.openURL(url).catch(err => console.error('Error opening URL:', err));
   };  
-  
-  const { width } = Dimensions.get('window');
-  const isDesktop = Platform.OS === 'web' && width > 1024;
+
+  const isDesktop = Platform.OS === 'web';
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <Text style={styles.title}>{position || 'Job'}</Text>
         <TouchableOpacity onPress={onClose} style={styles.closeButton}>
           <MaterialCommunityIcons name="close" size={24} color="#333" />
         </TouchableOpacity>
@@ -90,6 +91,11 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     padding: 5
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333'
   },
   iconsContainer: {
     alignItems: 'center'
