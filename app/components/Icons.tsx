@@ -1,6 +1,8 @@
 import React from 'react';
 import {
+  Dimensions,
   Linking,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -30,7 +32,10 @@ const Icons: React.FC<IconsProps> = ({
   const { t } = useTranslation();
   const handleOpenUrl = () => {
     Linking.openURL(url).catch(err => console.error('Error opening URL:', err));
-  };
+  };  
+  
+  const { width } = Dimensions.get('window');
+  const isDesktop = Platform.OS === 'web' && width > 1024;
 
   return (
     <View style={styles.container}>
@@ -50,14 +55,14 @@ const Icons: React.FC<IconsProps> = ({
           <Text style={styles.iconText}>{t(isFavorite ? 'icons.removeFromFavorites' : 'icons.addToFavorites')}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={onShare} style={styles.iconButton}>
+        {isDesktop ? null : <TouchableOpacity onPress={onShare} style={styles.iconButton}>
           <MaterialCommunityIcons
             name="share-variant"
             size={iconSize}
             color={iconColor}
           />
           <Text style={styles.iconText}>{t('icons.share')}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
 
         <TouchableOpacity onPress={handleOpenUrl} style={styles.iconButton}>
           <MaterialCommunityIcons
@@ -82,10 +87,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 15
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold'
   },
   closeButton: {
     padding: 5

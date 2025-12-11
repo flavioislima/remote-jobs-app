@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
   overlay: {
     width: '90%',
     maxHeight: '80%',
+    maxWidth: 600,
     borderRadius: 10,
     padding: 0,
     overflow: 'hidden',
