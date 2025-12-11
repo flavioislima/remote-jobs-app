@@ -12,6 +12,7 @@ export const metadata = {
   title: 'RemoteWork - Find Remote Jobs Worldwide',
   description: 'Discover remote job opportunities across industries. Search, filter, and apply to remote positions from top companies.',
   keywords: 'remote jobs, work from home, freelance, telecommute, job search',
+  robots: 'index, follow',
   openGraph: {
     title: 'RemoteWork - Remote Job Search',
     description: 'Find your next remote job with RemoteWork.',
