@@ -12,6 +12,7 @@
     "lint": "expo lint",
     "publish:android": "eas build --platform android --auto-submit",
     "publish:ios": "eas build --platform ios --auto-submit",
+    "publish:web": "npx expo export --platform web",
     "i18next": "i18next-cli extract"
   },
   "jest": {
